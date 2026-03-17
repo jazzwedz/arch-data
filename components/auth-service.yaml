@@ -1,0 +1,40 @@
+id: auth-service
+name: Authentication Service
+type: microservice
+status: production
+owner: platform-team
+tags:
+  - auth
+  - security
+  - core
+description:
+  oneliner: Handles user authentication and JWT token management
+  technical: >-
+    Spring Boot microservice providing OAuth2/OIDC authentication flows.
+    Issues and validates JWT tokens. Integrates with external IdPs
+    (Google, Microsoft). Manages refresh token rotation and session
+    invalidation. Rate-limited login endpoints with brute-force protection.
+  business: >-
+    Ensures only authorized users can access the system. Supports
+    single sign-on with corporate accounts. Provides secure session
+    management and automatic logout on inactivity.
+interfaces:
+  - direction: provides
+    type: rest
+    description: POST /auth/login - authenticate user credentials
+  - direction: provides
+    type: rest
+    description: POST /auth/refresh - refresh JWT token
+  - direction: provides
+    type: rest
+    description: GET /auth/userinfo - get current user profile
+  - direction: consumes
+    type: db
+    target: user-db
+    description: Read/write user credentials and sessions
+dependencies:
+  - id: user-db
+    connector: db
+risks:
+  - Single point of failure for all authenticated requests
+  - Token signing key rotation requires coordinated deployment
