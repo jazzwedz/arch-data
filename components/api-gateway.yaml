@@ -1,0 +1,38 @@
+id: api-gateway
+name: API Gateway
+type: gateway
+status: production
+owner: platform-team
+tags:
+  - gateway
+  - infrastructure
+  - core
+description:
+  oneliner: Central API gateway routing all external traffic to backend services
+  technical: >-
+    Kong-based API gateway handling request routing, rate limiting, JWT
+    validation, and request/response transformation. Deployed as a Kubernetes
+    ingress controller. Supports canary deployments and A/B testing via
+    traffic splitting. Prometheus metrics exported for latency and error
+    rate monitoring.
+  business: >-
+    Single entry point for all API consumers. Enforces security policies,
+    manages API versioning, and provides usage analytics for business
+    stakeholders.
+interfaces:
+  - direction: provides
+    type: rest
+    description: HTTPS ingress on port 443 - routes to all backend services
+  - direction: consumes
+    type: rest
+    target: auth-service
+    description: Validates JWT tokens on every request
+dependencies:
+  - id: auth-service
+    connector: rest
+risks:
+  - Single point of failure for all API traffic
+  - Configuration drift between environments
+  - Rate limiting misconfiguration can block legitimate traffic
+diagram:
+  color: "#FFF3E0"
