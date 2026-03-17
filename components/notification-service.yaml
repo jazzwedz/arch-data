@@ -1,0 +1,16 @@
+id: notification-service
+name: Notification Service
+type: microservice
+status: draft
+owner: platform-team
+tags:
+  - notifications
+  - email
+  - async
+description:
+  oneliner: notifications, email, async
+  technical: notifications, email, async
+  business: notifications, email, async
+interfaces: []
+dependencies: []
+risks: []
