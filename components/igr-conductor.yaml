@@ -1,0 +1,15 @@
+id: igr-conductor
+name: Conductor
+type: microservice
+status: production
+owner: Tomas K
+tags:
+  - orchestration
+  - flow
+description:
+  oneliner: Conducting data flows, inputs and outputs
+  technical: IGR Conductor is the orchestration service that manages the execution flow between the main IGR processing steps and connected components. It controls sequencing, handoffs, and processing triggers so that the overall flow runs in the defined order across the involved services.
+  business: IGR Conductor coordinates the end-to-end IGR process across the involved services and system steps. It ensures that the required processing happens in the correct sequence and that outputs are passed to the next stage of the flow.
+interfaces: []
+dependencies: []
+risks: []
