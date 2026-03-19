@@ -1,0 +1,13 @@
+id: test
+name: test
+type: microservice
+status: draft
+owner: test
+tags: []
+description:
+  oneliner: test
+  technical: test
+  business: test
+interfaces: []
+dependencies: []
+risks: []
