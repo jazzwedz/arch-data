@@ -7,7 +7,7 @@ tags:
   - orchestration
   - flow
 description:
-  oneliner: Conducting data flows, inputs and outputs
+  oneliner: Conducting data flows, inputs and outputs, https://arch-tool-production.up.railway.app/architecture.html
   technical: IGR Conductor is the orchestration service that manages the execution flow between the main IGR processing steps and connected components. It controls sequencing, handoffs, and processing triggers so that the overall flow runs in the defined order across the involved services.
   business: IGR Conductor coordinates the end-to-end IGR process across the involved services and system steps. It ensures that the required processing happens in the correct sequence and that outputs are passed to the next stage of the flow.
 interfaces: []
