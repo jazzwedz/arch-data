@@ -8,9 +8,9 @@ tags:
   - business-logic
   - transactions
 description:
-  oneliner: Spracovanie a riadenie životného cyklu objednávok
-  technical: Java 21 / Spring Boot 3 microservice implementujúci Saga pattern pre distribuované transakcie. Stavový automat objednávky (created → confirmed → processing → shipped → delivered / cancelled). Event sourcing s CQRS pre audit trail. Horizontálne škálovateľný, beží v Kubernetes.
-  business: Jadro obchodného procesu – spravuje celý životný cyklus objednávky od vytvorenia cez platbu až po doručenie. Kritický pre revenue a zákaznícku spokojnosť.
+  oneliner: Processing and managing the order lifecycle
+  technical: Java 21 / Spring Boot 3 microservice implementing the Saga pattern for distributed transactions. Order state machine (created -> confirmed -> processing -> shipped -> delivered / cancelled). Event sourcing with CQRS for audit trail. Horizontally scalable, runs in Kubernetes.
+  business: Core business process engine - manages the entire order lifecycle from creation through payment to delivery. Critical for revenue and customer satisfaction.
 interfaces:
   - direction: provides
     type: rest
@@ -36,9 +36,9 @@ dependencies:
   - id: event-bus
     connector: async
 risks:
-  - Strata objednávky znamená priamu finančnú stratu – vyžaduje exactly-once processing
-  - Saga rollback môže zlyhať a vytvoriť inkozistentný stav
-  - Vysoká záťaž počas sezónnych špičiek (Black Friday, Vianoce)
+  - Lost order means direct financial loss - requires exactly-once processing
+  - Saga rollback can fail and create inconsistent state
+  - High load during seasonal peaks (Black Friday, Christmas)
 diagram:
   color: '#F59E0B'
   shape: rectangle
