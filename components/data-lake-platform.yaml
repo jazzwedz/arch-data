@@ -1,0 +1,55 @@
+id: data-lake-platform
+name: Enterprise Data Lake
+type: platform
+status: production
+owner: data-engineering-team
+tags:
+  - data
+  - analytics
+  - lake
+  - warehouse
+  - ml
+  - reporting
+description:
+  oneliner: Centralized data platform for analytics, reporting, and machine learning
+  technical: Databricks Lakehouse on Azure with Delta Lake storage format. Ingests data from 40+ source systems via structured streaming and batch pipelines. Bronze/Silver/Gold medallion architecture with automated data quality checks at each layer. Unity Catalog for governance and access control. Supports SQL analytics via Databricks SQL warehouses, Python/Spark for data science, and MLflow for model lifecycle management. 200TB+ managed data.
+  business: The single place where data from across the institution comes together for analysis. Powers regulatory reporting (Basel III, Solvency II), management dashboards, customer analytics, and the machine learning models used in fraud detection and risk scoring. Replaces dozens of siloed data extracts with one governed, auditable data source.
+interfaces:
+  - direction: provides
+    type: rest
+    description: SQL and REST API access to curated Gold-layer datasets
+  - direction: provides
+    type: db
+    description: Direct table access for authorized analytics and reporting tools
+  - direction: provides
+    type: file
+    description: Automated data exports in CSV, Parquet, and Excel for downstream consumers
+  - direction: consumes
+    type: async
+    target: event-bus
+    description: Real-time event ingestion from operational systems
+  - direction: consumes
+    type: db
+    target: user-db
+    description: Batch ingestion of customer and account data
+  - direction: consumes
+    type: db
+    target: transaction-ledger-db
+    description: Daily batch load of transaction data for analytics
+dependencies:
+  - id: event-bus
+    connector: async
+  - id: user-db
+    connector: db
+  - id: transaction-ledger-db
+    connector: db
+  - id: monitoring-platform
+    connector: rest
+risks:
+  - Contains sensitive data from across the institution � data governance failures have regulatory consequences
+  - Pipeline failures can delay regulatory reports with submission deadlines
+  - Compute costs scale with usage � unoptimized queries can generate unexpected bills
+  - Data quality issues in source systems propagate to analytics and ML models
+diagram:
+  color: '#7C3AED'
+  shape: round
