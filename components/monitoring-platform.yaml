@@ -1,0 +1,34 @@
+id: monitoring-platform
+name: Observability Platform
+type: platform
+status: production
+owner: sre-team
+tags:
+  - observability
+  - monitoring
+  - logging
+  - tracing
+  - alerting
+description:
+  oneliner: Centrálna platforma pre monitoring, logging, tracing a alerting
+  technical: 'Stack: Prometheus + Grafana pre metriky, ELK (Elasticsearch, Logstash, Kibana) pre logy, Jaeger pre distributed tracing. OpenTelemetry Collector ako unified ingestion point. PagerDuty integrácia pre on-call alerting. Custom Grafana dashboardy pre SLI/SLO tracking. Retenčná politika: metriky 90 dní, logy 30 dní, traces 7 dní.'
+  business: Poskytuje prehľad o zdraví a výkone celého systému v reálnom čase. Umožňuje rýchlu detekciu a diagnostiku problémov, čím minimalizuje dopad výpadkov na zákazníkov a business.
+interfaces:
+  - direction: provides
+    type: human
+    description: Grafana dashboardy a Kibana pre vizualizáciu a analýzu
+  - direction: provides
+    type: rest
+    description: Prometheus remote write API a OpenTelemetry OTLP endpoint
+  - direction: consumes
+    type: rest
+    target: pagerduty-api
+    description: PagerDuty API pre eskaláciu alertov na on-call tím
+dependencies: []
+risks:
+  - Výpadok monitoringu znamená, že ostatné výpadky zostanú nedetekované
+  - Vysoký objem logov môže spôsobiť nákladovú explóziu na Elasticsearch cluster
+  - Alert fatigue pri zle nastavených prahových hodnotách znižuje reakčnú dobu tímu
+diagram:
+  color: '#6366F1'
+  shape: rectangle
