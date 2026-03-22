@@ -1,0 +1,47 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/29.6.1 Chrome/142.0.7444.265 Electron/39.8.0 Safari/537.36" version="29.6.1">
+  <diagram name="Page-1" id="mmv2e7HMt0sEsqQn1-ri">
+    <mxGraphModel dx="1028" dy="595" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <UserObject label="event-bus" arch_id="event-bus" arch_type="queue" arch_status="production" owner="team-platform" business_capability="Async Event Distribution" business_domain="Integration" business_value="Oddeluje producenta a konzumenta pre skalovatelnu integraciu" sla="99.95%" data_classification="internal" tech_framework="Apache Kafka 3.6" tech_hosting="AWS MSK" id="LKdDpjJKa6i_eGJmuv4O-1">
+          <mxCell parent="1" style="rounded=1;fillColor=#f8cecc;strokeColor=#b85450;fontStyle=1;fontSize=11;" vertex="1">
+            <mxGeometry height="60" width="60" x="500" y="210" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <mxCell id="LKdDpjJKa6i_eGJmuv4O-5" edge="1" parent="1" source="LKdDpjJKa6i_eGJmuv4O-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="LKdDpjJKa6i_eGJmuv4O-1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <UserObject label="user-db" arch_id="user-db" arch_type="database" arch_status="production" owner="team-identity" business_capability="User Data Persistence" business_domain="Security" business_value="Centralne ulozisko identit rol a opravneni" data_classification="confidential" tech_hosting="AWS RDS PostgreSQL 15 Multi-AZ" repo="github.com/org/user-db-migrations" confluence_page="confluence.org/display/USERDB" id="LKdDpjJKa6i_eGJmuv4O-2">
+          <mxCell parent="1" style="shape=cylinder3;fillColor=#fff2cc;strokeColor=#d6b656;fontStyle=1;fontSize=11;" vertex="1">
+            <mxGeometry height="70" width="60" x="160" y="140" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <mxCell id="LKdDpjJKa6i_eGJmuv4O-4" edge="1" parent="1" source="LKdDpjJKa6i_eGJmuv4O-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="LKdDpjJKa6i_eGJmuv4O-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <UserObject label="user-db" arch_id="user-db" arch_type="database" arch_status="production" owner="team-identity" business_capability="User Data Persistence" business_domain="Security" business_value="Centralne ulozisko identit rol a opravneni" data_classification="confidential" tech_hosting="AWS RDS PostgreSQL 15 Multi-AZ" repo="github.com/org/user-db-migrations" confluence_page="confluence.org/display/USERDB" id="LKdDpjJKa6i_eGJmuv4O-3">
+          <mxCell parent="1" style="shape=cylinder3;fillColor=#fff2cc;strokeColor=#d6b656;fontStyle=1;fontSize=11;" vertex="1">
+            <mxGeometry height="70" width="60" x="120" y="300" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="shared-ui-kit" arch_id="shared-ui-kit" arch_type="library" arch_status="production" owner="team-frontend" business_capability="UI Consistency and Design System" business_domain="Engineering" business_value="Jednotny vizualny jazyk a rychlejsi vyvoj frontendu" data_classification="public" tech_language="TypeScript" tech_framework="React 18 + Storybook" repo="github.com/org/shared-ui-kit" id="LKdDpjJKa6i_eGJmuv4O-6">
+          <mxCell parent="1" style="rounded=1;fillColor=#f0f0f0;strokeColor=#999999;fontStyle=1;fontSize=11;" vertex="1">
+            <mxGeometry height="60" width="120" x="470" y="330" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <mxCell id="LKdDpjJKa6i_eGJmuv4O-9" edge="1" parent="1" source="LKdDpjJKa6i_eGJmuv4O-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="LKdDpjJKa6i_eGJmuv4O-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <UserObject label="api-gateway" arch_id="api-gateway" arch_type="gateway" arch_status="production" owner="team-platform" business_capability="API Routing and Rate Limiting" business_domain="Integration" business_value="Jednotny vstupny bod pre API volania so zabezpecenim" sla="99.99%" data_classification="internal" tech_framework="Kong Gateway 3.4" tech_hosting="Kubernetes AWS EKS" id="LKdDpjJKa6i_eGJmuv4O-7">
+          <mxCell parent="1" style="rhombus;fillColor=#e1d5e7;strokeColor=#9673a6;fontStyle=1;fontSize=11;" vertex="1">
+            <mxGeometry height="60" width="120" x="380" y="80" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <mxCell id="LKdDpjJKa6i_eGJmuv4O-8" edge="1" parent="1" source="LKdDpjJKa6i_eGJmuv4O-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.667;entryY=0.571;entryDx=0;entryDy=0;entryPerimeter=0;" target="LKdDpjJKa6i_eGJmuv4O-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
