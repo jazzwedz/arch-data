@@ -2,28 +2,25 @@ id: user-db
 name: User Database
 type: database
 status: production
-owner: platform-team
+owner: dba-team
 tags:
   - database
-  - core
   - postgresql
+  - core
+  - pii
 description:
-  oneliner: PostgreSQL database storing user accounts and profiles
-  technical: >-
-    PostgreSQL 15 instance on AWS RDS. Stores user credentials (bcrypt hashed),
-    profile data, roles, permissions, and session metadata. Automated daily
-    backups with 30-day retention. Read replica for reporting queries.
-    Connection pooling via PgBouncer.
-  business: >-
-    Central store for all user information. Ensures data integrity and
-    supports compliance requirements for data retention and audit trails.
+  oneliner: Primarna databaza pre pouzivatelske data a identity
+  technical: PostgreSQL 16 s pgcrypto pre sifrovanie PII stlpcov. Primary-replica setup s streaming replication a automatickym failoverom cez Patroni. Row-level security pre multi-tenant izolaciu.
+  business: Uchovava vsetky zakaznicke data vratane osobnych udajov. Podlieha pr�snym bezpecnostnym a compliance poziadavkam (GDPR, SOC 2).
 interfaces:
   - direction: provides
     type: db
-    description: PostgreSQL connection on port 5432
+    description: PostgreSQL wire protocol na porte 5432 cez PgBouncer pool
 dependencies: []
 risks:
-  - Data loss if backup restoration fails
-  - Connection pool exhaustion under high load
+  - Strata dat je katastroficky scenar
+  - GDPR right to erasure
+  - Databazove migracie na velkych tabulkach mozu sposobit lock contention
 diagram:
-  color: "#E8F5E9"
+  color: '#06B6D4'
+  shape: cylinder
