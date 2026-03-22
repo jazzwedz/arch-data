@@ -1,0 +1,26 @@
+id: shared-ui-library
+name: Shared UI Component Library
+type: library
+status: production
+owner: frontend-team
+tags:
+  - frontend
+  - design-system
+  - reusable
+  - npm
+description:
+  oneliner: Zdieľaná knižnica UI komponentov a design tokens
+  technical: React component library buildovaná cez Vite v library mode, publikovaná ako privátny NPM balík (@company/ui). Založená na Radix UI primitívach s Tailwind CSS. Obsahuje 60+ komponentov, design tokens, ikony a utility hooks. Storybook pre dokumentáciu a vizuálne testy. Chromatic pre visual regression testing. Semantic versioning s changelogom.
+  business: Zabezpečuje konzistentný vizuálny štýl a používateľský zážitok naprieč všetkými frontend aplikáciami. Zrýchľuje vývoj nových funkcionalít tým, že vývojári nemuselia vytvárať základné UI prvky od nuly.
+interfaces:
+  - direction: provides
+    type: file
+    description: NPM balík @company/ui – React komponenty, hooks a design tokens
+dependencies: []
+risks:
+  - Breaking change v knižnici sa propaguje do všetkých konzumujúcich aplikácií
+  - Príliš časté major verzie spomaľujú adopciu a vytvárajú version drift
+  - Accessibility regresia v zdieľanom komponente ovplyvní celú organizáciu
+diagram:
+  color: '#A855F7'
+  shape: rectangle
