@@ -1,0 +1,45 @@
+id: retro-efr-service
+name: Retro EFR Service
+type: microservice
+status: production
+owner: retro-platform-team
+tags:
+  - core
+  - retrocession
+  - efr
+  - financial-reporting
+description:
+  oneliner: Enterprise Financial Reporting service for retrocession cashflow processing
+  technical: Java-based microservice orchestrating the end-to-end retrocession financial reporting pipeline. Generates Risk Adjustment (RA) outputs by consuming data from the silver_canonical layer, applying exchange rate conversions using quarterly average rates from MDM, and producing SICS-compatible bookings. Supports both final close runs (full quarterly rates) and interim runs (proxy average rates). Implements the Saga pattern for distributed transaction consistency across EFR, CIL, and IGR layers.
+  business: Core service that automates the generation of retrocession financial reports, replacing manual processes previously handled by the Group Retro Manager (GRM). Ensures accurate currency conversion and timely reporting for both internal and external retrocession arrangements.
+interfaces:
+  - direction: provides
+    type: rest
+    description: REST API for triggering RA generation runs (final close and interim)
+  - direction: provides
+    type: async
+    description: Publishes RA completion events and cashflow data to Kafka topics
+  - direction: consumes
+    type: db
+    target: silver-canonical-store
+    description: Reads best_estimate_cashflow_aggregated table from silver_canonical layer
+  - direction: consumes
+    type: rest
+    target: mdm-exchange-rate
+    description: Fetches quarterly average exchange rates from MDM for currency conversion
+dependencies:
+  - id: silver-canonical-store
+    connector: db
+  - id: mdm-exchange-rate
+    connector: rest
+  - id: event-bus
+    connector: async
+  - id: state-store
+    connector: db
+risks:
+  - Exchange rate discrepancies between interim and final close runs can cause booking variances
+  - Dependency on MDM availability for exchange rates - fallback to cached rates required
+  - Complex saga coordination across EFR, CIL and IGR layers increases failure surface
+diagram:
+  color: '#059669'
+  shape: rectangle
