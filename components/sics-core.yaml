@@ -1,0 +1,30 @@
+id: sics-core
+name: SICS Accounting System
+type: external
+status: production
+owner: finance-systems-team
+tags:
+  - accounting
+  - core-system
+  - legacy
+  - external
+  - sics
+description:
+  oneliner: Central statutory and internal accounting system for the insurance group
+  technical: Legacy enterprise accounting platform handling all statutory and internal booking entries. Supports multi-currency postings, intercompany settlements, and regulatory report generation. Exposes a proprietary API for automated booking integrations. Manages chart of accounts, cost centers, and legal entity hierarchies. Runs on a mainframe with batch processing windows.
+  business: The system of record for all financial transactions in the insurance group. All retrocession settlements, risk adjustment entries, and intercompany transactions must ultimately be reflected in SICS for accurate financial reporting and regulatory compliance.
+interfaces:
+  - direction: provides
+    type: rest
+    description: Proprietary booking API for posting and querying accounting entries
+  - direction: provides
+    type: file
+    description: Batch file interface for bulk posting during quarterly close
+dependencies: []
+risks:
+  - Legacy system with limited scalability during peak quarterly close periods
+  - Batch processing windows constrain real-time booking availability
+  - Any SICS downtime directly impacts financial closing deadlines
+diagram:
+  color: '#78716C'
+  shape: rectangle
