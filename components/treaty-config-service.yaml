@@ -1,0 +1,36 @@
+id: treaty-config-service
+name: Treaty Configuration Service
+type: microservice
+status: production
+owner: retro-platform-team
+tags:
+  - treaty
+  - configuration
+  - retrocession
+  - deal-management
+description:
+  oneliner: Manages treaty terms, deal configurations, and retrocession arrangement parameters
+  technical: Spring Boot microservice providing CRUD operations for treaty and deal configurations. Stores treaty terms including exchange rate definitions, threshold amounts, reporting deadlines, and profit commission rules. Supports versioned configurations with effective dating for treaty amendments. Manages deal IDs for both IGR (e.g., Quota Share Retro between group entities) and external retrocession (e.g., arrangements with third-party reinsurers).
+  business: Central repository for all retrocession treaty parameters that drive automated calculations. Ensures that exchange rate approaches, settlement terms, and allocation rules are consistently applied across all processing runs without manual intervention.
+interfaces:
+  - direction: provides
+    type: rest
+    description: CRUD API for treaty terms, deal configurations, and exchange rate definitions
+  - direction: provides
+    type: async
+    description: Publishes treaty configuration change events for dependent services
+  - direction: provides
+    type: human
+    description: Admin UI for treaty managers to review and update deal parameters
+dependencies:
+  - id: config-db
+    connector: db
+  - id: event-bus
+    connector: async
+risks:
+  - Incorrect treaty configuration directly impacts financial calculations with regulatory consequences
+  - Effective dating logic complexity - overlapping treaty versions can cause ambiguous lookups
+  - Manual profit commission rules for certain external deals are not yet captured in the system
+diagram:
+  color: '#DC2626'
+  shape: rectangle
