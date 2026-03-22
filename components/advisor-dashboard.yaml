@@ -1,0 +1,42 @@
+id: advisor-dashboard
+name: Advisor Dashboard
+type: frontend
+status: production
+owner: wealth-management-team
+tags:
+  - wealth
+  - advisory
+  - portfolio
+  - client-facing
+description:
+  oneliner: Portfolio management and client advisory interface for relationship managers
+  technical: React-based SPA with TypeScript, using AG Grid for portfolio data tables, D3.js for performance charts, and WebSocket connections for real-time market data. Integrates with the API gateway for backend calls. Supports offline mode via service workers for client meetings. Built with micro-frontend architecture for independent module deployment.
+  business: The primary tool relationship managers use to serve high-net-worth clients. Shows portfolio positions, performance against benchmarks, and investment proposals. Enables advisors to run what-if scenarios and generate client-ready reports during meetings.
+interfaces:
+  - direction: provides
+    type: human
+    description: Web-based dashboard for relationship managers and financial advisors
+  - direction: consumes
+    type: rest
+    target: api-gateway
+    description: All backend API calls routed through the gateway
+  - direction: consumes
+    type: rest
+    target: payment-service
+    description: Initiates and tracks client fund transfers and payments
+dependencies:
+  - id: api-gateway
+    connector: rest
+  - id: identity-service
+    connector: rest
+  - id: payment-service
+    connector: rest
+  - id: shared-ui-library
+    connector: file
+risks:
+  - Displays sensitive client financial data � breach would be a regulatory incident
+  - Real-time market data feeds must stay in sync or advisors make decisions on stale data
+  - Offline mode data caching creates data residency concerns on advisor devices
+diagram:
+  color: '#8B5CF6'
+  shape: round
