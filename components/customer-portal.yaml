@@ -1,0 +1,35 @@
+id: customer-portal
+name: Customer Portal
+type: frontend
+status: production
+owner: frontend-team
+tags:
+  - frontend
+  - customer-facing
+  - ux
+description:
+  oneliner: Webová aplikácia pre zákazníkov na správu účtu a služieb
+  technical: Next.js 14 aplikácia s App Router, server-side rendering a React Server Components. Používa Tailwind CSS + shadcn/ui design system. Stav riadený cez TanStack Query s optimistic updates. Monitoring cez Sentry, analytics cez Segment.
+  business: Hlavný digitálny kanál pre zákazníkov, kde si spravujú účet, prezerajú faktúry, podávajú požiadavky a komunikujú s podporou. Priamo ovplyvňuje zákaznícku spokojnosť a retenciu.
+interfaces:
+  - direction: provides
+    type: human
+    description: Webové rozhranie pre zákazníkov (responsive, WCAG 2.1 AA)
+  - direction: consumes
+    type: rest
+    target: api-gateway
+    description: Všetky API volania cez centrálny gateway
+dependencies:
+  - id: api-gateway
+    connector: rest
+  - id: identity-service
+    connector: rest
+  - id: cdn-service
+    connector: rest
+risks:
+  - XSS a CSRF zraniteľnosti – vyžaduje pravidelné penetračné testy
+  - Výpadok portálu priamo ovplyvňuje zákaznícku skúsenosť a NPS
+  - Veľké bundle size môže spôsobiť pomalé načítanie na slabších zariadeniach
+diagram:
+  color: '#8B5CF6'
+  shape: rectangle
