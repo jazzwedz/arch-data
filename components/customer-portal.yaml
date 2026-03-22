@@ -8,9 +8,9 @@ tags:
   - customer-facing
   - ux
 description:
-  oneliner: Webová aplikácia pre zákazníkov na správu účtu a služieb
-  technical: Next.js 14 aplikácia s App Router, server-side rendering a React Server Components. Používa Tailwind CSS + shadcn/ui design system. Stav riadený cez TanStack Query s optimistic updates. Monitoring cez Sentry, analytics cez Segment.
-  business: Hlavný digitálny kanál pre zákazníkov, kde si spravujú účet, prezerajú faktúry, podávajú požiadavky a komunikujú s podporou. Priamo ovplyvňuje zákaznícku spokojnosť a retenciu.
+  oneliner: Web application for customers to manage their account and services
+  technical: Next.js 14 application with App Router, server-side rendering and React Server Components. Uses Tailwind CSS + shadcn/ui design system. State managed via TanStack Query with optimistic updates. Monitoring via Sentry, analytics via Segment.
+  business: Primary digital channel for customers to manage their account, view invoices, submit requests, and communicate with support. Directly impacts customer satisfaction and retention.
 interfaces:
   - direction: provides
     type: human
@@ -27,9 +27,9 @@ dependencies:
   - id: cdn-service
     connector: rest
 risks:
-  - XSS a CSRF zraniteľnosti – vyžaduje pravidelné penetračné testy
-  - Výpadok portálu priamo ovplyvňuje zákaznícku skúsenosť a NPS
-  - Veľké bundle size môže spôsobiť pomalé načítanie na slabších zariadeniach
+  - XSS and CSRF vulnerabilities - requires regular penetration testing
+  - Portal outage directly impacts customer experience and NPS
+  - Large bundle size may cause slow loading on lower-end devices
 diagram:
   color: '#8B5CF6'
   shape: rectangle
