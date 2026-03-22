@@ -9,18 +9,18 @@ tags:
   - reusable
   - npm
 description:
-  oneliner: Zdieľaná knižnica UI komponentov a design tokens
-  technical: React component library buildovaná cez Vite v library mode, publikovaná ako privátny NPM balík (@company/ui). Založená na Radix UI primitívach s Tailwind CSS. Obsahuje 60+ komponentov, design tokens, ikony a utility hooks. Storybook pre dokumentáciu a vizuálne testy. Chromatic pre visual regression testing. Semantic versioning s changelogom.
-  business: Zabezpečuje konzistentný vizuálny štýl a používateľský zážitok naprieč všetkými frontend aplikáciami. Zrýchľuje vývoj nových funkcionalít tým, že vývojári nemuselia vytvárať základné UI prvky od nuly.
+  oneliner: Shared UI component library and design tokens
+  technical: React component library built with Vite in library mode, published as a private NPM package (@company/ui). Based on Radix UI primitives with Tailwind CSS. Contains 60+ components, design tokens, icons, and utility hooks. Storybook for documentation and visual tests. Chromatic for visual regression testing. Semantic versioning with changelog.
+  business: Ensures consistent visual style and user experience across all frontend applications. Accelerates development of new features by providing ready-made UI building blocks.
 interfaces:
   - direction: provides
     type: file
     description: NPM balík @company/ui – React komponenty, hooks a design tokens
 dependencies: []
 risks:
-  - Breaking change v knižnici sa propaguje do všetkých konzumujúcich aplikácií
-  - Príliš časté major verzie spomaľujú adopciu a vytvárajú version drift
-  - Accessibility regresia v zdieľanom komponente ovplyvní celú organizáciu
+  - Breaking change in library propagates to all consuming applications
+  - Too frequent major versions slow adoption and create version drift
+  - Accessibility regression in shared component affects the entire organization
 diagram:
   color: '#A855F7'
   shape: rectangle
