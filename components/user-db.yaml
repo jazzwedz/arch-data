@@ -9,18 +9,18 @@ tags:
   - core
   - pii
 description:
-  oneliner: Primarna databaza pre pouzivatelske data a identity
-  technical: PostgreSQL 16 s pgcrypto pre sifrovanie PII stlpcov. Primary-replica setup s streaming replication a automatickym failoverom cez Patroni. Row-level security pre multi-tenant izolaciu.
-  business: Uchovava vsetky zakaznicke data vratane osobnych udajov. Podlieha pr�snym bezpecnostnym a compliance poziadavkam (GDPR, SOC 2).
+  oneliner: Primary database for user data and identities
+  technical: PostgreSQL 16 with pgcrypto for PII column encryption. Primary-replica setup with streaming replication and automatic failover via Patroni. Row-level security for multi-tenant isolation. Automated backups every 6 hours to S3 with point-in-time recovery. Connection pooling via PgBouncer.
+  business: Stores all customer data including personal information. Subject to strict security and compliance requirements (GDPR, SOC 2). Availability of this database is critical for the entire system.
 interfaces:
   - direction: provides
     type: db
     description: PostgreSQL wire protocol na porte 5432 cez PgBouncer pool
 dependencies: []
 risks:
-  - Strata dat je katastroficky scenar
-  - GDPR right to erasure
-  - Databazove migracie na velkych tabulkach mozu sposobit lock contention
+  - Data loss is a catastrophic scenario - RPO must be < 1 hour
+  - GDPR right to erasure requires cascading deletion across all dependent tables
+  - Database migrations on large tables can cause lock contention
 diagram:
   color: '#06B6D4'
   shape: cylinder
