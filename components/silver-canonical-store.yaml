@@ -1,0 +1,26 @@
+id: silver-canonical-store
+name: Silver Canonical Data Store
+type: database
+status: production
+owner: data-engineering-team
+tags:
+  - data-lake
+  - canonical
+  - silver-layer
+  - cashflow
+description:
+  oneliner: Curated canonical data layer storing aggregated cashflow estimates for reinsurance
+  technical: Databricks Delta Lake silver layer table (best_estimate_cashflow_aggregated) conforming to the enterprise canonical data model. Stores cleansed, validated and aggregated cashflow data from upstream bronze sources. Partitioned by quarter and business line (P&C, L&H). Implements slowly changing dimensions (SCD Type 2) for audit trail. Accessed via Databricks SQL endpoints and JDBC connectivity.
+  business: The trusted, enterprise-wide source of aggregated cashflow data used for financial reporting, retrocession calculations, and regulatory submissions. Eliminates data inconsistencies by providing a single canonical view across all reporting consumers.
+interfaces:
+  - direction: provides
+    type: db
+    description: SQL access to best_estimate_cashflow_aggregated and related canonical tables
+dependencies: []
+risks:
+  - Data quality issues in upstream bronze layer propagate to canonical tables
+  - Schema changes require coordinated migration across all consumers
+  - Late-arriving data can cause discrepancies in quarterly aggregations
+diagram:
+  color: '#0891B2'
+  shape: cylinder
