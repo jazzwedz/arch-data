@@ -1,0 +1,47 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/29.6.1 Chrome/142.0.7444.265 Electron/39.8.0 Safari/537.36" version="29.6.1">
+  <diagram name="Page-1" id="8I5pkPgwxm4J3Kr4U1AM">
+    <mxGraphModel dx="1042" dy="722" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <UserObject label="cashflow-event-store" arch_id="cashflow-event-store" arch_type="database" id="nibp_-l4r2M7zSjhRXDH-1">
+          <mxCell parent="1" style="shape=cylinder3;fillColor=#fff2cc;strokeColor=#d6b656;fontStyle=1;fontSize=11;" vertex="1">
+            <mxGeometry height="70" width="60" x="310" y="130" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="state-store" arch_id="state-store" arch_type="database" id="nibp_-l4r2M7zSjhRXDH-2">
+          <mxCell parent="1" style="shape=cylinder3;fillColor=#fff2cc;strokeColor=#d6b656;fontStyle=1;fontSize=11;" vertex="1">
+            <mxGeometry height="70" width="60" x="530" y="230" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="user-db" arch_id="user-db" arch_type="database" id="nibp_-l4r2M7zSjhRXDH-3">
+          <mxCell parent="1" style="shape=cylinder3;fillColor=#fff2cc;strokeColor=#d6b656;fontStyle=1;fontSize=11;" vertex="1">
+            <mxGeometry height="70" width="60" x="300" y="360" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <mxCell id="nibp_-l4r2M7zSjhRXDH-5" edge="1" parent="1" source="nibp_-l4r2M7zSjhRXDH-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="nibp_-l4r2M7zSjhRXDH-1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="nibp_-l4r2M7zSjhRXDH-6" edge="1" parent="1" source="nibp_-l4r2M7zSjhRXDH-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="nibp_-l4r2M7zSjhRXDH-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <UserObject label="sics-booking-gateway" arch_id="sics-booking-gateway" arch_type="gateway" id="nibp_-l4r2M7zSjhRXDH-4">
+          <mxCell parent="1" style="rhombus;fillColor=#e1d5e7;strokeColor=#9673a6;fontStyle=1;fontSize=11;" vertex="1">
+            <mxGeometry height="60" width="120" x="280" y="240" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <mxCell id="nibp_-l4r2M7zSjhRXDH-7" edge="1" parent="1" source="nibp_-l4r2M7zSjhRXDH-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.487;entryY=0.389;entryDx=0;entryDy=0;entryPerimeter=0;" target="nibp_-l4r2M7zSjhRXDH-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="nibp_-l4r2M7zSjhRXDH-9" edge="1" parent="1" source="nibp_-l4r2M7zSjhRXDH-8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="nibp_-l4r2M7zSjhRXDH-4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <UserObject label="customer-portal" arch_id="customer-portal" arch_type="frontend" id="nibp_-l4r2M7zSjhRXDH-8">
+          <mxCell parent="1" style="rounded=1;fillColor=#d5e8d4;strokeColor=#82b366;fontStyle=1;fontSize=11;" vertex="1">
+            <mxGeometry height="60" width="120" x="50" y="140" as="geometry" />
+          </mxCell>
+        </UserObject>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
