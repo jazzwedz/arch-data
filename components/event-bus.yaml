@@ -1,0 +1,29 @@
+id: event-bus
+name: Enterprise Event Bus
+type: queue
+status: production
+owner: platform-team
+tags:
+  - core
+  - infrastructure
+  - messaging
+  - kafka
+description:
+  oneliner: Centrálna message broker platforma pre asynchrónnu komunikáciu
+  technical: Apache Kafka cluster (3 brokery, 3 ZooKeeper nody) s Confluent Schema Registry pre Avro schémy. Replication factor 3, min.insync.replicas=2. Retenčná politika 7 dní pre väčšinu topicov, 90 dní pre audit topicy. Kafka Connect pre CDC z databáz. Monitoring cez Confluent Control Center.
+  business: Umožňuje jednotlivým systémom komunikovať asynchrónne a nezávisle, čo zvyšuje odolnosť celého systému voči výpadkom. Zabezpečuje, že žiadna správa sa nestratí.
+interfaces:
+  - direction: provides
+    type: async
+    description: Kafka topics pre publish/subscribe messaging s guaranteed delivery
+  - direction: provides
+    type: rest
+    description: Schema Registry REST API pre registráciu a validáciu schém
+dependencies: []
+risks:
+  - Výpadok Kafka clustra ovplyvní všetku asynchrónnu komunikáciu v systéme
+  - Schema evolution musí byť backward compatible, inak zlomí konzumentov
+  - Disk space – bez monitoringu môže retenčná politika zaplniť storage
+diagram:
+  color: '#F97316'
+  shape: cylinder
