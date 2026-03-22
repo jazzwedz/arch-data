@@ -9,9 +9,9 @@ tags:
   - security
   - ingress
 description:
-  oneliner: Centralny vstupny bod pre vsetky API poziadavky
-  technical: Kong-based API gateway s rate limiting, JWT validaciou, request/response transformaciami a circuit breaker patternom. Bezi ako Kubernetes Ingress controller s horizontalnym skalovanim.
-  business: Zabezpecuje, ze vsetky externe a interne poziadavky na system prechadzaju cez jeden kontrolovany bod.
+  oneliner: Central entry point for all API requests
+  technical: Kong-based API gateway with rate limiting, JWT validation, request/response transformations, and circuit breaker pattern. Runs as a Kubernetes Ingress controller with horizontal scaling. Supports canary deployments and A/B routing.
+  business: Ensures that all external and internal requests to the system pass through a single controlled point, increasing security and enabling comprehensive traffic monitoring.
 interfaces:
   - direction: provides
     type: rest
@@ -31,8 +31,9 @@ dependencies:
   - id: config-db
     connector: db
 risks:
-  - Single point of failure
-  - Vysoky throughput vyzaduje pravidelne zatazove testy
+  - Single point of failure - gateway outage means full system outage
+  - High throughput requires regular load testing
+  - Routing rule configuration is complex and error-prone
 diagram:
   color: '#3B82F6'
   shape: hexagon
