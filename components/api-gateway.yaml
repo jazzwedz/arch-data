@@ -4,35 +4,35 @@ type: gateway
 status: production
 owner: platform-team
 tags:
-  - gateway
-  - infrastructure
   - core
+  - networking
+  - security
+  - ingress
 description:
-  oneliner: Central API gateway routing all external traffic to backend services
-  technical: >-
-    Kong-based API gateway handling request routing, rate limiting, JWT
-    validation, and request/response transformation. Deployed as a Kubernetes
-    ingress controller. Supports canary deployments and A/B testing via
-    traffic splitting. Prometheus metrics exported for latency and error
-    rate monitoring.
-  business: >-
-    Single entry point for all API consumers. Enforces security policies,
-    manages API versioning, and provides usage analytics for business
-    stakeholders.
+  oneliner: Centralny vstupny bod pre vsetky API poziadavky
+  technical: Kong-based API gateway s rate limiting, JWT validaciou, request/response transformaciami a circuit breaker patternom. Bezi ako Kubernetes Ingress controller s horizontalnym skalovanim.
+  business: Zabezpecuje, ze vsetky externe a interne poziadavky na system prechadzaju cez jeden kontrolovany bod.
 interfaces:
   - direction: provides
     type: rest
-    description: HTTPS ingress on port 443 - routes to all backend services
+    description: Proxy pre vsetky downstream REST API endpointy
+  - direction: provides
+    type: grpc
+    description: gRPC reverse proxy pre interne sluzby
   - direction: consumes
     type: rest
-    target: auth-service
-    description: Validates JWT tokens on every request
+    target: identity-service
+    description: Validacia JWT tokenov
 dependencies:
-  - id: auth-service
+  - id: identity-service
     connector: rest
+  - id: redis-cache
+    connector: db
+  - id: config-db
+    connector: db
 risks:
-  - Single point of failure for all API traffic
-  - Configuration drift between environments
-  - Rate limiting misconfiguration can block legitimate traffic
+  - Single point of failure
+  - Vysoky throughput vyzaduje pravidelne zatazove testy
 diagram:
-  color: "#FFF3E0"
+  color: '#3B82F6'
+  shape: hexagon
