@@ -1,0 +1,39 @@
+id: transaction-ledger-db
+name: Transaction Ledger
+type: database
+status: production
+owner: core-banking-team
+tags:
+  - core-banking
+  - ledger
+  - transactions
+  - audit
+  - immutable
+description:
+  oneliner: Immutable ledger of all financial transactions across the institution
+  technical: PostgreSQL 15 with Citus extension for horizontal sharding across transaction date ranges. Append-only design with no UPDATE or DELETE operations � corrections are recorded as reversal entries. Partitioned by month with automated partition management. Synchronous replication to standby with RPO=0. Row-level security policies enforce data access by business unit. 12TB active data with 7-year retention.
+  business: The single source of truth for every financial transaction. Auditors, regulators, and internal teams rely on this ledger to verify what happened, when, and between whom. Its immutable design means records cannot be tampered with after the fact.
+interfaces:
+  - direction: provides
+    type: db
+    description: Read-only SQL access for reporting and analytics systems
+  - direction: provides
+    type: db
+    description: Write access for authorized transaction-posting services only
+  - direction: consumes
+    type: async
+    target: event-bus
+    description: Receives confirmed transaction events for ledger posting
+dependencies:
+  - id: event-bus
+    connector: async
+  - id: monitoring-platform
+    connector: rest
+risks:
+  - Data loss or corruption would be a catastrophic regulatory and business event
+  - Storage growth requires ongoing capacity planning � 12TB and growing
+  - Schema changes must be backwards-compatible due to immutable append-only design
+  - Cross-region replication lag could cause inconsistent reads during failover
+diagram:
+  color: '#059669'
+  shape: cylinder
