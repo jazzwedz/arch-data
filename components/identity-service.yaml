@@ -1,0 +1,38 @@
+id: identity-service
+name: Identity & Access Management
+type: microservice
+status: production
+owner: security-team
+tags:
+  - security
+  - auth
+  - core
+  - compliance
+description:
+  oneliner: Správa identít, autentifikácie a autorizácie používateľov
+  technical: OAuth 2.0 / OpenID Connect provider postavený na Keycloak s custom SPI pluginmi. Podporuje SAML 2.0 federation pre enterprise SSO, MFA cez TOTP a WebAuthn, RBAC s hierarchickými rolami a ABAC policies. Ukladá identity do PostgreSQL, sessions do Redis.
+  business: Zabezpečuje, že do systému majú prístup iba oprávnení používatelia s overenými identitami. Podporuje firemné SSO a viacfaktorové overenie podľa compliance požiadaviek.
+interfaces:
+  - direction: provides
+    type: rest
+    description: OAuth 2.0 endpointy – /authorize, /token, /userinfo, /introspect
+  - direction: provides
+    type: rest
+    description: Admin REST API pre správu používateľov, rolí a klientov
+  - direction: provides
+    type: async
+    description: 'Eventy pri login, logout, zmene role (Kafka topic: identity.events)'
+dependencies:
+  - id: user-db
+    connector: db
+  - id: redis-cache
+    connector: db
+  - id: notification-service
+    connector: async
+risks:
+  - Kompromitácia tejto služby ohrozuje celý systém – vyžaduje pravidelný security audit
+  - Migrácia identity providera je vysoko riziková a komplexná
+  - GDPR – ukladanie PII vyžaduje šifrovanie at-rest a audit log
+diagram:
+  color: '#EF4444'
+  shape: rectangle
