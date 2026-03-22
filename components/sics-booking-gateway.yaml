@@ -1,0 +1,41 @@
+id: sics-booking-gateway
+name: SICS Booking Gateway
+type: gateway
+status: production
+owner: finance-integration-team
+tags:
+  - sics
+  - accounting
+  - booking
+  - integration
+  - gateway
+description:
+  oneliner: Integration gateway for posting retrocession entries to the SICS accounting system
+  technical: Message-driven integration gateway that transforms retrocession calculation outputs into SICS-compatible booking entries. Implements idempotent posting with duplicate detection, batch processing for high-volume quarterly closes, and automatic reconciliation between posted and acknowledged entries. Supports both real-time and scheduled batch posting modes. Handles SICS-specific format requirements and validation rules.
+  business: Final step in the retrocession pipeline that ensures all calculated amounts are accurately booked in the central accounting system (SICS). Critical for financial statement accuracy and regulatory reporting compliance.
+interfaces:
+  - direction: provides
+    type: rest
+    description: API for submitting booking requests, checking posting status, and reconciliation reports
+  - direction: consumes
+    type: async
+    target: event-bus
+    description: Consumes QSR run completion events and RA output events for automatic posting
+  - direction: consumes
+    type: rest
+    target: sics-core
+    description: Posts booking entries to SICS via its internal API
+dependencies:
+  - id: event-bus
+    connector: async
+  - id: sics-core
+    connector: rest
+  - id: redis-cache
+    connector: db
+risks:
+  - SICS posting failures during quarterly close can delay financial statement preparation
+  - Exchange rate differences between manual client statements and SICS bookings need reconciliation
+  - Duplicate bookings due to retry logic failures would require manual SICS corrections
+diagram:
+  color: '#EA580C'
+  shape: hexagon
