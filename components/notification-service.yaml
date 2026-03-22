@@ -1,16 +1,41 @@
 id: notification-service
 name: Notification Service
 type: microservice
-status: draft
+status: production
 owner: platform-team
 tags:
-  - notifications
+  - platform
+  - messaging
   - email
-  - async
+  - sms
+  - push
 description:
-  oneliner: notifications, email, async
-  technical: notifications, email, async
-  business: notifications, email, async
-interfaces: []
-dependencies: []
-risks: []
+  oneliner: Centralizovany system pre odosielanie notifikacii cez vsetky kanaly
+  technical: Node.js microservice s template engine (Handlebars) a channel routing. Podporuje email (SendGrid), SMS (Twilio), push notifikacie (Firebase), in-app a webhook. Priority queue s rate limiting per channel.
+  business: Zabezpecuje spolahlive dorucenie transacnych a marketingovych sprav zakaznikom.
+interfaces:
+  - direction: provides
+    type: rest
+    description: REST API pre priame odoslanie notifikacie a spravu sablon
+  - direction: consumes
+    type: async
+    target: event-bus
+    description: Pocuva domenove eventy a triggeruje prislusne notifikacie
+  - direction: consumes
+    type: rest
+    target: sendgrid-api
+    description: SendGrid API pre odosielanie emailov
+dependencies:
+  - id: notification-db
+    connector: db
+  - id: event-bus
+    connector: async
+  - id: redis-cache
+    connector: db
+risks:
+  - Spam protection
+  - Email deliverability zavisi od reputacie domeny
+  - GDPR opt-out preferencie
+diagram:
+  color: '#EC4899'
+  shape: rectangle
