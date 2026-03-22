@@ -10,9 +10,9 @@ tags:
   - sms
   - push
 description:
-  oneliner: Centralizovany system pre odosielanie notifikacii cez vsetky kanaly
-  technical: Node.js microservice s template engine (Handlebars) a channel routing. Podporuje email (SendGrid), SMS (Twilio), push notifikacie (Firebase), in-app a webhook. Priority queue s rate limiting per channel.
-  business: Zabezpecuje spolahlive dorucenie transacnych a marketingovych sprav zakaznikom.
+  oneliner: Centralized system for sending notifications across all channels
+  technical: Node.js microservice with template engine (Handlebars) and channel routing. Supports email (SendGrid), SMS (Twilio), push notifications (Firebase), in-app, and webhook. Priority queue with rate limiting per channel. Retry mechanism with exponential backoff. Delivery tracking and bounce handling.
+  business: Ensures reliable delivery of transactional and marketing messages to customers. Unifies communication channels and enables business teams to manage templates without developer intervention.
 interfaces:
   - direction: provides
     type: rest
@@ -33,9 +33,9 @@ dependencies:
   - id: redis-cache
     connector: db
 risks:
-  - Spam protection
-  - Email deliverability zavisi od reputacie domeny
-  - GDPR opt-out preferencie
+  - Spam protection - misconfiguration can cause mass sending
+  - Email deliverability depends on domain reputation and SPF/DKIM configuration
+  - GDPR - must respect customer opt-out preferences
 diagram:
   color: '#EC4899'
   shape: rectangle
