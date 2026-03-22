@@ -1,0 +1,39 @@
+id: igr-calculation-service
+name: IGR Calculation Service
+type: microservice
+status: production
+owner: retro-platform-team
+tags:
+  - core
+  - igr
+  - retrocession
+  - calculation
+description:
+  oneliner: Internal Group Retrocession calculation engine for quota share arrangements
+  technical: Stateless calculation microservice implementing the IGR (Internal Group Retrocession) business logic for Quota Share Retro (QSR) arrangements. Processes validated cashflow data, applies treaty terms and conditions (T&C), and computes QSR allocations. Supports multiple deal configurations (e.g., P&C and L&H). Runs on a scheduled basis (QSR Run) and produces output for downstream SICS booking.
+  business: Automates the calculation of internal retrocession allocations between group entities (e.g., regional branches and reinsurance affiliates). Ensures compliance with treaty terms while eliminating manual spreadsheet-based calculations.
+interfaces:
+  - direction: provides
+    type: rest
+    description: API for triggering QSR calculation runs and retrieving results
+  - direction: provides
+    type: async
+    description: Publishes QSR run completion events with output summaries
+  - direction: consumes
+    type: async
+    target: event-bus
+    description: Consumes validated cashflow events from Risk Adjustment pipeline
+dependencies:
+  - id: state-store
+    connector: db
+  - id: event-bus
+    connector: async
+  - id: treaty-config-service
+    connector: rest
+risks:
+  - Treaty terms misinterpretation can lead to incorrect allocations with financial impact
+  - QSR calculation depends on complete data from upstream RA pipeline - partial data produces wrong results
+  - Profit commission calculations for certain deals require manual override not yet supported
+diagram:
+  color: '#2563EB'
+  shape: rectangle
