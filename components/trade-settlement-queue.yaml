@@ -1,0 +1,39 @@
+id: trade-settlement-queue
+name: Trade Settlement Queue
+type: queue
+status: production
+owner: capital-markets-team
+tags:
+  - trading
+  - settlement
+  - t+1
+  - capital-markets
+  - async
+description:
+  oneliner: Message queue for orchestrating trade settlement workflows
+  technical: 'Apache Kafka cluster with 12 brokers, handling trade settlement event streams. Topics partitioned by instrument type and settlement date. Supports exactly-once semantics via idempotent producers and transactional consumers. Schema registry enforces Avro schemas for all messages. Retention: 30 days for active topics, 1 year for compliance topics. Peak throughput: 50k messages/second during market close.'
+  business: Coordinates the complex multi-step process of settling trades after execution. Ensures that every buy and sell order goes through matching, clearing, and settlement in the correct order. Supports T+1 settlement cycles as required by market regulations.
+interfaces:
+  - direction: provides
+    type: async
+    description: 'Trade lifecycle events: matched, cleared, settled, failed'
+  - direction: provides
+    type: async
+    description: Settlement instruction messages for custodian and depository systems
+  - direction: consumes
+    type: async
+    target: event-bus
+    description: Receives raw trade execution events from the central event bus
+dependencies:
+  - id: event-bus
+    connector: async
+  - id: monitoring-platform
+    connector: rest
+risks:
+  - Message ordering is critical � out-of-order processing can cause failed settlements
+  - Broker failure during market close could delay settlement and trigger regulatory penalties
+  - Schema evolution must be carefully managed to avoid breaking downstream consumers
+  - Compliance topic retention requirements differ by jurisdiction
+diagram:
+  color: '#D97706'
+  shape: round
