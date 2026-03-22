@@ -1,0 +1,53 @@
+id: fraud-detection-service
+name: Fraud Detection Service
+type: microservice
+status: production
+owner: financial-crime-team
+tags:
+  - fraud
+  - compliance
+  - real-time
+  - ml
+  - risk
+description:
+  oneliner: Real-time fraud detection and prevention for financial transactions
+  technical: 'ML-powered microservice using gradient boosting and neural network models to score transactions in real-time. Runs on Kubernetes with GPU-accelerated inference. Processes event streams from the transaction pipeline, applies rule-based filters and ML scoring, and publishes fraud alerts. Model retraining runs daily on historical data. Latency budget: <50ms per transaction.'
+  business: Protects customers and the institution from fraudulent transactions by analyzing patterns in real-time. Reduces fraud losses by flagging suspicious activity before funds leave the account. Required by regulators and critical for maintaining customer trust.
+interfaces:
+  - direction: provides
+    type: rest
+    description: Transaction scoring API � accepts transaction details, returns risk score and recommendation (allow/block/review)
+  - direction: provides
+    type: async
+    description: Publishes fraud alerts and case creation events to downstream systems
+  - direction: consumes
+    type: async
+    target: event-bus
+    description: Subscribes to real-time transaction events for scoring
+  - direction: consumes
+    type: rest
+    target: identity-service
+    description: Retrieves customer identity and verification status for risk assessment
+  - direction: consumes
+    type: db
+    target: user-db
+    description: Reads customer transaction history and behavioral patterns
+dependencies:
+  - id: event-bus
+    connector: async
+  - id: identity-service
+    connector: rest
+  - id: user-db
+    connector: db
+  - id: redis-cache
+    connector: db
+  - id: monitoring-platform
+    connector: rest
+risks:
+  - False positives block legitimate transactions and damage customer experience
+  - Model drift can reduce detection accuracy over time without continuous retraining
+  - Latency spikes during high-volume periods may force fallback to rule-based-only scoring
+  - Regulatory requirements vary by jurisdiction and change frequently
+diagram:
+  color: '#DC2626'
+  shape: round
