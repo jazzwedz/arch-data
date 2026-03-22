@@ -1,0 +1,26 @@
+id: redis-cache
+name: Redis Cache Cluster
+type: database
+status: production
+owner: platform-team
+tags:
+  - cache
+  - infrastructure
+  - performance
+  - redis
+description:
+  oneliner: Distribuovaný in-memory cache a session store
+  technical: 'Redis 7 Cluster s 6 nodmi (3 primary + 3 replica). Používaný ako cache (LRU eviction), session store (TTL 24h), rate limiter (sliding window), distributed lock (Redlock) a pub/sub pre real-time features. Maxmemory policy: allkeys-lru. Persistence: RDB snapshots každých 15 minút.'
+  business: Dramaticky zrýchľuje odozvu systému tým, že často používané dáta drží v pamäti. Znižuje záťaž na databázy a externé služby, čo šetrí náklady na infraštruktúru.
+interfaces:
+  - direction: provides
+    type: db
+    description: Redis protocol (RESP3) na porte 6379 – cache, sessions, locks, pub/sub
+dependencies: []
+risks:
+  - Cache invalidation – nekonzistencia medzi cache a source of truth
+  - Memory pressure – bez monitoringu môže OOM killer zabiť Redis proces
+  - Thundering herd pri cache miss na populárny kľúč po expirácii
+diagram:
+  color: '#DC2626'
+  shape: cylinder
