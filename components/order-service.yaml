@@ -1,0 +1,44 @@
+id: order-service
+name: Order Management Service
+type: microservice
+status: production
+owner: commerce-team
+tags:
+  - core
+  - business-logic
+  - transactions
+description:
+  oneliner: Spracovanie a riadenie životného cyklu objednávok
+  technical: Java 21 / Spring Boot 3 microservice implementujúci Saga pattern pre distribuované transakcie. Stavový automat objednávky (created → confirmed → processing → shipped → delivered / cancelled). Event sourcing s CQRS pre audit trail. Horizontálne škálovateľný, beží v Kubernetes.
+  business: Jadro obchodného procesu – spravuje celý životný cyklus objednávky od vytvorenia cez platbu až po doručenie. Kritický pre revenue a zákaznícku spokojnosť.
+interfaces:
+  - direction: provides
+    type: rest
+    description: CRUD API pre objednávky s filtrovaním, stránkovaním a full-text search
+  - direction: provides
+    type: async
+    description: Doménové eventy (order.created, order.confirmed, order.shipped) na Kafka
+  - direction: consumes
+    type: async
+    target: payment-service
+    description: Počúva payment.completed a payment.failed eventy
+  - direction: consumes
+    type: rest
+    target: inventory-service
+    description: Overenie dostupnosti produktov pred potvrdením objednávky
+dependencies:
+  - id: order-db
+    connector: db
+  - id: payment-service
+    connector: async
+  - id: notification-service
+    connector: async
+  - id: event-bus
+    connector: async
+risks:
+  - Strata objednávky znamená priamu finančnú stratu – vyžaduje exactly-once processing
+  - Saga rollback môže zlyhať a vytvoriť inkozistentný stav
+  - Vysoká záťaž počas sezónnych špičiek (Black Friday, Vianoce)
+diagram:
+  color: '#F59E0B'
+  shape: rectangle
