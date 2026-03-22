@@ -1,0 +1,29 @@
+id: mdm-exchange-rate
+name: MDM Exchange Rate Service
+type: external
+status: production
+owner: enterprise-data-team
+tags:
+  - mdm
+  - exchange-rate
+  - master-data
+  - external
+description:
+  oneliner: Master Data Management service providing official exchange rates for the insurance group
+  technical: Enterprise MDM system serving as the single source of truth for FX rates across the organization. Provides quarterly average rates, daily spot rates, and custom reporting deadline rates (e.g., rates 10 business days before reporting deadlines). Exposes REST API with historical rate queries and supports both real-time and batch consumption. Data sourced from Bloomberg and Reuters feeds with internal validation.
+  business: Provides authoritative exchange rates used across all financial reporting, treaty settlements, and regulatory submissions. Critical for ensuring consistent currency conversion across all business units and compliance with treaty-specific exchange rate requirements.
+interfaces:
+  - direction: provides
+    type: rest
+    description: REST API for querying quarterly average, daily spot, and custom-period exchange rates
+  - direction: provides
+    type: async
+    description: Publishes rate update events when new quarterly rates are finalized
+dependencies: []
+risks:
+  - Stale or incorrect rates propagate to all downstream financial calculations
+  - Quarterly rate finalization timing creates a window where proxy rates must be used
+  - External market data feed outage can delay rate availability
+diagram:
+  color: '#7C3AED'
+  shape: rectangle
