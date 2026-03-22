@@ -1,0 +1,45 @@
+id: swift-gateway
+name: SWIFT Gateway
+type: gateway
+status: production
+owner: payments-infrastructure-team
+tags:
+  - swift
+  - payments
+  - international
+  - messaging
+  - iso20022
+description:
+  oneliner: Gateway for sending and receiving SWIFT financial messages
+  technical: SWIFT Alliance Lite2 integration gateway handling MT and MX (ISO 20022) message formats. Translates internal payment instructions to SWIFT messages and routes incoming SWIFT messages to appropriate internal services. Supports FIN, InterAct, and FileAct protocols. HSM-backed message signing and encryption. Message queue with guaranteed delivery and automatic retry. Dual-site active-passive deployment for business continuity.
+  business: Connects the institution to the global SWIFT network used by 11,000+ banks worldwide. Every international wire transfer, correspondent banking message, and securities settlement instruction flows through this gateway. Without it, the institution cannot send or receive international payments.
+interfaces:
+  - direction: provides
+    type: rest
+    description: Internal API for submitting outbound SWIFT messages (MT103, MT202, pacs.008)
+  - direction: provides
+    type: async
+    description: Publishes inbound SWIFT messages to internal processing queues
+  - direction: consumes
+    type: rest
+    target: payment-service
+    description: Receives payment instructions formatted for SWIFT delivery
+  - direction: consumes
+    type: async
+    target: event-bus
+    description: Publishes message status updates (sent, acknowledged, rejected)
+dependencies:
+  - id: payment-service
+    connector: rest
+  - id: event-bus
+    connector: async
+  - id: monitoring-platform
+    connector: rest
+risks:
+  - SWIFT outage means no international payments � direct revenue and regulatory impact
+  - Message format errors can result in rejected payments and manual intervention
+  - ISO 20022 migration deadline requires ongoing format conversion work
+  - Security compromise could enable unauthorized fund transfers globally
+diagram:
+  color: '#0284C7'
+  shape: hexagon
