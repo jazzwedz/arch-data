@@ -9,9 +9,9 @@ tags:
   - pci-dss
   - compliance
 description:
-  oneliner: Spracovanie platieb, refundov a finančných transakcií
-  technical: Go microservice v PCI DSS Level 1 compliant prostredí. Integruje Stripe, PayPal a bankové prevody cez adapter pattern. Idempotentné spracovanie s deduplication key. Dvojfázový commit pre kritické transakcie. Citlivé dáta šifrované cez AWS KMS, žiadne PAN dáta v logoch.
-  business: Zabezpečuje bezpečné a spoľahlivé spracovanie platieb od zákazníkov. Podporuje viaceré platobné metódy a automatické refundy. Priamo ovplyvňuje cash flow a compliance.
+  oneliner: Processing payments, refunds and financial transactions
+  technical: Go microservice in a PCI DSS Level 1 compliant environment. Integrates Stripe, PayPal and bank transfers via adapter pattern. Idempotent processing with deduplication key. Two-phase commit for critical transactions. Sensitive data encrypted via AWS KMS, no PAN data in logs.
+  business: Ensures secure and reliable payment processing from customers. Supports multiple payment methods and automatic refunds. Directly impacts cash flow and compliance.
 interfaces:
   - direction: provides
     type: rest
@@ -33,9 +33,9 @@ dependencies:
   - id: redis-cache
     connector: db
 risks:
-  - PCI DSS non-compliance môže viesť k strate licencie na spracovanie platieb
-  - Double-charge scenár pri network timeout – idempotencia je kritická
-  - Výpadok payment providera vyžaduje automatický failover
+  - PCI DSS non-compliance can lead to loss of payment processing license
+  - Double-charge scenario on network timeout - idempotency is critical
+  - Payment provider outage requires automatic failover
 diagram:
   color: '#10B981'
   shape: rectangle
