@@ -1,0 +1,40 @@
+id: regulatory-calc-library
+name: Regulatory Calculation Library
+type: library
+status: production
+owner: quantitative-risk-team
+tags:
+  - regulatory
+  - risk
+  - capital
+  - basel
+  - solvency
+  - calculations
+description:
+  oneliner: Shared calculation engine for regulatory capital and risk metrics
+  technical: TypeScript/Java dual-target library implementing Basel III/IV capital calculations, Solvency II SCR computations, and IFRS 17 reserve calculations. Published as npm package and Maven artifact. Includes RWA (Risk-Weighted Assets) calculators, LGD/PD/EAD models, stress testing scenarios, and capital adequacy ratio computations. Deterministic calculation engine with full audit trail of intermediate results. 98% test coverage with regression tests against regulator-published examples.
+  business: The math engine behind regulatory reporting. Every capital adequacy number the institution reports to regulators is computed by this library. Used by multiple teams and systems to ensure everyone calculates regulatory metrics the same way. Getting these calculations wrong means reporting incorrect numbers to regulators � which carries fines, reputational damage, and increased supervisory scrutiny.
+interfaces:
+  - direction: provides
+    type: rest
+    description: 'Capital calculation APIs: RWA, SCR, MCR, capital ratios, and stress test scenarios'
+  - direction: provides
+    type: file
+    description: Calculation audit trail exports for regulatory examination
+  - direction: consumes
+    type: rest
+    target: bloomberg-market-data
+    description: Market data inputs for mark-to-market and stress scenario calculations
+dependencies:
+  - id: bloomberg-market-data
+    connector: rest
+  - id: monitoring-platform
+    connector: rest
+risks:
+  - Calculation errors directly impact regulatory reporting � potential fines and sanctions
+  - Regulatory rule changes (Basel IV timeline) require frequent library updates
+  - Multiple consumers means breaking changes have wide blast radius
+  - Performance under stress testing scenarios with thousands of positions needs ongoing optimization
+diagram:
+  color: '#0D9488'
+  shape: round
