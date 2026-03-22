@@ -1,0 +1,75 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/29.6.1 Chrome/142.0.7444.265 Electron/39.8.0 Safari/537.36" version="29.6.1">
+  <diagram name="Page-1" id="qwtSh8Xfm85yk8IsOebT">
+    <mxGraphModel dx="1042" dy="722" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="aV2sSclAa_pkQAXcNSXp-10" edge="1" parent="1" source="aV2sSclAa_pkQAXcNSXp-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="aV2sSclAa_pkQAXcNSXp-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="aV2sSclAa_pkQAXcNSXp-11" edge="1" parent="1" source="aV2sSclAa_pkQAXcNSXp-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="aV2sSclAa_pkQAXcNSXp-7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <UserObject label="sics-booking-gateway" arch_id="sics-booking-gateway" arch_type="gateway" id="aV2sSclAa_pkQAXcNSXp-1">
+          <mxCell parent="1" style="rhombus;fillColor=#e1d5e7;strokeColor=#9673a6;fontStyle=1;fontSize=11;" vertex="1">
+            <mxGeometry height="60" width="120" x="320" y="90" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="api-gateway" arch_id="api-gateway" arch_type="gateway" id="aV2sSclAa_pkQAXcNSXp-2">
+          <mxCell parent="1" style="rhombus;fillColor=#e1d5e7;strokeColor=#9673a6;fontStyle=1;fontSize=11;" vertex="1">
+            <mxGeometry height="60" width="120" x="320" y="360" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="cashflow-event-store" arch_id="cashflow-event-store" arch_type="database" id="aV2sSclAa_pkQAXcNSXp-3">
+          <mxCell parent="1" style="shape=cylinder3;fillColor=#fff2cc;strokeColor=#d6b656;fontStyle=1;fontSize=11;" vertex="1">
+            <mxGeometry height="70" width="60" x="120" y="590" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <mxCell id="aV2sSclAa_pkQAXcNSXp-5" edge="1" parent="1" source="aV2sSclAa_pkQAXcNSXp-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="aV2sSclAa_pkQAXcNSXp-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="aV2sSclAa_pkQAXcNSXp-6" edge="1" parent="1" source="aV2sSclAa_pkQAXcNSXp-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="aV2sSclAa_pkQAXcNSXp-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <UserObject label="order-service" arch_id="order-service" arch_type="microservice" id="aV2sSclAa_pkQAXcNSXp-4">
+          <mxCell parent="1" style="rounded=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=1;fontSize=11;" vertex="1">
+            <mxGeometry height="60" width="120" x="90" y="360" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="event-bus" arch_id="event-bus" arch_type="queue" id="aV2sSclAa_pkQAXcNSXp-7">
+          <mxCell parent="1" style="rounded=1;fillColor=#f8cecc;strokeColor=#b85450;fontStyle=1;fontSize=11;" vertex="1">
+            <mxGeometry height="60" width="60" x="590" y="90" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <mxCell id="aV2sSclAa_pkQAXcNSXp-9" edge="1" parent="1" source="aV2sSclAa_pkQAXcNSXp-8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="aV2sSclAa_pkQAXcNSXp-1" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <UserObject label="customer-portal" arch_id="customer-portal" arch_type="frontend" id="aV2sSclAa_pkQAXcNSXp-8">
+          <mxCell parent="1" style="rounded=1;fillColor=#d5e8d4;strokeColor=#82b366;fontStyle=1;fontSize=11;" vertex="1">
+            <mxGeometry height="60" width="120" x="80" y="90" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="user-db" arch_id="user-db" arch_type="database" id="aV2sSclAa_pkQAXcNSXp-12">
+          <mxCell parent="1" style="shape=cylinder3;fillColor=#fff2cc;strokeColor=#d6b656;fontStyle=1;fontSize=11;" vertex="1">
+            <mxGeometry height="70" width="60" x="590" y="310" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <mxCell id="aV2sSclAa_pkQAXcNSXp-13" edge="1" parent="1" source="aV2sSclAa_pkQAXcNSXp-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.855;entryY=0;entryDx=0;entryDy=4.35;entryPerimeter=0;" target="aV2sSclAa_pkQAXcNSXp-12">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="620" y="314" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="aV2sSclAa_pkQAXcNSXp-15" edge="1" parent="1" source="aV2sSclAa_pkQAXcNSXp-14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="aV2sSclAa_pkQAXcNSXp-4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <UserObject label="mdm-exchange-rate" arch_id="mdm-exchange-rate" arch_type="external" id="aV2sSclAa_pkQAXcNSXp-14">
+          <mxCell parent="1" style="rounded=1;fillColor=#f5f5f5;strokeColor=#666666;fontStyle=1;fontSize=11;dashed=1;" vertex="1">
+            <mxGeometry height="60" width="120" x="90" y="240" as="geometry" />
+          </mxCell>
+        </UserObject>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
