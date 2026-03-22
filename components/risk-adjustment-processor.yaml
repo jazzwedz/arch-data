@@ -1,0 +1,43 @@
+id: risk-adjustment-processor
+name: Risk Adjustment Processor
+type: microservice
+status: production
+owner: actuarial-tech-team
+tags:
+  - risk-adjustment
+  - cashflow
+  - data-pipeline
+  - core
+description:
+  oneliner: Multi-stage data pipeline for consuming, transforming, and splitting cashflow data into risk adjustment tables
+  technical: 'Kafka Streams application implementing a three-stage pipeline: (1) Consume Data from upstream sources with configurable conditions, (2) Transform Data applying business rules and currency conversions, (3) Split into Tables producing ul_ras_cashflow_header and ul_ras_cashflow_item output tables. Includes a scheduled Grace Validation step running daily at midnight to verify data completeness. Supports backpressure and exactly-once semantics.'
+  business: Processes raw cashflow data into structured risk adjustment outputs required for regulatory reporting and retrocession settlement. The daily grace validation ensures data integrity before downstream consumption by IGR and external retro calculations.
+interfaces:
+  - direction: provides
+    type: async
+    description: Produces ul_ras_cashflow_header and ul_ras_cashflow_item to downstream Kafka topics
+  - direction: provides
+    type: rest
+    description: Operational API for pipeline status, manual re-processing triggers, and health checks
+  - direction: consumes
+    type: async
+    target: event-bus
+    description: Consumes raw cashflow events from EFR layer
+  - direction: consumes
+    type: db
+    target: state-store
+    description: Reads and writes pipeline state and data completeness flags
+dependencies:
+  - id: event-bus
+    connector: async
+  - id: state-store
+    connector: db
+  - id: cashflow-event-store
+    connector: db
+risks:
+  - Grace validation failure at midnight blocks entire downstream pipeline until resolved
+  - Schema mismatch between header and item tables causes join failures in consumers
+  - High data volumes during quarterly close can cause processing lag
+diagram:
+  color: '#0284C7'
+  shape: rectangle
