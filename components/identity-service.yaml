@@ -9,9 +9,9 @@ tags:
   - core
   - compliance
 description:
-  oneliner: Správa identít, autentifikácie a autorizácie používateľov
-  technical: OAuth 2.0 / OpenID Connect provider postavený na Keycloak s custom SPI pluginmi. Podporuje SAML 2.0 federation pre enterprise SSO, MFA cez TOTP a WebAuthn, RBAC s hierarchickými rolami a ABAC policies. Ukladá identity do PostgreSQL, sessions do Redis.
-  business: Zabezpečuje, že do systému majú prístup iba oprávnení používatelia s overenými identitami. Podporuje firemné SSO a viacfaktorové overenie podľa compliance požiadaviek.
+  oneliner: Identity management, authentication and authorization of users
+  technical: OAuth 2.0 / OpenID Connect provider built on Keycloak with custom SPI plugins. Supports SAML 2.0 federation for enterprise SSO, MFA via TOTP and WebAuthn, RBAC with hierarchical roles and ABAC policies. Stores identities in PostgreSQL, sessions in Redis.
+  business: Ensures that only authorized users with verified identities can access the system. Supports corporate SSO and multi-factor authentication per compliance requirements.
 interfaces:
   - direction: provides
     type: rest
@@ -30,9 +30,9 @@ dependencies:
   - id: notification-service
     connector: async
 risks:
-  - Kompromitácia tejto služby ohrozuje celý systém – vyžaduje pravidelný security audit
-  - Migrácia identity providera je vysoko riziková a komplexná
-  - GDPR – ukladanie PII vyžaduje šifrovanie at-rest a audit log
+  - Compromise of this service endangers the entire system - requires regular security audit
+  - Identity provider migration is high-risk and complex
+  - GDPR - storing PII requires encryption at-rest and audit logging
 diagram:
   color: '#EF4444'
   shape: rectangle
