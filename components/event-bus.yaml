@@ -9,9 +9,9 @@ tags:
   - messaging
   - kafka
 description:
-  oneliner: Centrálna message broker platforma pre asynchrónnu komunikáciu
-  technical: Apache Kafka cluster (3 brokery, 3 ZooKeeper nody) s Confluent Schema Registry pre Avro schémy. Replication factor 3, min.insync.replicas=2. Retenčná politika 7 dní pre väčšinu topicov, 90 dní pre audit topicy. Kafka Connect pre CDC z databáz. Monitoring cez Confluent Control Center.
-  business: Umožňuje jednotlivým systémom komunikovať asynchrónne a nezávisle, čo zvyšuje odolnosť celého systému voči výpadkom. Zabezpečuje, že žiadna správa sa nestratí.
+  oneliner: Central message broker platform for asynchronous communication
+  technical: Apache Kafka cluster (3 brokers, 3 ZooKeeper nodes) with Confluent Schema Registry for Avro schemas. Replication factor 3, min.insync.replicas=2. Retention policy 7 days for most topics, 90 days for audit topics. Kafka Connect for CDC from databases. Monitoring via Confluent Control Center.
+  business: Enables individual systems to communicate asynchronously and independently, increasing overall system resilience against outages. Ensures that no message is lost.
 interfaces:
   - direction: provides
     type: async
@@ -21,9 +21,9 @@ interfaces:
     description: Schema Registry REST API pre registráciu a validáciu schém
 dependencies: []
 risks:
-  - Výpadok Kafka clustra ovplyvní všetku asynchrónnu komunikáciu v systéme
-  - Schema evolution musí byť backward compatible, inak zlomí konzumentov
-  - Disk space – bez monitoringu môže retenčná politika zaplniť storage
+  - Kafka cluster outage affects all asynchronous communication in the system
+  - Schema evolution must be backward compatible, otherwise it breaks consumers
+  - Disk space - without monitoring, retention policy can fill up storage
 diagram:
   color: '#F97316'
   shape: cylinder
