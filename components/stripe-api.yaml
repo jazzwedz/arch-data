@@ -1,0 +1,26 @@
+id: stripe-api
+name: Stripe Payment Gateway
+type: external
+status: production
+owner: fintech-team
+tags:
+  - external
+  - payments
+  - third-party
+  - pci-dss
+description:
+  oneliner: Externý platobný provider pre kartové transakcie
+  technical: Stripe API v2024-01 integrácia cez oficiálny SDK. Využíva Payment Intents API, Webhook endpointy pre asynchrónne notifikácie (payment_intent.succeeded, charge.refunded), Stripe Elements pre PCI-compliant frontend. Idempotency keys pre safe retries. Test/live mode switching cez environment variables.
+  business: Hlavný platobný provider umožňujúci prijímanie kartových platieb (Visa, Mastercard, AMEX) a digitálnych peňaženiek (Apple Pay, Google Pay). Stripe znáša PCI DSS compliance záťaž pre kartové dáta.
+interfaces:
+  - direction: provides
+    type: rest
+    description: Stripe REST API – PaymentIntents, Refunds, Customers, Webhooks
+dependencies: []
+risks:
+  - Vendor lock-in – migrácia na iného providera je nákladná a riziková
+  - Zmeny v Stripe API verzii môžu vyžadovať úpravy integrácie
+  - Výpadok Stripe blokuje všetky kartové platby – treba mať fallback plán
+diagram:
+  color: '#635BFF'
+  shape: rectangle
