@@ -1,0 +1,41 @@
+id: bloomberg-market-data
+name: Bloomberg Market Data
+type: external
+status: production
+owner: market-data-team
+tags:
+  - market-data
+  - pricing
+  - bloomberg
+  - real-time
+  - vendor
+description:
+  oneliner: Bloomberg terminal and data feed integration for real-time market data
+  technical: Integration with Bloomberg B-PIPE and Server API (SAPI) for real-time and reference market data. Provides tick-by-tick pricing for equities, fixed income, FX, and derivatives. Bloomberg DAPI used for historical data and analytics. Data normalized through internal adapter layer before distribution. Failover to delayed feeds via Bloomberg Per Security licensing.
+  business: Provides the real-time market prices, curves, and reference data that traders, risk managers, and portfolio managers need to make decisions. Pricing data feeds directly into position valuation, risk calculations, and regulatory reporting. Bloomberg is the primary market data vendor � when it goes down, trading desks operate blind.
+interfaces:
+  - direction: provides
+    type: async
+    description: Real-time tick data stream for equities, FX, fixed income, and derivatives
+  - direction: provides
+    type: rest
+    description: Reference data API for instrument details, corporate actions, and historical prices
+  - direction: consumes
+    type: rest
+    target: api-gateway
+    description: Internal distribution of normalized market data through the gateway
+dependencies:
+  - id: api-gateway
+    connector: rest
+  - id: redis-cache
+    connector: db
+  - id: monitoring-platform
+    connector: rest
+risks:
+  - Bloomberg outage directly impacts trading and risk management operations
+  - License costs are substantial � ~$24k per terminal per year plus data fees
+  - Data redistribution rights are strictly controlled by Bloomberg contracts
+  - Tick data volumes can spike during market events, requiring elastic infrastructure
+diagram:
+  color: '#F97316'
+  shape: round
