@@ -1,0 +1,26 @@
+id: state-store
+name: State Store
+type: database
+status: production
+owner: retro-platform-team
+tags:
+  - state-management
+  - monitoring
+  - tiger-schema
+  - operational
+description:
+  oneliner: Operational state store tracking data load completeness and pipeline execution status
+  technical: PostgreSQL database implementing the Tiger schema for pipeline state management. Tracks data arrival status from upstream sources (SS Data Arrived flag), monitors data load completeness, and maintains execution state for all pipeline runs. Supports the outbound monitoring pattern with configurable polling intervals (5-10 minutes). Provides optimistic locking for concurrent pipeline coordination.
+  business: Ensures that financial reports and retrocession calculations only proceed when all required source data has been fully loaded, preventing incomplete or incorrect outputs that could impact regulatory submissions.
+interfaces:
+  - direction: provides
+    type: db
+    description: PostgreSQL access for pipeline state queries, data completeness checks, and run tracking
+dependencies: []
+risks:
+  - State corruption can cause pipelines to skip data or re-process unnecessarily
+  - Polling-based monitoring adds latency to the overall pipeline execution
+  - Single point of coordination - unavailability blocks all downstream processing
+diagram:
+  color: '#D97706'
+  shape: cylinder
