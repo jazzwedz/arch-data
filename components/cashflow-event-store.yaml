@@ -1,0 +1,32 @@
+id: cashflow-event-store
+name: Cashflow Event Store
+type: database
+status: production
+owner: retro-platform-team
+tags:
+  - event-store
+  - cil
+  - cashflow
+  - secondary-store
+description:
+  oneliner: Secondary event store in the CIL layer persisting cashflow events for audit and replay
+  technical: Event store database (cashflow_entry schema) in the CIL (Central Integration Layer) providing durable storage for all cashflow events. Implements append-only event log with immutable entries for full audit trail. Supports event replay for reprocessing scenarios and temporal queries for point-in-time reconstruction. Uses PostgreSQL with BRIN indexes for efficient time-range queries on large event volumes.
+  business: Provides complete audit trail of all cashflow data flowing through the retrocession pipeline. Enables regulatory auditors to trace any financial figure back to its source events and supports reprocessing when corrections are needed.
+interfaces:
+  - direction: provides
+    type: db
+    description: Read access for event replay, audit queries, and temporal data reconstruction
+  - direction: consumes
+    type: async
+    target: event-bus
+    description: Subscribes to cashflow events from Risk Adjustment pipeline for persistence
+dependencies:
+  - id: event-bus
+    connector: async
+risks:
+  - Storage growth requires proactive capacity management - cashflow events are never deleted
+  - Replay of large event ranges can overwhelm downstream consumers without throttling
+  - Event schema versioning must be backward compatible to support historical replay
+diagram:
+  color: '#9333EA'
+  shape: cylinder
