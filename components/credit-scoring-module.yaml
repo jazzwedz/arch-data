@@ -1,0 +1,36 @@
+id: credit-scoring-module
+name: Credit Scoring Module
+type: module
+status: production
+owner: lending-team
+tags:
+  - credit
+  - scoring
+  - risk
+  - lending
+  - decisioning
+description:
+  oneliner: Automated credit scoring and decisioning engine for loan applications
+  technical: Rule-based scoring engine with 120+ decision variables. Integrates external bureau data (Experian, CRIF), internal behavioral data from transaction history, and employer verification. Produces credit score (300-850), risk grade (A-F), and automated approve/decline/refer decision. Sub-second response time for online applications. Decision audit trail stored for 10 years per regulatory requirement.
+  business: When someone applies for a loan, this module decides within seconds whether they qualify. It looks at their credit history, income, existing debts, and payment behavior to calculate a risk score. Low risk means automatic approval, high risk means automatic decline, and borderline cases go to a human analyst for review.
+interfaces:
+  - direction: provides
+    type: rest
+    description: Score and decision API for loan origination
+  - direction: consumes
+    type: rest
+    description: External credit bureau data
+relationships:
+  - target: risk-adjustment-processor
+    type: child-of
+    description: Scoring component within risk processing
+  - target: user-db
+    type: reads-from
+    connector: db
+    description: Customer behavioral data for scoring
+  - target: regulatory-calc-library
+    type: depends-on
+    description: Regulatory risk weight calculations
+risks:
+  - Model drift if scoring rules are not recalibrated quarterly
+  - External bureau outage degrades scoring to internal-only data
