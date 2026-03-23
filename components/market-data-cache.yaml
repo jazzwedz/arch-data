@@ -1,0 +1,33 @@
+id: market-data-cache
+name: Market Data Cache
+type: cache
+status: production
+owner: market-data-team
+tags:
+  - cache
+  - market-data
+  - pricing
+  - real-time
+description:
+  oneliner: Low-latency cache for real-time market prices and exchange rates
+  technical: Hazelcast IMDG cluster with near-cache on client side. Stores FX rates, equity prices, and bond yields with sub-millisecond read latency. Write-behind to persistence layer, event-driven invalidation from Bloomberg feed. 50GB heap per node, 5-node cluster.
+  business: Makes sure traders and systems always see the latest prices without waiting. When the trading desk needs a currency rate right now, this component delivers it in under a millisecond instead of calling external providers each time.
+interfaces:
+  - direction: provides
+    type: db
+    description: Real-time price lookups for trading services
+  - direction: consumes
+    type: async
+    target: bloomberg-market-data
+    description: Receives live price updates via feed
+relationships:
+  - target: bloomberg-market-data
+    type: reads-from
+    connector: async
+    description: Ingests live market data feed
+  - target: mdm-exchange-rate
+    type: fallback
+    description: Falls back to MDM rates when Bloomberg feed is unavailable
+risks:
+  - Stale prices if feed connection drops � 30s staleness threshold triggers alerts
+  - Cache warming after restart takes ~2min during which latency is degraded
