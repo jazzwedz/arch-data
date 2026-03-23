@@ -23,6 +23,14 @@ interfaces:
     type: async
     target: event-bus
     description: Consumes validated cashflow events from Risk Adjustment pipeline
+  - direction: consumes
+    type: db
+    target: state-store
+    description: Reads and writes calculation state and intermediate results
+  - direction: consumes
+    type: rest
+    target: treaty-config-service
+    description: Fetches treaty parameters for IGR calculations
 dependencies:
   - id: state-store
     connector: db
