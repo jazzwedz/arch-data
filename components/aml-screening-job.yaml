@@ -1,0 +1,39 @@
+id: aml-screening-job
+name: AML Screening Job
+type: batch-job
+status: production
+owner: financial-crime-team
+tags:
+  - aml
+  - compliance
+  - screening
+  - sanctions
+  - batch
+description:
+  oneliner: Scheduled batch screening of customer base against sanctions and PEP lists
+  technical: Java batch application running twice daily (06:00 and 18:00 CET). Screens entire customer base (~3M records) against consolidated watchlists (OFAC, EU, UN, local). Uses fuzzy matching with configurable thresholds. Generates alerts in case management system. Parallel processing with 16 worker threads, typical runtime 30-60 minutes.
+  business: Checks every single customer against global sanctions lists twice a day. If a customer or their company appears on a sanctions list � or even someone with a similar name � the compliance team gets an alert to investigate. This is a legal requirement and missing a match could result in heavy fines.
+interfaces:
+  - direction: consumes
+    type: db
+    target: silver-canonical-store
+    description: Customer master data for screening
+  - direction: provides
+    type: rest
+    description: Screening results and alerts to case management
+relationships:
+  - target: silver-canonical-store
+    type: reads-from
+    connector: db
+    description: Customer records to screen
+  - target: fraud-detection-service
+    type: communicates-with
+    connector: rest
+    description: Shares alert data for cross-referencing
+  - target: notification-service
+    type: depends-on
+    connector: rest
+    description: Sends urgent match notifications
+risks:
+  - False positives overload compliance team if matching thresholds are too loose
+  - Delayed list updates could miss newly sanctioned entities
