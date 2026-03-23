@@ -1,0 +1,51 @@
+id: eod-reconciliation
+name: End-of-Day Reconciliation
+type: batch-job
+status: production
+owner: operations-team
+tags:
+  - batch
+  - reconciliation
+  - eod
+  - operations
+  - t+1
+description:
+  oneliner: Nightly batch job that reconciles all financial positions across systems
+  technical: Spring Batch application running on Kubernetes CronJob at 22:00 CET. Compares positions in transaction ledger against external custodian records (via SWIFT), booking system (SICS), and payment processor. Generates break reports and auto-resolves known break patterns. Typical runtime 45-90 minutes for ~2M positions.
+  business: Every evening after markets close, this job checks that the bank knows about every single trade and payment from the day. If something does not add up � say a payment was sent but not recorded � it flags the discrepancy so the operations team can fix it first thing in the morning.
+interfaces:
+  - direction: consumes
+    type: db
+    target: transaction-ledger-db
+    description: Internal position data
+  - direction: consumes
+    type: file
+    target: swift-message-store
+    description: SWIFT confirmations for matching
+  - direction: provides
+    type: file
+    description: Break reports and reconciliation summaries
+relationships:
+  - target: transaction-ledger-db
+    type: reads-from
+    connector: db
+    description: Internal positions and trades
+  - target: swift-message-store
+    type: reads-from
+    connector: file
+    description: External confirmations
+  - target: state-store
+    type: writes-to
+    connector: db
+    description: Reconciliation state and break records
+  - target: document-archive
+    type: writes-to
+    connector: file
+    description: Break reports (PDF)
+  - target: notification-service
+    type: communicates-with
+    connector: rest
+    description: Sends alerts on critical breaks
+risks:
+  - Delayed start due to upstream data latency impacts morning operations
+  - Unresolved breaks accumulate if auto-resolution rules are not maintained
