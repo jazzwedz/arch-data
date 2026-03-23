@@ -46,8 +46,9 @@ relationships:
     connector: rest
     description: JWT validation on each request
   - target: dmz-boundary
-    type: child-of
+    type: parent-of
     description: Deployed in DMZ network zone
+    connector: ''
 risks:
   - Single point of failure - gateway outage means full system outage
   - High throughput requires regular load testing
