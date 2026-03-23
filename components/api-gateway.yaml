@@ -23,6 +23,10 @@ interfaces:
     type: rest
     target: identity-service
     description: Validacia JWT tokenov
+  - direction: consumes
+    type: db
+    target: redis-cache
+    description: Rate limiting counters and session cache
 dependencies:
   - id: identity-service
     connector: rest
