@@ -25,6 +25,10 @@ interfaces:
     type: rest
     target: bloomberg-market-data
     description: Market data inputs for mark-to-market and stress scenario calculations
+  - direction: consumes
+    type: rest
+    target: monitoring-platform
+    description: Reports calculation performance and error metrics
 dependencies:
   - id: bloomberg-market-data
     connector: rest
