@@ -32,13 +32,6 @@ interfaces:
     type: db
     target: redis-cache
     description: Template cache and delivery deduplication
-dependencies:
-  - id: notification-db
-    connector: db
-  - id: event-bus
-    connector: async
-  - id: redis-cache
-    connector: db
 risks:
   - Spam protection - misconfiguration can cause mass sending
   - Email deliverability depends on domain reputation and SPF/DKIM configuration
@@ -46,3 +39,17 @@ risks:
 diagram:
   color: '#EC4899'
   shape: rectangle
+relationships:
+  - target: notification-db
+    type: depends-on
+    connector: db
+  - target: event-bus
+    type: depends-on
+    connector: async
+  - target: redis-cache
+    type: depends-on
+    connector: db
+  - target: eod-reconciliation
+    type: communicates-with
+    connector: rest
+    description: Receives break alert triggers from reconciliation
