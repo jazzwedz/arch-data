@@ -1,12 +1,11 @@
 id: silver-canonical-store
-name: Silver Canonical Data Store
+name: Canonical Data Store
 type: database
 status: production
 owner: data-engineering-team
 tags:
   - data-lake
   - canonical
-  - silver-layer
   - cashflow
 description:
   oneliner: Curated canonical data layer storing aggregated cashflow estimates for reinsurance
