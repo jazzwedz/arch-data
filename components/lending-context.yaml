@@ -1,0 +1,31 @@
+id: lending-context
+name: Lending Domain
+type: context
+status: production
+owner: lending-team
+tags:
+  - domain
+  - lending
+  - loans
+  - ddd
+  - bounded-context
+description:
+  oneliner: Bounded context for loan origination, servicing, and risk assessment
+  technical: 'DDD bounded context owning the full lending lifecycle: application intake, credit scoring, approval workflows, disbursement, servicing, and collections. Publishes loan lifecycle events for downstream consumers. Integrates with payments context for disbursement and repayment.'
+  business: Handles everything about loans � from the moment a customer applies for one, through the approval process, to monthly repayments and eventual payoff. It decides who qualifies, how much they can borrow, and keeps track of every loan the bank has on its books.
+interfaces: []
+relationships:
+  - target: order-service
+    type: parent-of
+    description: Loan order management
+  - target: risk-adjustment-processor
+    type: parent-of
+    description: Credit risk calculations
+  - target: regulatory-calc-library
+    type: depends-on
+    description: Regulatory capital calculations for loan portfolio
+  - target: payments-context
+    type: communicates-with
+    description: Loan disbursement and repayment processing
+risks:
+  - Tight coupling with payments context if disbursement is not event-driven
