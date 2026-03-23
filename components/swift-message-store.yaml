@@ -1,0 +1,36 @@
+id: swift-message-store
+name: SWIFT Message Store
+type: storage
+status: production
+owner: payments-team
+tags:
+  - swift
+  - messages
+  - payments
+  - archive
+  - mt
+  - mx
+description:
+  oneliner: Immutable archive of all inbound and outbound SWIFT messages
+  technical: S3-compatible object storage (MinIO on-premise) with WORM (Write Once Read Many) compliance. Stores MT and MX message formats with full metadata indexing. Daily volume ~15k messages. 5-year mandatory retention with legal hold capability. Replicated across two data centers.
+  business: Every international payment instruction the bank sends or receives is stored here permanently. When an auditor asks to see the original SWIFT message for a payment from three years ago, this is where it lives. The messages cannot be altered or deleted � this is a regulatory requirement.
+interfaces:
+  - direction: provides
+    type: file
+    description: Message retrieval for reconciliation and audit
+  - direction: consumes
+    type: async
+    target: swift-gateway
+    description: Incoming and outgoing SWIFT messages
+relationships:
+  - target: swift-gateway
+    type: reads-from
+    connector: async
+    description: Archives all SWIFT traffic
+  - target: eod-reconciliation
+    type: communicates-with
+    connector: file
+    description: Provides confirmations for position matching
+risks:
+  - Storage replication lag between data centers during network issues
+  - WORM compliance lock prevents correction of incorrectly stored messages
