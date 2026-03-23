@@ -14,18 +14,18 @@ description:
 interfaces:
   - direction: provides
     type: rest
-    description: CRUD API pre objednávky s filtrovaním, stránkovaním a full-text search
+    description: CRUD API pre objednÃ¡vky s filtrovanÃ­m, strÃ¡nkovanÃ­m a full-text search
   - direction: provides
     type: async
-    description: Doménové eventy (order.created, order.confirmed, order.shipped) na Kafka
+    description: DomÃ©novÃ© eventy (order.created, order.confirmed, order.shipped) na Kafka
   - direction: consumes
     type: async
     target: payment-service
-    description: Počúva payment.completed a payment.failed eventy
+    description: "PoÄ\uDC8DÃºva payment.completed a payment.failed eventy"
   - direction: consumes
     type: rest
     target: inventory-service
-    description: Overenie dostupnosti produktov pred potvrdením objednávky
+    description: Overenie dostupnosti produktov pred potvrdenÃ­m objednÃ¡vky
   - direction: consumes
     type: async
     target: notification-service
@@ -34,15 +34,6 @@ interfaces:
     type: async
     target: event-bus
     description: Publishes order lifecycle events
-dependencies:
-  - id: order-db
-    connector: db
-  - id: payment-service
-    connector: async
-  - id: notification-service
-    connector: async
-  - id: event-bus
-    connector: async
 risks:
   - Lost order means direct financial loss - requires exactly-once processing
   - Saga rollback can fail and create inconsistent state
@@ -50,3 +41,19 @@ risks:
 diagram:
   color: '#F59E0B'
   shape: rectangle
+relationships:
+  - target: order-db
+    type: depends-on
+    connector: db
+  - target: payment-service
+    type: depends-on
+    connector: async
+  - target: notification-service
+    type: depends-on
+    connector: async
+  - target: event-bus
+    type: depends-on
+    connector: async
+  - target: lending-context
+    type: child-of
+    description: Part of the Lending bounded context
