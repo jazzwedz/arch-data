@@ -26,6 +26,14 @@ interfaces:
     type: rest
     target: inventory-service
     description: Overenie dostupnosti produktov pred potvrdením objednávky
+  - direction: consumes
+    type: async
+    target: notification-service
+    description: Triggers order confirmation and status update notifications
+  - direction: consumes
+    type: async
+    target: event-bus
+    description: Publishes order lifecycle events
 dependencies:
   - id: order-db
     connector: db
