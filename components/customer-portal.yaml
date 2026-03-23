@@ -19,6 +19,10 @@ interfaces:
     type: rest
     target: api-gateway
     description: Všetky API volania cez centrálny gateway
+  - direction: consumes
+    type: rest
+    target: identity-service
+    description: User login and authentication
 dependencies:
   - id: api-gateway
     connector: rest
