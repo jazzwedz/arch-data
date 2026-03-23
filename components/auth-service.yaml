@@ -29,6 +29,10 @@ relationships:
   - target: user-db
     type: depends-on
     connector: db
+  - target: session-cache
+    type: depends-on
+    connector: db
+    description: Session token storage and validation
 risks:
   - Single point of failure for all authenticated requests
   - Token signing key rotation requires coordinated deployment
