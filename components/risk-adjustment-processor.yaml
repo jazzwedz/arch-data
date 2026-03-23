@@ -51,3 +51,6 @@ relationships:
   - target: lending-context
     type: child-of
     description: Part of the Lending bounded context
+  - target: credit-scoring-module
+    type: parent-of
+    description: Credit scoring is a module within risk processing
