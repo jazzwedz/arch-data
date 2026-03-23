@@ -31,13 +31,6 @@ interfaces:
     type: db
     target: cashflow-event-store
     description: Reads cashflow events for risk adjustment
-dependencies:
-  - id: event-bus
-    connector: async
-  - id: state-store
-    connector: db
-  - id: cashflow-event-store
-    connector: db
 risks:
   - Grace validation failure at midnight blocks entire downstream pipeline until resolved
   - Schema mismatch between header and item tables causes join failures in consumers
@@ -45,3 +38,16 @@ risks:
 diagram:
   color: '#0284C7'
   shape: rectangle
+relationships:
+  - target: event-bus
+    type: depends-on
+    connector: async
+  - target: state-store
+    type: depends-on
+    connector: db
+  - target: cashflow-event-store
+    type: depends-on
+    connector: db
+  - target: lending-context
+    type: child-of
+    description: Part of the Lending bounded context
