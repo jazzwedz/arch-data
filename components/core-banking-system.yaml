@@ -38,6 +38,9 @@ relationships:
   - target: internal-zone
     type: child-of
     description: Deployed in internal trusted zone
+  - target: gl-posting-module
+    type: parent-of
+    description: GL posting engine is a core module
 risks:
   - Single point of failure for all account operations
   - Batch window constraints limit real-time processing capabilities
