@@ -52,3 +52,6 @@ relationships:
     type: communicates-with
     connector: rest
     description: JWT validation on each request
+  - target: dmz-boundary
+    type: child-of
+    description: Deployed in DMZ network zone
