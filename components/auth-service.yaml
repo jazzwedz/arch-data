@@ -9,15 +9,8 @@ tags:
   - core
 description:
   oneliner: Handles user authentication and JWT token management
-  technical: >-
-    Spring Boot microservice providing OAuth2/OIDC authentication flows.
-    Issues and validates JWT tokens. Integrates with external IdPs
-    (Google, Microsoft). Manages refresh token rotation and session
-    invalidation. Rate-limited login endpoints with brute-force protection.
-  business: >-
-    Ensures only authorized users can access the system. Supports
-    single sign-on with corporate accounts. Provides secure session
-    management and automatic logout on inactivity.
+  technical: Spring Boot microservice providing OAuth2/OIDC authentication flows. Issues and validates JWT tokens. Integrates with external IdPs (Google, Microsoft). Manages refresh token rotation and session invalidation. Rate-limited login endpoints with brute-force protection.
+  business: Ensures only authorized users can access the system. Supports single sign-on with corporate accounts. Provides secure session management and automatic logout on inactivity.
 interfaces:
   - direction: provides
     type: rest
