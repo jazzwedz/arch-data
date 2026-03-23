@@ -13,7 +13,7 @@ tags:
 description:
   oneliner: Immutable archive of all inbound and outbound SWIFT messages
   technical: S3-compatible object storage (MinIO on-premise) with WORM (Write Once Read Many) compliance. Stores MT and MX message formats with full metadata indexing. Daily volume ~15k messages. 5-year mandatory retention with legal hold capability. Replicated across two data centers.
-  business: Every international payment instruction the bank sends or receives is stored here permanently. When an auditor asks to see the original SWIFT message for a payment from three years ago, this is where it lives. The messages cannot be altered or deleted � this is a regulatory requirement.
+  business: Every international payment instruction the bank sends or receives is stored here permanently. When an auditor asks to see the original SWIFT message for a payment from three years ago, this is where it lives. The messages cannot be altered or deleted ï¿½ this is a regulatory requirement.
 interfaces:
   - direction: provides
     type: file
@@ -31,6 +31,9 @@ relationships:
     type: communicates-with
     connector: file
     description: Provides confirmations for position matching
+  - target: payments-context
+    type: child-of
+    description: Part of the Payments bounded context
 risks:
   - Storage replication lag between data centers during network issues
   - WORM compliance lock prevents correction of incorrectly stored messages
