@@ -1,0 +1,42 @@
+id: customer-data-pipeline
+name: Customer Data Pipeline
+type: data-pipeline
+status: production
+owner: data-engineering-team
+tags:
+  - cdc
+  - customer
+  - etl
+  - kafka
+  - data-quality
+description:
+  oneliner: Change data capture pipeline that synchronizes customer data across systems
+  technical: Debezium CDC from user-db, processed through Kafka Streams with exactly-once semantics. Applies data quality rules, deduplication, and PII masking before writing to silver-canonical-store. Handles ~50k change events per minute at peak. Schema registry enforces Avro compatibility.
+  business: When a customer updates their address in the portal, this pipeline makes sure every system in the bank knows about it within seconds. It also cleans up messy data and makes sure sensitive information like social security numbers are properly masked where they should not be visible.
+interfaces:
+  - direction: consumes
+    type: async
+    target: user-db
+    description: CDC events from customer database
+  - direction: provides
+    type: async
+    description: Cleaned customer change events for downstream consumers
+relationships:
+  - target: user-db
+    type: reads-from
+    connector: async
+    description: CDC stream of customer changes
+  - target: silver-canonical-store
+    type: writes-to
+    connector: db
+    description: Mastered customer records
+  - target: event-bus
+    type: depends-on
+    connector: async
+    description: Kafka infrastructure for CDC transport
+  - target: data-lake-platform
+    type: child-of
+    description: Part of the enterprise data lake platform
+risks:
+  - CDC lag during bulk migrations can cause temporary data inconsistency
+  - Schema evolution requires coordinated deployment across producers and consumers
