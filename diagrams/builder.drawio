@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="arch-tool" modified="2026-03-23T19:43:25.245Z" type="device">
+  <diagram id="diagram-1" name="builder">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="900">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+        <UserObject label="Authentication Service" arch_id="auth-service" arch_type="microservice" id="2"><mxCell style="rounded=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=1;fontSize=11;" vertex="1" parent="1"><mxGeometry x="430" y="100" width="120" height="60" as="geometry"/></mxCell></UserObject>
+        <UserObject label="Advisor Dashboard" arch_id="advisor-dashboard" arch_type="frontend" id="3"><mxCell style="rounded=1;fillColor=#d5e8d4;strokeColor=#82b366;fontStyle=1;fontSize=11;" vertex="1" parent="1"><mxGeometry x="300" y="230" width="120" height="60" as="geometry"/></mxCell></UserObject>
+        <UserObject label="Cashflow Event Store" arch_id="cashflow-event-store" arch_type="database" id="4"><mxCell style="shape=cylinder3;fillColor=#fff2cc;strokeColor=#d6b656;fontStyle=1;fontSize=11;" vertex="1" parent="1"><mxGeometry x="670" y="265" width="60" height="70" as="geometry"/></mxCell></UserObject>
+        <UserObject label="Market Data Cache" arch_id="market-data-cache" arch_type="cache" id="5"><mxCell style="rounded=1;fillColor=#d6f5d6;strokeColor=#48a848;fontStyle=1;fontSize=11;" vertex="1" parent="1"><mxGeometry x="450" y="550" width="60" height="60" as="geometry"/></mxCell></UserObject>
+        <UserObject label="API Gateway" arch_id="api-gateway" arch_type="gateway" id="6"><mxCell style="rhombus;fillColor=#e1d5e7;strokeColor=#9673a6;fontStyle=1;fontSize=11;" vertex="1" parent="1"><mxGeometry x="230" y="480" width="120" height="60" as="geometry"/></mxCell></UserObject>
+        <UserObject label="SICS Booking Gateway" arch_id="sics-booking-gateway" arch_type="gateway" id="7"><mxCell style="rhombus;fillColor=#e1d5e7;strokeColor=#9673a6;fontStyle=1;fontSize=11;" vertex="1" parent="1"><mxGeometry x="220" y="620" width="120" height="60" as="geometry"/></mxCell></UserObject>
+        <UserObject label="SWIFT Gateway" arch_id="swift-gateway" arch_type="gateway" id="8"><mxCell style="rhombus;fillColor=#e1d5e7;strokeColor=#9673a6;fontStyle=1;fontSize=11;" vertex="1" parent="1"><mxGeometry x="420" y="710" width="120" height="60" as="geometry"/></mxCell></UserObject>
+        <UserObject label="DMZ" arch_id="dmz-boundary" arch_type="boundary" id="9"><mxCell style="rounded=1;fillColor=#fde8e8;strokeColor=#c62828;fontStyle=1;fontSize=11;strokeWidth=2;" vertex="1" parent="1"><mxGeometry x="760" y="460" width="160" height="80" as="geometry"/></mxCell></UserObject>
+        <UserObject label="GL Posting Module" arch_id="gl-posting-module" arch_type="module" id="10"><mxCell style="rounded=1;fillColor=#f3e5f5;strokeColor=#8e24aa;fontStyle=1;fontSize=11;" vertex="1" parent="1"><mxGeometry x="750" y="635" width="100" height="50" as="geometry"/></mxCell></UserObject>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
