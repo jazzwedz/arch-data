@@ -15,14 +15,14 @@ description:
 interfaces:
   - direction: provides
     type: rest
-    description: Payment API – initiate, capture, refund, status
+    description: Payment API â€“ initiate, capture, refund, status
   - direction: provides
     type: async
     description: Eventy payment.completed, payment.failed, refund.processed na Kafka
   - direction: consumes
     type: rest
     target: stripe-api
-    description: Stripe API pre kartové platby
+    description: Stripe API pre kartovÃ© platby
   - direction: consumes
     type: async
     target: event-bus
@@ -31,15 +31,6 @@ interfaces:
     type: db
     target: redis-cache
     description: Idempotency keys and transaction deduplication cache
-dependencies:
-  - id: payment-db
-    connector: db
-  - id: stripe-api
-    connector: rest
-  - id: event-bus
-    connector: async
-  - id: redis-cache
-    connector: db
 risks:
   - PCI DSS non-compliance can lead to loss of payment processing license
   - Double-charge scenario on network timeout - idempotency is critical
@@ -47,3 +38,19 @@ risks:
 diagram:
   color: '#10B981'
   shape: rectangle
+relationships:
+  - target: payment-db
+    type: depends-on
+    connector: db
+  - target: stripe-api
+    type: depends-on
+    connector: rest
+  - target: event-bus
+    type: depends-on
+    connector: async
+  - target: redis-cache
+    type: depends-on
+    connector: db
+  - target: payments-context
+    type: child-of
+    description: Part of the Payments bounded context
