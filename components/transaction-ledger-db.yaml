@@ -24,6 +24,10 @@ interfaces:
     type: async
     target: event-bus
     description: Receives confirmed transaction events for ledger posting
+  - direction: consumes
+    type: rest
+    target: monitoring-platform
+    description: Reports storage usage, replication lag, and query performance
 dependencies:
   - id: event-bus
     connector: async
