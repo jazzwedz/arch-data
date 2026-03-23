@@ -32,6 +32,14 @@ interfaces:
     type: db
     target: user-db
     description: Reads customer transaction history and behavioral patterns
+  - direction: consumes
+    type: db
+    target: redis-cache
+    description: Caches recent transaction patterns for real-time scoring
+  - direction: consumes
+    type: rest
+    target: monitoring-platform
+    description: Reports fraud detection metrics and model performance
 dependencies:
   - id: event-bus
     connector: async
