@@ -1,0 +1,36 @@
+id: payments-context
+name: Payments Domain
+type: context
+status: production
+owner: payments-team
+tags:
+  - domain
+  - payments
+  - ddd
+  - bounded-context
+description:
+  oneliner: Bounded context covering all payment processing, settlement, and reconciliation
+  technical: DDD bounded context encapsulating payment initiation, execution, SWIFT messaging, settlement, and reconciliation. Owns the payment lifecycle from order to confirmation. Communicates with other contexts via domain events on the enterprise event bus.
+  business: Everything that happens when the bank moves money. From the moment someone initiates a payment to when it is confirmed and reconciled � this domain owns that entire journey. It includes domestic transfers, international SWIFT payments, and the nightly checks that make sure everything adds up.
+interfaces: []
+relationships:
+  - target: payment-service
+    type: parent-of
+    description: Core payment processing service
+  - target: swift-gateway
+    type: parent-of
+    description: International payment messaging
+  - target: trade-settlement-queue
+    type: parent-of
+    description: Settlement workflow orchestration
+  - target: eod-reconciliation
+    type: parent-of
+    description: End-of-day position matching
+  - target: swift-message-store
+    type: parent-of
+    description: SWIFT message archive
+  - target: lending-context
+    type: communicates-with
+    description: Loan disbursement payments
+risks:
+  - Context boundary erosion if other teams bypass domain events and call services directly
