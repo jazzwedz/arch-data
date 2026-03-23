@@ -17,22 +17,15 @@ description:
 interfaces:
   - direction: provides
     type: human
-    description: Webové rozhranie pre zákazníkov (responsive, WCAG 2.1 AA)
+    description: WebovÃ© rozhranie pre zÃ¡kaznÃ­kov (responsive, WCAG 2.1 AA)
   - direction: consumes
     type: rest
     target: api-gateway
-    description: Všetky API volania cez centrálny gateway
+    description: VÅ¡etky API volania cez centrÃ¡lny gateway
   - direction: consumes
     type: rest
     target: identity-service
     description: User login and authentication
-dependencies:
-  - id: api-gateway
-    connector: rest
-  - id: identity-service
-    connector: rest
-  - id: cdn-service
-    connector: rest
 risks:
   - XSS and CSRF vulnerabilities - requires regular penetration testing
   - Portal outage directly impacts customer experience and NPS
@@ -40,3 +33,16 @@ risks:
 diagram:
   color: '#8B5CF6'
   shape: rectangle
+relationships:
+  - target: api-gateway
+    type: depends-on
+    connector: rest
+  - target: identity-service
+    type: depends-on
+    connector: rest
+  - target: cdn-service
+    type: depends-on
+    connector: rest
+  - target: dmz-boundary
+    type: child-of
+    description: Deployed in DMZ network zone
