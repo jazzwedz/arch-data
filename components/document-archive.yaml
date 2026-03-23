@@ -1,0 +1,34 @@
+id: document-archive
+name: Document Archive
+type: storage
+status: production
+owner: enterprise-architecture-team
+tags:
+  - storage
+  - documents
+  - archive
+  - kyc
+  - compliance
+description:
+  oneliner: Central document storage for contracts, KYC documents, and generated reports
+  technical: 'Azure Blob Storage with hot/cool/archive tiering. Documents indexed in Elasticsearch for full-text search. Automatic lifecycle policies: hot for 30 days, cool for 1 year, archive for 7+ years (regulatory retention). Immutable storage for compliance documents. ~50TB total, growing ~2TB/year.'
+  business: The digital filing cabinet for the entire institution. Every client contract, KYC document, regulatory report, and audit trail ends up here. Documents are searchable, tamper-proof, and kept for as long as the law requires � some up to 10 years.
+interfaces:
+  - direction: provides
+    type: rest
+    description: Document upload, download, and search API
+  - direction: provides
+    type: file
+    description: Bulk file access for batch consumers
+relationships:
+  - target: regulatory-reporting-pipeline
+    type: communicates-with
+    connector: file
+    description: Receives generated regulatory reports
+  - target: eod-reconciliation
+    type: communicates-with
+    connector: file
+    description: Receives break reports
+risks:
+  - Storage cost growth requires regular tier optimization reviews
+  - Accidental deletion of compliance documents would violate retention requirements
