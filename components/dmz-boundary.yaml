@@ -1,0 +1,29 @@
+id: dmz-boundary
+name: DMZ
+type: boundary
+status: production
+owner: infrastructure-security-team
+tags:
+  - network
+  - security
+  - dmz
+  - perimeter
+  - zone
+description:
+  oneliner: Demilitarized zone separating public internet from internal network
+  technical: Network boundary implemented via F5 load balancers, WAF (Web Application Firewall), and firewall rules. All external traffic terminates here. Only API Gateway and Customer Portal frontend are exposed. TLS termination, DDoS protection, and IP reputation filtering at this layer. No direct database or internal service access from DMZ.
+  business: The front door of the bank with a security guard. Everything from the internet goes through here first and gets checked before it can reach any internal system. Customers access their portal through this zone, and all API calls from partners land here too.
+interfaces: []
+relationships:
+  - target: api-gateway
+    type: parent-of
+    description: Only component exposed to external traffic
+  - target: customer-portal
+    type: parent-of
+    description: Public-facing web application
+  - target: internal-zone
+    type: communicates-with
+    description: Filtered traffic forwarded to internal services
+risks:
+  - Single point of failure if WAF goes down � all external access blocked
+  - Misconfigured firewall rules could expose internal services to the internet
