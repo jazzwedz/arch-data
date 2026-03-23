@@ -16,7 +16,7 @@ description:
 interfaces:
   - direction: provides
     type: rest
-    description: Transaction scoring API � accepts transaction details, returns risk score and recommendation (allow/block/review)
+    description: Transaction scoring API ï¿½ accepts transaction details, returns risk score and recommendation (allow/block/review)
   - direction: provides
     type: async
     description: Publishes fraud alerts and case creation events to downstream systems
@@ -40,17 +40,6 @@ interfaces:
     type: rest
     target: monitoring-platform
     description: Reports fraud detection metrics and model performance
-dependencies:
-  - id: event-bus
-    connector: async
-  - id: identity-service
-    connector: rest
-  - id: user-db
-    connector: db
-  - id: redis-cache
-    connector: db
-  - id: monitoring-platform
-    connector: rest
 risks:
   - False positives block legitimate transactions and damage customer experience
   - Model drift can reduce detection accuracy over time without continuous retraining
@@ -59,3 +48,27 @@ risks:
 diagram:
   color: '#DC2626'
   shape: round
+relationships:
+  - target: event-bus
+    type: depends-on
+    connector: async
+  - target: identity-service
+    type: depends-on
+    connector: rest
+  - target: user-db
+    type: depends-on
+    connector: db
+  - target: redis-cache
+    type: depends-on
+    connector: db
+  - target: monitoring-platform
+    type: depends-on
+    connector: rest
+  - target: aml-screening-job
+    type: communicates-with
+    connector: rest
+    description: Cross-references real-time fraud signals with batch AML alerts
+  - target: market-data-cache
+    type: reads-from
+    connector: db
+    description: Reads price data for transaction value checks
