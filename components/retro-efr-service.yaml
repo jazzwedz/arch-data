@@ -27,6 +27,14 @@ interfaces:
     type: rest
     target: mdm-exchange-rate
     description: Fetches quarterly average exchange rates from MDM for currency conversion
+  - direction: consumes
+    type: async
+    target: event-bus
+    description: Publishes retro EFR calculation results
+  - direction: consumes
+    type: db
+    target: state-store
+    description: Reads calculation state for retro processing
 dependencies:
   - id: silver-canonical-store
     connector: db
