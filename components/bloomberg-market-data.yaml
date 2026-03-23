@@ -24,6 +24,14 @@ interfaces:
     type: rest
     target: api-gateway
     description: Internal distribution of normalized market data through the gateway
+  - direction: consumes
+    type: db
+    target: redis-cache
+    description: Caches frequently accessed market data for low-latency reads
+  - direction: consumes
+    type: rest
+    target: monitoring-platform
+    description: Reports feed health, latency, and data quality metrics
 dependencies:
   - id: api-gateway
     connector: rest
