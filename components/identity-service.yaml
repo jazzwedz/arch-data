@@ -15,10 +15,10 @@ description:
 interfaces:
   - direction: provides
     type: rest
-    description: OAuth 2.0 endpointy – /authorize, /token, /userinfo, /introspect
+    description: OAuth 2.0 endpointy â€“ /authorize, /token, /userinfo, /introspect
   - direction: provides
     type: rest
-    description: Admin REST API pre správu používateľov, rolí a klientov
+    description: Admin REST API pre sprÃ¡vu pouÅ¾Ã­vateÄ¾ov, rolÃ­ a klientov
   - direction: provides
     type: async
     description: 'Eventy pri login, logout, zmene role (Kafka topic: identity.events)'
@@ -34,13 +34,6 @@ interfaces:
     type: async
     target: notification-service
     description: Triggers notifications for login alerts and password resets
-dependencies:
-  - id: user-db
-    connector: db
-  - id: redis-cache
-    connector: db
-  - id: notification-service
-    connector: async
 risks:
   - Compromise of this service endangers the entire system - requires regular security audit
   - Identity provider migration is high-risk and complex
@@ -48,3 +41,16 @@ risks:
 diagram:
   color: '#EF4444'
   shape: rectangle
+relationships:
+  - target: user-db
+    type: depends-on
+    connector: db
+  - target: redis-cache
+    type: depends-on
+    connector: db
+  - target: notification-service
+    type: depends-on
+    connector: async
+  - target: internal-zone
+    type: child-of
+    description: Deployed in internal trusted zone
