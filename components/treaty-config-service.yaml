@@ -22,6 +22,10 @@ interfaces:
   - direction: provides
     type: human
     description: Admin UI for treaty managers to review and update deal parameters
+  - direction: consumes
+    type: async
+    target: event-bus
+    description: Publishes treaty configuration change events
 dependencies:
   - id: config-db
     connector: db
