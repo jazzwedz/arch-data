@@ -24,6 +24,10 @@ interfaces:
     type: async
     target: event-bus
     description: Receives raw trade execution events from the central event bus
+  - direction: consumes
+    type: rest
+    target: monitoring-platform
+    description: Reports queue depth, lag, and settlement metrics
 dependencies:
   - id: event-bus
     connector: async
