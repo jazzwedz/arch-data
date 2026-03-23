@@ -2,15 +2,15 @@ id: igr-calculation-service
 name: Calculation Service
 type: microservice
 status: production
-owner: retro-platform-team
+owner: rates-platform-team
 tags:
   - core
   - retrocession
   - calculation
 description:
-  oneliner: Internal Group Retrocession calculation engine for quota share arrangements
-  technical: Stateless calculation microservice implementing the business logic for Quota Share Retro (QSR) arrangements. Processes validated cashflow data, applies treaty terms and conditions (T&C), and computes QSR allocations. Supports multiple deal configurations (e.g., P&C and L&H). Runs on a scheduled basis (QSR Run) and produces output for downstream SICS booking.
-  business: Automates the calculation of internal retrocession allocations between group entities (e.g., regional branches and reinsurance affiliates). Ensures compliance with treaty terms while eliminating manual spreadsheet-based calculations.
+  oneliner: Internal Group Rates calculation engine for quota share arrangements
+  technical: Stateless calculation microservice implementing the business logic for Quota Share (QS) arrangements. Processes validated cashflow data, applies treaty terms and conditions (T&C), and computes QSR allocations. Supports multiple deal configurations (e.g., P&C and L&H). Runs on a scheduled basis (QSR Run) and produces output for downstream SICS booking.
+  business: Automates the calculation of internal rates allocations between group entities (e.g., regional branches and reinsurance affiliates). Ensures compliance with treaty terms while eliminating manual spreadsheet-based calculations.
 interfaces:
   - direction: provides
     type: rest
