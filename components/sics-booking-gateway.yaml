@@ -25,6 +25,10 @@ interfaces:
     type: rest
     target: sics-core
     description: Posts booking entries to SICS via its internal API
+  - direction: consumes
+    type: db
+    target: redis-cache
+    description: Caches booking templates and connection state
 dependencies:
   - id: event-bus
     connector: async
