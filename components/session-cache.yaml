@@ -1,0 +1,33 @@
+id: session-cache
+name: Session Cache
+type: cache
+status: production
+owner: platform-team
+tags:
+  - cache
+  - redis
+  - session
+  - auth
+description:
+  oneliner: In-memory cache for user sessions and authentication tokens
+  technical: Redis Cluster 7.x with sentinel failover, 3-node deployment across availability zones. Stores JWT refresh tokens, session state, and rate-limiting counters. TTL-based eviction with 15min default for sessions. Replication factor 2, persistence disabled for performance.
+  business: Keeps users logged in and pages loading fast. When you open the app and it remembers who you are without asking you to log in again � that is this component doing its job.
+interfaces:
+  - direction: provides
+    type: db
+    description: Session read/write for authentication flows
+  - direction: provides
+    type: db
+    description: Rate limiting counters for API gateway
+relationships:
+  - target: auth-service
+    type: communicates-with
+    connector: db
+    description: Stores and validates session tokens
+  - target: api-gateway
+    type: communicates-with
+    connector: db
+    description: Rate limiting counter storage
+risks:
+  - Data loss on full cluster restart � sessions require re-authentication
+  - Memory pressure under peak load may trigger early evictions
