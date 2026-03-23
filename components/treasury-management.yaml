@@ -1,0 +1,50 @@
+id: treasury-management
+name: Treasury Management System
+type: application
+status: production
+owner: treasury-team
+tags:
+  - treasury
+  - murex
+  - trading
+  - risk
+  - positions
+description:
+  oneliner: Trading and risk management platform for treasury operations
+  technical: Murex MX.3 deployment covering FX, fixed income, and derivatives trading. Real-time position management, P&L calculation, and market risk (VaR). Connects to Bloomberg for market data, SWIFT for trade confirmations, and core banking for settlement. Oracle 19c backend, ~200 concurrent users.
+  business: Where the bank trades currencies, bonds, and other financial instruments. Traders use it to execute deals, and risk managers use it to make sure the bank is not taking on too much risk. Every morning it calculates how much money the bank could lose in a bad day � and makes sure that number stays within limits.
+interfaces:
+  - direction: provides
+    type: rest
+    description: Position and P&L data for risk dashboards
+  - direction: consumes
+    type: async
+    target: bloomberg-market-data
+    description: Real-time market data for pricing
+  - direction: consumes
+    type: rest
+    target: market-data-cache
+    description: Cached FX rates for valuation
+relationships:
+  - target: bloomberg-market-data
+    type: depends-on
+    connector: async
+    description: Live market data for trading decisions
+  - target: market-data-cache
+    type: reads-from
+    connector: rest
+    description: Cached prices for batch valuations
+  - target: swift-gateway
+    type: communicates-with
+    connector: rest
+    description: Trade confirmations via SWIFT
+  - target: core-banking-system
+    type: communicates-with
+    connector: rest
+    description: Settlement instructions to core banking
+  - target: internal-zone
+    type: child-of
+    description: Deployed in internal trusted zone
+risks:
+  - Market data feed interruption halts real-time pricing
+  - End-of-day risk calculations depend on complete trade capture
