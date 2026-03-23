@@ -1,0 +1,49 @@
+id: regulatory-reporting-pipeline
+name: Regulatory Reporting Pipeline
+type: data-pipeline
+status: production
+owner: regulatory-team
+tags:
+  - etl
+  - regulatory
+  - reporting
+  - compliance
+  - spark
+description:
+  oneliner: ETL pipeline that aggregates transaction data for regulatory submissions
+  technical: Apache Spark on Kubernetes with daily and intraday schedules. Reads from transaction ledger and canonical data store, applies regulatory calculation rules (via regulatory-calc-library), transforms into COREP/FINREP/AnaCredit formats. Output lands in data lake as parquet files and generates PDF reports to document archive.
+  business: Collects all the transaction data the regulator needs to see and packages it in exactly the format they require. Runs every night so the compliance team has fresh reports each morning � and can run on demand when the regulator asks for ad-hoc data.
+interfaces:
+  - direction: consumes
+    type: db
+    target: transaction-ledger-db
+    description: Reads daily transaction records
+  - direction: consumes
+    type: db
+    target: silver-canonical-store
+    description: Reads canonical reference data
+  - direction: provides
+    type: file
+    description: COREP/FINREP/AnaCredit formatted output files
+relationships:
+  - target: transaction-ledger-db
+    type: reads-from
+    connector: db
+    description: Source transaction data
+  - target: silver-canonical-store
+    type: reads-from
+    connector: db
+    description: Reference and master data
+  - target: document-archive
+    type: writes-to
+    connector: file
+    description: Generated regulatory reports (PDF)
+  - target: data-lake-platform
+    type: child-of
+    description: Part of the enterprise data lake platform
+  - target: regulatory-calc-library
+    type: depends-on
+    description: Uses regulatory calculation rules
+risks:
+  - Pipeline failure before regulatory deadline requires manual intervention
+  - Schema changes in source systems can silently break transformations
