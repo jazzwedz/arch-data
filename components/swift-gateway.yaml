@@ -28,6 +28,10 @@ interfaces:
     type: async
     target: event-bus
     description: Publishes message status updates (sent, acknowledged, rejected)
+  - direction: consumes
+    type: rest
+    target: monitoring-platform
+    description: Reports SWIFT message delivery status and error rates
 dependencies:
   - id: payment-service
     connector: rest
