@@ -7,6 +7,9 @@ tags:
   - frontend
   - customer-facing
   - ux
+  - customer
+  - UX
+  - CX
 description:
   oneliner: Web application for customers to manage their account and services
   technical: Next.js 14 application with App Router, server-side rendering and React Server Components. Uses Tailwind CSS + shadcn/ui design system. State managed via TanStack Query with optimistic updates. Monitoring via Sentry, analytics via Segment.
