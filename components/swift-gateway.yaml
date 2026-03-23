@@ -33,7 +33,7 @@ interfaces:
     target: monitoring-platform
     description: Reports SWIFT message delivery status and error rates
 risks:
-  - SWIFT outage means no international payments ï¿½ direct revenue and regulatory impact
+  - SWIFT outage means no international payments Ã¯Â¿Â½ direct revenue and regulatory impact
   - Message format errors can result in rejected payments and manual intervention
   - ISO 20022 migration deadline requires ongoing format conversion work
   - Security compromise could enable unauthorized fund transfers globally
@@ -54,3 +54,6 @@ relationships:
     type: writes-to
     connector: async
     description: Archives all SWIFT traffic for audit
+  - target: payments-context
+    type: child-of
+    description: Part of the Payments bounded context
