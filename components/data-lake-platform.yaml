@@ -36,6 +36,10 @@ interfaces:
     type: db
     target: transaction-ledger-db
     description: Daily batch load of transaction data for analytics
+  - direction: consumes
+    type: rest
+    target: monitoring-platform
+    description: Pipeline monitoring and data quality alerting
 dependencies:
   - id: event-bus
     connector: async
