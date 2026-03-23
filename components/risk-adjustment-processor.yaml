@@ -27,6 +27,10 @@ interfaces:
     type: db
     target: state-store
     description: Reads and writes pipeline state and data completeness flags
+  - direction: consumes
+    type: db
+    target: cashflow-event-store
+    description: Reads cashflow events for risk adjustment
 dependencies:
   - id: event-bus
     connector: async
