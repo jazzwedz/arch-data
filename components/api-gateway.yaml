@@ -27,13 +27,6 @@ interfaces:
     type: db
     target: redis-cache
     description: Rate limiting counters and session cache
-risks:
-  - Single point of failure - gateway outage means full system outage
-  - High throughput requires regular load testing
-  - Routing rule configuration is complex and error-prone
-diagram:
-  color: '#3B82F6'
-  shape: hexagon
 relationships:
   - target: identity-service
     type: depends-on
@@ -55,3 +48,20 @@ relationships:
   - target: dmz-boundary
     type: child-of
     description: Deployed in DMZ network zone
+risks:
+  - Single point of failure - gateway outage means full system outage
+  - High throughput requires regular load testing
+  - Routing rule configuration is complex and error-prone
+business_capabilities:
+  - Customer Management
+  - Product Management
+nfr:
+  availability: 99%
+  max_latency: 200ms
+  rto: '4'
+  throughput: 12r/s
+  data_classification: public
+  scaling: vertical
+diagram:
+  color: '#3B82F6'
+  shape: hexagon
