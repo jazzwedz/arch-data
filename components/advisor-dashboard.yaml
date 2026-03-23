@@ -24,6 +24,14 @@ interfaces:
     type: rest
     target: payment-service
     description: Initiates and tracks client fund transfers and payments
+  - direction: consumes
+    type: rest
+    target: identity-service
+    description: User authentication and session management
+  - direction: consumes
+    type: file
+    target: shared-ui-library
+    description: Shared UI components and design system
 dependencies:
   - id: api-gateway
     connector: rest
