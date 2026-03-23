@@ -1,17 +1,16 @@
 id: retro-efr-service
-name: Retro EFR Service
+name: Rates Service
 type: microservice
 status: production
 owner: retro-platform-team
 tags:
   - core
   - retrocession
-  - efr
   - financial-reporting
 description:
   oneliner: Enterprise Financial Reporting service for retrocession cashflow processing
-  technical: Java-based microservice orchestrating the end-to-end retrocession financial reporting pipeline. Generates Risk Adjustment (RA) outputs by consuming data from the silver_canonical layer, applying exchange rate conversions using quarterly average rates from MDM, and producing SICS-compatible bookings. Supports both final close runs (full quarterly rates) and interim runs (proxy average rates). Implements the Saga pattern for distributed transaction consistency across EFR, CIL, and IGR layers.
-  business: Core service that automates the generation of retrocession financial reports, replacing manual processes previously handled by the Group Retro Manager (GRM). Ensures accurate currency conversion and timely reporting for both internal and external retrocession arrangements.
+  technical: Java-based microservice orchestrating the end-to-end retrocession financial reporting pipeline. Generates Risk Adjustment (RA) outputs by consuming data from the layer, applying exchange rate conversions using quarterly average rates from , and producing SICS-compatible bookings. Supports both final close runs (full quarterly rates) and interim runs (proxy average rates). Implements the Saga pattern for distributed transaction consistency across layers.
+  business: Core service that automates the generation of retrocession financial reports, replacing manual processes previously handled by the system. Ensures accurate currency conversion and timely reporting for both internal and external retrocession arrangements.
 interfaces:
   - direction: provides
     type: rest
@@ -30,7 +29,7 @@ interfaces:
   - direction: consumes
     type: async
     target: event-bus
-    description: Publishes retro EFR calculation results
+    description: Publishes retro calculation results
   - direction: consumes
     type: db
     target: state-store
