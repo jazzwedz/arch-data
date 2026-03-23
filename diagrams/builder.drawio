@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mxfile host="arch-tool" modified="2026-03-23T20:13:20.613Z" type="device">
+<mxfile host="arch-tool" modified="2026-03-23T20:15:56.260Z" type="device">
   <diagram id="diagram-1" name="builder">
     <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="900">
       <root>
@@ -14,6 +14,7 @@
         <UserObject label="SWIFT Gateway" arch_id="swift-gateway" arch_type="gateway" id="8"><mxCell style="rhombus;fillColor=#e1d5e7;strokeColor=#9673a6;fontStyle=1;fontSize=11;" vertex="1" parent="1"><mxGeometry x="420" y="710" width="120" height="60" as="geometry"/></mxCell></UserObject>
         <UserObject label="DMZ" arch_id="dmz-boundary" arch_type="boundary" id="9"><mxCell style="rounded=1;fillColor=#fde8e8;strokeColor=#c62828;fontStyle=1;fontSize=11;strokeWidth=2;" vertex="1" parent="1"><mxGeometry x="760" y="460" width="160" height="80" as="geometry"/></mxCell></UserObject>
         <UserObject label="GL Posting Module" arch_id="gl-posting-module" arch_type="module" id="10"><mxCell style="rounded=1;fillColor=#f3e5f5;strokeColor=#8e24aa;fontStyle=1;fontSize=11;" vertex="1" parent="1"><mxGeometry x="750" y="640" width="100" height="50" as="geometry"/></mxCell></UserObject>
+        <mxCell id="11" value="DB" style="endArrow=ERmany;endFill=0;strokeColor=#d6b656;fontSize=10;" edge="1" parent="1" source="2" target="4" connector_type="db"><mxGeometry relative="1" as="geometry"/></mxCell>
       </root>
     </mxGraphModel>
   </diagram>
