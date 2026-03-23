@@ -16,7 +16,7 @@ description:
 interfaces:
   - direction: provides
     type: rest
-    description: Transaction scoring API ï¿½ accepts transaction details, returns risk score and recommendation (allow/block/review)
+    description: Transaction scoring API Ã¯Â¿Â½ accepts transaction details, returns risk score and recommendation (allow/block/review)
   - direction: provides
     type: async
     description: Publishes fraud alerts and case creation events to downstream systems
@@ -72,3 +72,6 @@ relationships:
     type: reads-from
     connector: db
     description: Reads price data for transaction value checks
+  - target: internal-zone
+    type: child-of
+    description: Deployed in internal trusted zone
