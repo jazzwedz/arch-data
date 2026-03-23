@@ -1,0 +1,32 @@
+id: gl-posting-module
+name: GL Posting Module
+type: module
+status: production
+owner: core-banking-team
+tags:
+  - general-ledger
+  - accounting
+  - postings
+  - core-module
+description:
+  oneliner: General ledger posting engine handling all double-entry bookkeeping
+  technical: Core T24 module (EB.POSTING) responsible for all GL entries. Enforces double-entry accounting rules, multi-currency posting with real-time FX conversion, and automated reversal logic. Processes ~500k postings daily. Supports both online (real-time) and batch posting modes. All entries immutable after end-of-day closure.
+  business: Every time money moves in the bank � a payment, an interest charge, a fee � this module records it as a double-entry in the books. Debit one account, credit another, always balanced. The finance team relies on these entries for financial statements, and auditors check them for accuracy.
+interfaces:
+  - direction: provides
+    type: rest
+    description: Posting API for real-time GL entries
+  - direction: provides
+    type: db
+    description: GL query interface for reporting
+relationships:
+  - target: core-banking-system
+    type: child-of
+    description: Core module within the banking system
+  - target: transaction-ledger-db
+    type: writes-to
+    connector: db
+    description: Persists all GL entries
+risks:
+  - Posting errors require complex reversal procedures
+  - Batch closure window is inflexible � late postings roll to next business day
