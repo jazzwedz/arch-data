@@ -23,6 +23,14 @@ interfaces:
     type: rest
     target: stripe-api
     description: Stripe API pre kartové platby
+  - direction: consumes
+    type: async
+    target: event-bus
+    description: Publishes payment confirmation and failure events
+  - direction: consumes
+    type: db
+    target: redis-cache
+    description: Idempotency keys and transaction deduplication cache
 dependencies:
   - id: payment-db
     connector: db
