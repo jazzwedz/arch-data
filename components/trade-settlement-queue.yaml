@@ -28,16 +28,21 @@ interfaces:
     type: rest
     target: monitoring-platform
     description: Reports queue depth, lag, and settlement metrics
-dependencies:
-  - id: event-bus
-    connector: async
-  - id: monitoring-platform
-    connector: rest
 risks:
-  - Message ordering is critical � out-of-order processing can cause failed settlements
+  - Message ordering is critical ï¿½ out-of-order processing can cause failed settlements
   - Broker failure during market close could delay settlement and trigger regulatory penalties
   - Schema evolution must be carefully managed to avoid breaking downstream consumers
   - Compliance topic retention requirements differ by jurisdiction
 diagram:
   color: '#D97706'
   shape: round
+relationships:
+  - target: event-bus
+    type: depends-on
+    connector: async
+  - target: monitoring-platform
+    type: depends-on
+    connector: rest
+  - target: payments-context
+    type: child-of
+    description: Part of the Payments bounded context
