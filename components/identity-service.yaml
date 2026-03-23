@@ -22,6 +22,18 @@ interfaces:
   - direction: provides
     type: async
     description: 'Eventy pri login, logout, zmene role (Kafka topic: identity.events)'
+  - direction: consumes
+    type: db
+    target: user-db
+    description: Reads and writes user credentials and profile data
+  - direction: consumes
+    type: db
+    target: redis-cache
+    description: Session token cache and rate limiting
+  - direction: consumes
+    type: async
+    target: notification-service
+    description: Triggers notifications for login alerts and password resets
 dependencies:
   - id: user-db
     connector: db
