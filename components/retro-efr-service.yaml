@@ -35,7 +35,7 @@ interfaces:
     target: state-store
     description: Reads calculation state for retro processing
 dependencies:
-  - id: silver-canonical-store
+  - id: order-service
     connector: db
   - id: mdm-exchange-rate
     connector: rest
