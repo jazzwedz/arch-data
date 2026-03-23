@@ -1,0 +1,44 @@
+id: core-banking-system
+name: Core Banking System
+type: application
+status: production
+owner: core-banking-team
+tags:
+  - core-banking
+  - monolith
+  - accounts
+  - ledger
+  - temenos
+description:
+  oneliner: Central banking application managing accounts, ledger, and core financial operations
+  technical: Temenos T24 (R22) running on Oracle 19c RAC. Handles account management, general ledger, interest calculation, and regulatory reporting feeds. ~800 COBOL-era modules progressively wrapped with REST APIs. Deployed on-premise across two data centers in active-passive configuration. Batch window 22:00-06:00 CET.
+  business: The heart of the bank. Every account balance, every interest calculation, every transaction that hits the general ledger goes through this system. It has been running for 15 years and knows about every account the bank has ever opened. Newer services call it for the source of truth on customer balances.
+interfaces:
+  - direction: provides
+    type: rest
+    description: Account balance and transaction APIs
+  - direction: provides
+    type: db
+    description: Direct GL access for reporting
+  - direction: provides
+    type: file
+    description: Regulatory reporting feeds (daily batch)
+  - direction: consumes
+    type: rest
+    target: payment-service
+    description: Payment execution requests
+relationships:
+  - target: transaction-ledger-db
+    type: depends-on
+    connector: db
+    description: Primary data store for all financial records
+  - target: payments-context
+    type: child-of
+    description: Core financial engine of the payments domain
+  - target: internal-zone
+    type: child-of
+    description: Deployed in internal trusted zone
+risks:
+  - Single point of failure for all account operations
+  - Batch window constraints limit real-time processing capabilities
+  - Legacy COBOL modules are difficult to modify and test
