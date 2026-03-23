@@ -25,8 +25,9 @@ interfaces:
     type: db
     target: user-db
     description: Read/write user credentials and sessions
-dependencies:
-  - id: user-db
+relationships:
+  - target: user-db
+    type: depends-on
     connector: db
 risks:
   - Single point of failure for all authenticated requests
