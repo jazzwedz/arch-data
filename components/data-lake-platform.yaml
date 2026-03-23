@@ -40,20 +40,34 @@ interfaces:
     type: rest
     target: monitoring-platform
     description: Pipeline monitoring and data quality alerting
-dependencies:
-  - id: event-bus
-    connector: async
-  - id: user-db
-    connector: db
-  - id: transaction-ledger-db
-    connector: db
-  - id: monitoring-platform
-    connector: rest
 risks:
-  - Contains sensitive data from across the institution � data governance failures have regulatory consequences
+  - Contains sensitive data from across the institution ï¿½ data governance failures have regulatory consequences
   - Pipeline failures can delay regulatory reports with submission deadlines
-  - Compute costs scale with usage � unoptimized queries can generate unexpected bills
+  - Compute costs scale with usage ï¿½ unoptimized queries can generate unexpected bills
   - Data quality issues in source systems propagate to analytics and ML models
 diagram:
   color: '#7C3AED'
   shape: round
+relationships:
+  - target: event-bus
+    type: depends-on
+    connector: async
+    description: Kafka infrastructure for data ingestion
+  - target: user-db
+    type: reads-from
+    connector: db
+    description: Source system for customer data
+  - target: transaction-ledger-db
+    type: reads-from
+    connector: db
+    description: Source system for transaction data
+  - target: monitoring-platform
+    type: communicates-with
+    connector: rest
+    description: Pipeline health metrics and alerts
+  - target: regulatory-reporting-pipeline
+    type: parent-of
+    description: Regulatory ETL pipeline runs on this platform
+  - target: customer-data-pipeline
+    type: parent-of
+    description: Customer CDC pipeline runs on this platform
