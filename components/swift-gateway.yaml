@@ -32,18 +32,25 @@ interfaces:
     type: rest
     target: monitoring-platform
     description: Reports SWIFT message delivery status and error rates
-dependencies:
-  - id: payment-service
-    connector: rest
-  - id: event-bus
-    connector: async
-  - id: monitoring-platform
-    connector: rest
 risks:
-  - SWIFT outage means no international payments � direct revenue and regulatory impact
+  - SWIFT outage means no international payments ï¿½ direct revenue and regulatory impact
   - Message format errors can result in rejected payments and manual intervention
   - ISO 20022 migration deadline requires ongoing format conversion work
   - Security compromise could enable unauthorized fund transfers globally
 diagram:
   color: '#0284C7'
   shape: hexagon
+relationships:
+  - target: payment-service
+    type: depends-on
+    connector: rest
+  - target: event-bus
+    type: depends-on
+    connector: async
+  - target: monitoring-platform
+    type: depends-on
+    connector: rest
+  - target: swift-message-store
+    type: writes-to
+    connector: async
+    description: Archives all SWIFT traffic for audit
