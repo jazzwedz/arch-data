@@ -12,7 +12,7 @@ tags:
 description:
   oneliner: Nightly batch job that reconciles all financial positions across systems
   technical: Spring Batch application running on Kubernetes CronJob at 22:00 CET. Compares positions in transaction ledger against external custodian records (via SWIFT), booking system (SICS), and payment processor. Generates break reports and auto-resolves known break patterns. Typical runtime 45-90 minutes for ~2M positions.
-  business: Every evening after markets close, this job checks that the bank knows about every single trade and payment from the day. If something does not add up � say a payment was sent but not recorded � it flags the discrepancy so the operations team can fix it first thing in the morning.
+  business: Every evening after markets close, this job checks that the bank knows about every single trade and payment from the day. If something does not add up ï¿½ say a payment was sent but not recorded ï¿½ it flags the discrepancy so the operations team can fix it first thing in the morning.
 interfaces:
   - direction: consumes
     type: db
@@ -46,6 +46,9 @@ relationships:
     type: communicates-with
     connector: rest
     description: Sends alerts on critical breaks
+  - target: payments-context
+    type: child-of
+    description: Part of the Payments bounded context
 risks:
   - Delayed start due to upstream data latency impacts morning operations
   - Unresolved breaks accumulate if auto-resolution rules are not maintained
