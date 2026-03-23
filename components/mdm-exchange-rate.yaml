@@ -19,7 +19,6 @@ interfaces:
   - direction: provides
     type: async
     description: Publishes rate update events when new quarterly rates are finalized
-dependencies: []
 risks:
   - Stale or incorrect rates propagate to all downstream financial calculations
   - Quarterly rate finalization timing creates a window where proxy rates must be used
@@ -27,3 +26,8 @@ risks:
 diagram:
   color: '#7C3AED'
   shape: rectangle
+relationships:
+  - target: market-data-cache
+    type: communicates-with
+    connector: rest
+    description: Provides fallback exchange rates when primary feed is down
