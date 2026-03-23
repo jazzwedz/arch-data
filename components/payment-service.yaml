@@ -15,14 +15,14 @@ description:
 interfaces:
   - direction: provides
     type: rest
-    description: Payment API â€“ initiate, capture, refund, status
+    description: Payment API Ã¢â‚¬â€œ initiate, capture, refund, status
   - direction: provides
     type: async
     description: Eventy payment.completed, payment.failed, refund.processed na Kafka
   - direction: consumes
     type: rest
     target: stripe-api
-    description: Stripe API pre kartovÃ© platby
+    description: Stripe API pre kartovÃƒÂ© platby
   - direction: consumes
     type: async
     target: event-bus
@@ -54,3 +54,6 @@ relationships:
   - target: payments-context
     type: child-of
     description: Part of the Payments bounded context
+  - target: internal-zone
+    type: child-of
+    description: Deployed in internal trusted zone
