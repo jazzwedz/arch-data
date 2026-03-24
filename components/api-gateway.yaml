@@ -49,6 +49,10 @@ relationships:
     type: parent-of
     description: Deployed in DMZ network zone
     connector: ''
+  - target: dmz-boundary
+    type: writes-to
+    description: ''
+    connector: rest
 risks:
   - Single point of failure - gateway outage means full system outage
   - High throughput requires regular load testing
@@ -56,6 +60,8 @@ risks:
 business_capabilities:
   - Customer Management
   - Product Management
+  - Payment Processing
+  - Document Management
 nfr:
   availability: 99%
   max_latency: 200ms
