@@ -10,7 +10,7 @@ tags:
   - ingress
 description:
   oneliner: Central entry point for all API requests
-  technical: Kong-based API gateway with rate limiting, JWT validation, request/response transformations, and circuit breaker pattern. Runs as a Kubernetes Ingress controller with horizontal scaling. Supports canary deployments and A/B routing.
+  technical: Kong-based API gateway with rate limiting, JWT validation, request/response transformations, and circuit breaker pattern. Runs as a Kubernetes Ingress controller with horizontal scaling. Supports canary deployments and A/B routing. It is used for POC testing.
   business: Ensures that all external and internal requests to the system pass through a single controlled point, increasing security and enabling comprehensive traffic monitoring.
 interfaces:
   - direction: provides
@@ -63,12 +63,13 @@ business_capabilities:
   - Payment Processing
   - Document Management
 nfr:
-  availability: 99%
+  availability: 98%
   max_latency: 200ms
   rto: '4'
   throughput: 12r/s
   data_classification: public
   scaling: vertical
+  rpo: 10 mins
 diagram:
   color: '#3B82F6'
   shape: hexagon
