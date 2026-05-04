@@ -10,7 +10,7 @@ tags:
   - ingress
 description:
   oneliner: Central entry point for all API requests
-  technical: Kong-based API gateway with rate limiting, JWT validation, request/response transformations, and circuit breaker pattern. Runs as a Kubernetes Ingress controller with horizontal scaling. Supports canary deployments and A/B routing. Used to demonstrate POC capabilities.
+  technical: Kong-based API gateway with rate limiting, JWT validation, request/response transformations, and circuit breaker pattern. Runs as a Kubernetes Ingress controller with horizontal scaling. Supports canary deployments and A/B routing. Used to demonstrate POC capabilities. ljgslngalk nflksdnaldf
   business: Ensures that all external and internal requests to the system pass through a single controlled point, increasing security and enabling comprehensive traffic monitoring.
 interfaces:
   - direction: provides
@@ -27,6 +27,10 @@ interfaces:
     type: db
     target: redis-cache
     description: Rate limiting counters and session cache
+  - direction: provides
+    type: db
+    target: gfdsgfdgfd
+    description: gfdgfdsgds
 relationships:
   - target: identity-service
     type: depends-on
