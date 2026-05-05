@@ -252,11 +252,30 @@ risks:
   - Single point of failure - gateway outage means full system outage
   - High throughput requires regular load testing
   - Routing rule configuration is complex and error-prone
-business_capabilities:
-  - Customer Management
-  - Product Management
-  - Payment Processing
-  - Document Management
+capabilities:
+  - name: Customer Management
+    role: indirect
+  - name: Product Management
+    role: indirect
+  - name: Payment Processing
+    role: indirect
+  - name: Document Management
+    role: indirect
+data:
+  owns:
+    - name: customer record
+      kind: document
+  inputs:
+    - name: table in Databricks
+      kind: reference
+      purpose: load data
+  outputs:
+    - name: table in Databricks
+      kind: reference
+processes:
+  - name: process A
+    role: participant
+    activity: supports step A
 nfr:
   availability: 98%
   max_latency: 200ms
