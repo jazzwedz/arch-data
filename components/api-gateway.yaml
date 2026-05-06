@@ -87,7 +87,7 @@ processes:
     role: participant
     activity: supports step A
 nfr:
-  availability: 999.9%
+  availability: 99.99%
   max_latency: 200ms
   rto: '4'
   throughput: 12r/s
@@ -97,7 +97,6 @@ nfr:
 diagram:
   color: '#3B82F6'
   shape: hexagon
-
 rules:
   - name: Per-tier rate limit
     kind: formula
@@ -145,4 +144,3 @@ rules:
       - identity-service
     description: |
       Mandated by internal security policy SEC-2024-03. The gateway enforces a valid JWT carrying scope 'policies:read' before any request is allowed through to policy-service.
-
