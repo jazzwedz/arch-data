@@ -76,11 +76,11 @@ data:
       kind: document
   inputs:
     - name: table in Databricks
-      kind: reference
+      kind: table
       purpose: load data
   outputs:
     - name: table in Databricks
-      kind: reference
+      kind: table
 processes:
   - name: process A
     role: participant
