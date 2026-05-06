@@ -97,3 +97,52 @@ nfr:
 diagram:
   color: '#3B82F6'
   shape: hexagon
+
+rules:
+  - name: Per-tier rate limit
+    kind: formula
+    summary: Computes the allowed requests-per-second for each tenant based on their commercial tier
+    formula: allowed_rps = base_rps * tier_multiplier
+    description: |
+      tier_multiplier values:
+        Bronze = 1.0
+        Silver = 2.5
+        Gold   = 5.0
+      Drives the Kong rate-limit plugin per-consumer; recalculated nightly when the customer-tier service publishes its TierChanged event.
+  - name: Request priority score
+    kind: formula
+    summary: Prioritises requests during overload so high-value or urgent traffic is served first
+    formula: priority = tier_weight + claim_urgency_factor - rate_used_ratio
+    description: |
+      claim_urgency_factor is 10 when path matches /claims/submit during a declared severe-weather event window, 0 otherwise.
+      rate_used_ratio is current_quota_used / quota_limit and pulls down customers already close to their cap.
+  - name: Throttle policy-holders under fraud review
+    kind: rule
+    summary: Customers with an open fraud investigation get a stricter rate limit on claim endpoints
+    given: Customer has an open fraud investigation flag in identity-service
+    when: Request targets any /api/claims/* endpoint
+    then: Apply a 50% rate-limit reduction and return HTTP 429 with header X-Reason=review-pending if the quota is exceeded
+  - name: Auto-route by policy version
+    kind: rule
+    summary: Legacy policies stay on v1, post-2024 policies are upgraded to v2 endpoints transparently
+    given: Authenticated request to /api/policies or /api/claims
+    when: The caller's primary policy was created on or after 2024-01-01
+    then: Rewrite the path to its /v2 equivalent and forward to claims-service-v2 instead of the legacy v1 service
+  - name: PII data residency
+    kind: constraint
+    summary: Requests carrying customer PII must be processed only in EU regions (GDPR Article 44)
+    enforced_in:
+      - api-gateway
+      - claims-service
+      - customer-service
+    description: |
+      The gateway tags ingressing requests with X-Region: eu-west-1 and refuses to forward payloads that arrive with a non-EU region tag. Downstream services validate the same header before persisting.
+  - name: No anonymous policy access
+    kind: constraint
+    summary: Authenticated session is required for every /api/policies/* endpoint
+    enforced_in:
+      - api-gateway
+      - identity-service
+    description: |
+      Mandated by internal security policy SEC-2024-03. The gateway enforces a valid JWT carrying scope 'policies:read' before any request is allowed through to policy-service.
+
