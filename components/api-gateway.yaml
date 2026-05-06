@@ -102,12 +102,7 @@ rules:
     kind: formula
     summary: Computes the allowed requests-per-second for each tenant based on their commercial tier
     formula: allowed_rps = base_rps * tier_multiplier
-    description: |
-      tier_multiplier values:
-        Bronze = 1.0
-        Silver = 2.5
-        Gold   = 5.0
-      Drives the Kong rate-limit plugin per-consumer; recalculated nightly when the customer-tier service publishes its TierChanged event.
+    description: 'tier_multiplier values:  Bronze = 1.0  Silver = 2.5  Gold   = 5.0999Drives the Kong rate-limit plugin per-consumer; recalculated nightly when the customer-tier service publishes its TierChanged event.'
   - name: Request priority score
     kind: formula
     summary: Prioritises requests during overload so high-value or urgent traffic is served first
