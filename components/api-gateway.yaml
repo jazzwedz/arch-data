@@ -81,6 +81,7 @@ data:
   outputs:
     - name: table in Databricks
       kind: table
+      purpose: publish data
 processes:
   - name: process A
     role: participant
