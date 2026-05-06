@@ -87,7 +87,7 @@ processes:
     role: participant
     activity: supports step A
 nfr:
-  availability: 99.9%
+  availability: 999.9%
   max_latency: 200ms
   rto: '4'
   throughput: 12r/s
