@@ -1,4 +1,2 @@
 ui:
-  blocks:
-    overview:
-      heroContext: false
+  blocks: {}
