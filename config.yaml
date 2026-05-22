@@ -1,2 +1,10 @@
 ui:
-  blocks: {}
+  blocks:
+    overview:
+      risks: false
+    technical:
+      relationships: false
+      nfr: false
+    business:
+      capabilities: false
+      processes: false
