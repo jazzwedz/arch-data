@@ -64,6 +64,10 @@ relationships:
   - target: dmz-boundary
     type: child-of
     description: Only component exposed to external traffic
+  - target: session-cache
+    type: communicates-with
+    connector: db
+    description: Rate limiting counter storage
 risks:
   - Single point of failure - gateway outage means full system outage
   - High throughput requires regular load testing
