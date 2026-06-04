@@ -28,6 +28,10 @@ interfaces:
     type: db
     target: risk-adjustment-processor
     description: Reads cashflow events for risk adjustment
+  - direction: provides
+    type: db
+    target: risk-adjustment-processor
+    description: Reads cashflow events for risk adjustment
 risks:
   - Storage growth requires proactive capacity management - cashflow events are never deleted
   - Replay of large event ranges can overwhelm downstream consumers without throttling
