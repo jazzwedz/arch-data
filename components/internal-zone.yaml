@@ -13,6 +13,10 @@ description:
   oneliner: Trusted internal network zone hosting all core services and databases
   technical: Private network segment with microsegmentation via Kubernetes NetworkPolicies and Calico. Contains all microservices, databases, caches, queues, and internal tooling. Access only via API Gateway from DMZ or VPN for employees. East-west traffic encrypted with mTLS via service mesh (Istio). Zero-trust model � every service authenticates even within the zone.
   business: The vault of the bank where all the real work happens. No one from the outside can reach this directly � they must go through the DMZ first. Even inside, every system checks the identity of every other system it talks to. All customer data, transactions, and business logic live here.
+  description: |-
+    Private network segment with microsegmentation via Kubernetes NetworkPolicies and Calico. Contains all microservices, databases, caches, queues, and internal tooling. Access only via API Gateway from DMZ or VPN for employees. East-west traffic encrypted with mTLS via service mesh (Istio). Zero-trust model � every service authenticates even within the zone.
+
+    The vault of the bank where all the real work happens. No one from the outside can reach this directly � they must go through the DMZ first. Even inside, every system checks the identity of every other system it talks to. All customer data, transactions, and business logic live here.
 interfaces: []
 relationships:
   - target: auth-service
@@ -30,6 +34,9 @@ relationships:
   - target: dmz-boundary
     type: communicates-with
     description: Receives filtered external traffic from DMZ
+  - target: core-banking-system
+    type: parent-of
+    description: Deployed in internal trusted zone
 risks:
   - Lateral movement risk if a single service is compromised
   - Service mesh misconfiguration could bypass mTLS enforcement
