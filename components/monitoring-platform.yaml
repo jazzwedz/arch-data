@@ -13,6 +13,10 @@ description:
   oneliner: Central platform for monitoring, logging, tracing and alerting
   technical: 'Stack: Prometheus + Grafana for metrics, ELK (Elasticsearch, Logstash, Kibana) for logs, Jaeger for distributed tracing. OpenTelemetry Collector as unified ingestion point. PagerDuty integration for on-call alerting. Custom Grafana dashboards for SLI/SLO tracking. Retention policy: metrics 90 days, logs 30 days, traces 7 days.'
   business: Provides real-time visibility into the health and performance of the entire system. Enables rapid detection and diagnosis of issues, minimizing the impact of outages on customers and business.
+  description: |-
+    Stack: Prometheus + Grafana for metrics, ELK (Elasticsearch, Logstash, Kibana) for logs, Jaeger for distributed tracing. OpenTelemetry Collector as unified ingestion point. PagerDuty integration for on-call alerting. Custom Grafana dashboards for SLI/SLO tracking. Retention policy: metrics 90 days, logs 30 days, traces 7 days.
+
+    Provides real-time visibility into the health and performance of the entire system. Enables rapid detection and diagnosis of issues, minimizing the impact of outages on customers and business.
 interfaces:
   - direction: provides
     type: human
@@ -24,7 +28,6 @@ interfaces:
     type: rest
     target: pagerduty-api
     description: PagerDuty API pre eskaláciu alertov na on-call tím
-dependencies: []
 risks:
   - Monitoring outage means other outages go undetected
   - High log volume can cause cost explosion on Elasticsearch cluster
@@ -32,3 +35,8 @@ risks:
 diagram:
   color: '#6366F1'
   shape: rectangle
+relationships:
+  - target: data-lake-platform
+    type: communicates-with
+    connector: rest
+    description: Pipeline health metrics and alerts
