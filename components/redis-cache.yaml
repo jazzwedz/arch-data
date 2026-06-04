@@ -12,11 +12,18 @@ description:
   oneliner: Distributed in-memory cache and session store
   technical: 'Redis 7 Cluster with 6 nodes (3 primary + 3 replica). Used as cache (LRU eviction), session store (TTL 24h), rate limiter (sliding window), distributed lock (Redlock), and pub/sub for real-time features. Maxmemory policy: allkeys-lru. Persistence: RDB snapshots every 15 minutes.'
   business: Dramatically speeds up system response time by keeping frequently used data in memory. Reduces load on databases and external services, saving infrastructure costs.
+  description: |-
+    Redis 7 Cluster with 6 nodes (3 primary + 3 replica). Used as cache (LRU eviction), session store (TTL 24h), rate limiter (sliding window), distributed lock (Redlock), and pub/sub for real-time features. Maxmemory policy: allkeys-lru. Persistence: RDB snapshots every 15 minutes.
+
+    Dramatically speeds up system response time by keeping frequently used data in memory. Reduces load on databases and external services, saving infrastructure costs.
 interfaces:
   - direction: provides
     type: db
     description: Redis protocol (RESP3) na porte 6379 – cache, sessions, locks, pub/sub
-dependencies: []
+  - direction: provides
+    type: db
+    target: api-gateway
+    description: Rate limiting counters and session cache
 risks:
   - Cache invalidation - inconsistency between cache and source of truth
   - Memory pressure - without monitoring, OOM killer can terminate Redis process
@@ -24,3 +31,4 @@ risks:
 diagram:
   color: '#DC2626'
   shape: cylinder
+relationships: []
