@@ -31,6 +31,10 @@ interfaces:
     type: async
     target: data-lake-platform
     description: Real-time event ingestion from operational systems
+  - direction: provides
+    type: async
+    target: treaty-config-service
+    description: Publishes contract configuration change events
 risks:
   - Kafka cluster outage affects all asynchronous communication in the system
   - Schema evolution must be backward compatible, otherwise it breaks consumers
