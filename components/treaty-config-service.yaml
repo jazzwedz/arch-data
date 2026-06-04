@@ -12,6 +12,10 @@ description:
   oneliner: Manages contract terms, deal configurations, and retrocession arrangement parameters
   technical: Spring Boot microservice providing CRUD operations for contract and deal configurations. Stores contract terms including exchange rate definitions, threshold amounts, reporting deadlines, and profit commission rules. Supports versioned configurations with effective dating for contract amendments. Manages deal IDs for both IGR (e.g., Quota Share Retro between group entities) and external retrocession (e.g., arrangements with third-party reinsurers).
   business: Central repository for all retrocession contract parameters that drive automated calculations. Ensures that exchange rate approaches, settlement terms, and allocation rules are consistently applied across all processing runs without manual intervention.
+  description: |-
+    Spring Boot microservice providing CRUD operations for contract and deal configurations. Stores contract terms including exchange rate definitions, threshold amounts, reporting deadlines, and profit commission rules. Supports versioned configurations with effective dating for contract amendments. Manages deal IDs for both IGR (e.g., Quota Share Retro between group entities) and external retrocession (e.g., arrangements with third-party reinsurers).
+
+    Central repository for all retrocession contract parameters that drive automated calculations. Ensures that exchange rate approaches, settlement terms, and allocation rules are consistently applied across all processing runs without manual intervention.
 interfaces:
   - direction: provides
     type: rest
@@ -26,11 +30,10 @@ interfaces:
     type: async
     target: event-bus
     description: Publishes contract configuration change events
-dependencies:
-  - id: config-db
-    connector: db
-  - id: event-bus
-    connector: async
+  - direction: provides
+    type: rest
+    target: igr-calculation-service
+    description: Fetches treaty parameters for calculations
 risks:
   - Incorrect contract configuration directly impacts financial calculations with regulatory consequences
   - Effective dating logic complexity - overlapping contract versions can cause ambiguous lookups
@@ -38,3 +41,10 @@ risks:
 diagram:
   color: '#DC2626'
   shape: rectangle
+relationships:
+  - target: config-db
+    type: depends-on
+    connector: db
+  - target: event-bus
+    type: depends-on
+    connector: async
