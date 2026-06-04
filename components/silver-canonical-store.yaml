@@ -23,6 +23,10 @@ interfaces:
     type: db
     target: retro-efr-service
     description: Reads best_estimate_cashflow_aggregated table from silver_canonical layer
+  - direction: provides
+    type: db
+    target: regulatory-reporting-pipeline
+    description: Reads canonical reference data
 risks:
   - Data quality issues in upstream bronze layer propagate to canonical tables
   - Schema changes require coordinated migration across all consumers
