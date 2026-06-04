@@ -39,6 +39,10 @@ interfaces:
     type: rest
     target: advisor-dashboard
     description: All backend API calls routed through the gateway
+  - direction: provides
+    type: rest
+    target: customer-portal
+    description: VÅ¡etky API volania cez centrÃ¡lny gateway
 relationships:
   - target: identity-service
     type: depends-on
