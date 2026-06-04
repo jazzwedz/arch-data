@@ -12,6 +12,10 @@ description:
   oneliner: Central message broker platform for asynchronous communication
   technical: Apache Kafka cluster (3 brokers, 3 ZooKeeper nodes) with Confluent Schema Registry for Avro schemas. Replication factor 3, min.insync.replicas=2. Retention policy 7 days for most topics, 90 days for audit topics. Kafka Connect for CDC from databases. Monitoring via Confluent Control Center.
   business: Enables individual systems to communicate asynchronously and independently, increasing overall system resilience against outages. Ensures that no message is lost.
+  description: |-
+    Apache Kafka cluster (3 brokers, 3 ZooKeeper nodes) with Confluent Schema Registry for Avro schemas. Replication factor 3, min.insync.replicas=2. Retention policy 7 days for most topics, 90 days for audit topics. Kafka Connect for CDC from databases. Monitoring via Confluent Control Center.
+
+    Enables individual systems to communicate asynchronously and independently, increasing overall system resilience against outages. Ensures that no message is lost.
 interfaces:
   - direction: provides
     type: async
@@ -19,7 +23,10 @@ interfaces:
   - direction: provides
     type: rest
     description: Schema Registry REST API pre registráciu a validáciu schém
-dependencies: []
+  - direction: provides
+    type: async
+    target: fraud-detection-service
+    description: Subscribes to real-time transaction events for scoring
 risks:
   - Kafka cluster outage affects all asynchronous communication in the system
   - Schema evolution must be backward compatible, otherwise it breaks consumers
@@ -27,3 +34,4 @@ risks:
 diagram:
   color: '#F97316'
   shape: cylinder
+relationships: []
