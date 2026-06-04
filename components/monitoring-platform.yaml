@@ -28,6 +28,10 @@ interfaces:
     type: rest
     target: pagerduty-api
     description: PagerDuty API pre eskaláciu alertov na on-call tím
+  - direction: provides
+    type: rest
+    target: trade-settlement-queue
+    description: Reports queue depth, lag, and settlement metrics
 risks:
   - Monitoring outage means other outages go undetected
   - High log volume can cause cost explosion on Elasticsearch cluster
