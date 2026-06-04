@@ -13,6 +13,10 @@ description:
   oneliner: Gateway for sending and receiving SWIFT financial messages
   technical: SWIFT Alliance Lite2 integration gateway handling MT and MX (ISO 20022) message formats. Translates internal payment instructions to SWIFT messages and routes incoming SWIFT messages to appropriate internal services. Supports FIN, InterAct, and FileAct protocols. HSM-backed message signing and encryption. Message queue with guaranteed delivery and automatic retry. Dual-site active-passive deployment for business continuity.
   business: Connects the institution to the global SWIFT network used by 11,000+ banks worldwide. Every international wire transfer, correspondent banking message, and securities settlement instruction flows through this gateway. Without it, the institution cannot send or receive international payments.
+  description: |-
+    SWIFT Alliance Lite2 integration gateway handling MT and MX (ISO 20022) message formats. Translates internal payment instructions to SWIFT messages and routes incoming SWIFT messages to appropriate internal services. Supports FIN, InterAct, and FileAct protocols. HSM-backed message signing and encryption. Message queue with guaranteed delivery and automatic retry. Dual-site active-passive deployment for business continuity.
+
+    Connects the institution to the global SWIFT network used by 11,000+ banks worldwide. Every international wire transfer, correspondent banking message, and securities settlement instruction flows through this gateway. Without it, the institution cannot send or receive international payments.
 interfaces:
   - direction: provides
     type: rest
@@ -57,3 +61,7 @@ relationships:
   - target: payments-context
     type: child-of
     description: Part of the Payments bounded context
+  - target: treasury-management
+    type: communicates-with
+    connector: rest
+    description: Trade confirmations via SWIFT
