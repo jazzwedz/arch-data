@@ -44,6 +44,10 @@ interfaces:
     type: rest
     target: regulatory-calc-library
     description: Market data inputs for mark-to-market and stress scenario calculations
+  - direction: provides
+    type: async
+    target: market-data-cache
+    description: Receives live price updates via feed
 risks:
   - Bloomberg outage directly impacts trading and risk management operations
   - License costs are substantial ï¿½ ~$24k per terminal per year plus data fees
