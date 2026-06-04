@@ -12,11 +12,18 @@ description:
   oneliner: Shared UI component library and design tokens
   technical: React component library built with Vite in library mode, published as a private NPM package (@company/ui). Based on Radix UI primitives with Tailwind CSS. Contains 60+ components, design tokens, icons, and utility hooks. Storybook for documentation and visual tests. Chromatic for visual regression testing. Semantic versioning with changelog.
   business: Ensures consistent visual style and user experience across all frontend applications. Accelerates development of new features by providing ready-made UI building blocks.
+  description: |-
+    React component library built with Vite in library mode, published as a private NPM package (@company/ui). Based on Radix UI primitives with Tailwind CSS. Contains 60+ components, design tokens, icons, and utility hooks. Storybook for documentation and visual tests. Chromatic for visual regression testing. Semantic versioning with changelog.
+
+    Ensures consistent visual style and user experience across all frontend applications. Accelerates development of new features by providing ready-made UI building blocks.
 interfaces:
   - direction: provides
     type: file
     description: NPM balík @company/ui – React komponenty, hooks a design tokens
-dependencies: []
+  - direction: provides
+    type: file
+    target: advisor-dashboard
+    description: Shared UI components and design system
 risks:
   - Breaking change in library propagates to all consuming applications
   - Too frequent major versions slow adoption and create version drift
@@ -24,3 +31,4 @@ risks:
 diagram:
   color: '#A855F7'
   shape: rectangle
+relationships: []
