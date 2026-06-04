@@ -12,6 +12,10 @@ description:
   oneliner: Processing payments, refunds and financial transactions
   technical: Go microservice in a PCI DSS Level 1 compliant environment. Integrates Stripe, PayPal and bank transfers via adapter pattern. Idempotent processing with deduplication key. Two-phase commit for critical transactions. Sensitive data encrypted via AWS KMS, no PAN data in logs.
   business: Ensures secure and reliable payment processing from customers. Supports multiple payment methods and automatic refunds. Directly impacts cash flow and compliance.
+  description: |-
+    Go microservice in a PCI DSS Level 1 compliant environment. Integrates Stripe, PayPal and bank transfers via adapter pattern. Idempotent processing with deduplication key. Two-phase commit for critical transactions. Sensitive data encrypted via AWS KMS, no PAN data in logs.
+
+    Ensures secure and reliable payment processing from customers. Supports multiple payment methods and automatic refunds. Directly impacts cash flow and compliance.
 interfaces:
   - direction: provides
     type: rest
@@ -31,6 +35,10 @@ interfaces:
     type: db
     target: redis-cache
     description: Idempotency keys and transaction deduplication cache
+  - direction: provides
+    type: rest
+    target: advisor-dashboard
+    description: Initiates and tracks client fund transfers and payments
 risks:
   - PCI DSS non-compliance can lead to loss of payment processing license
   - Double-charge scenario on network timeout - idempotency is critical
