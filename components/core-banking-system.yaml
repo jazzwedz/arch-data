@@ -13,6 +13,10 @@ description:
   oneliner: Central banking application managing accounts, ledger, and core financial operations
   technical: Temenos T24 (R22) running on Oracle 19c RAC. Handles account management, general ledger, interest calculation, and regulatory reporting feeds. ~800 COBOL-era modules progressively wrapped with REST APIs. Deployed on-premise across two data centers in active-passive configuration. Batch window 22:00-06:00 CET.
   business: The heart of the bank. Every account balance, every interest calculation, every transaction that hits the general ledger goes through this system. It has been running for 15 years and knows about every account the bank has ever opened. Newer services call it for the source of truth on customer balances.
+  description: |-
+    Temenos T24 (R22) running on Oracle 19c RAC. Handles account management, general ledger, interest calculation, and regulatory reporting feeds. ~800 COBOL-era modules progressively wrapped with REST APIs. Deployed on-premise across two data centers in active-passive configuration. Batch window 22:00-06:00 CET.
+
+    The heart of the bank. Every account balance, every interest calculation, every transaction that hits the general ledger goes through this system. It has been running for 15 years and knows about every account the bank has ever opened. Newer services call it for the source of truth on customer balances.
 interfaces:
   - direction: provides
     type: rest
@@ -41,6 +45,10 @@ relationships:
   - target: gl-posting-module
     type: parent-of
     description: GL posting engine is a core module
+  - target: treasury-management
+    type: communicates-with
+    connector: rest
+    description: Settlement instructions to core banking
 risks:
   - Single point of failure for all account operations
   - Batch window constraints limit real-time processing capabilities
