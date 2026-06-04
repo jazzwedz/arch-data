@@ -13,6 +13,10 @@ description:
   oneliner: ETL pipeline that aggregates transaction data for regulatory submissions
   technical: Apache Spark on Kubernetes with daily and intraday schedules. Reads from transaction ledger and canonical data store, applies regulatory calculation rules (via regulatory-calc-library), transforms into COREP/FINREP/AnaCredit formats. Output lands in data lake as parquet files and generates PDF reports to document archive.
   business: Collects all the transaction data the regulator needs to see and packages it in exactly the format they require. Runs every night so the compliance team has fresh reports each morning � and can run on demand when the regulator asks for ad-hoc data.
+  description: |-
+    Apache Spark on Kubernetes with daily and intraday schedules. Reads from transaction ledger and canonical data store, applies regulatory calculation rules (via regulatory-calc-library), transforms into COREP/FINREP/AnaCredit formats. Output lands in data lake as parquet files and generates PDF reports to document archive.
+
+    Collects all the transaction data the regulator needs to see and packages it in exactly the format they require. Runs every night so the compliance team has fresh reports each morning � and can run on demand when the regulator asks for ad-hoc data.
 interfaces:
   - direction: consumes
     type: db
@@ -44,6 +48,10 @@ relationships:
   - target: regulatory-calc-library
     type: depends-on
     description: Uses regulatory calculation rules
+  - target: document-archive
+    type: communicates-with
+    connector: file
+    description: Receives generated regulatory reports
 risks:
   - Pipeline failure before regulatory deadline requires manual intervention
   - Schema changes in source systems can silently break transformations
