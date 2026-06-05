@@ -35,4 +35,8 @@ links:
   - target: market-data-cache
     role: serves
     description: Falls back to MDM rates when Bloomberg feed is unavailable
+  - target: market-data-cache
+    role: serves
+    protocol: rest
+    description: Provides fallback exchange rates when primary feed is down
 schema_version: 2
