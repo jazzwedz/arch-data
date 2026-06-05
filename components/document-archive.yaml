@@ -33,4 +33,8 @@ links:
     role: reads-from
     protocol: file
     description: Break reports (PDF)
+  - target: regulatory-reporting-pipeline
+    role: reads-from
+    protocol: file
+    description: Generated regulatory reports (PDF)
 schema_version: 2
