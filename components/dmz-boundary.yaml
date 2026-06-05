@@ -36,4 +36,7 @@ links:
   - target: api-gateway
     role: reads-from
     protocol: rest
+  - target: internal-zone
+    role: serves
+    description: Receives filtered external traffic from DMZ
 schema_version: 2
