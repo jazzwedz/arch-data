@@ -50,6 +50,10 @@ interfaces:
     type: rest
     target: customer-portal
     description: User login and authentication
+  - direction: provides
+    type: rest
+    target: fraud-detection-service
+    description: Retrieves customer identity and verification status for risk assessment
 risks:
   - Compromise of this service endangers the entire system - requires regular security audit
   - Identity provider migration is high-risk and complex
