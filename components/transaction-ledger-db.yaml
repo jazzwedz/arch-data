@@ -13,6 +13,10 @@ description:
   oneliner: Immutable ledger of all financial transactions across the institution
   technical: PostgreSQL 15 with Citus extension for horizontal sharding across transaction date ranges. Append-only design with no UPDATE or DELETE operations � corrections are recorded as reversal entries. Partitioned by month with automated partition management. Synchronous replication to standby with RPO=0. Row-level security policies enforce data access by business unit. 12TB active data with 7-year retention.
   business: The single source of truth for every financial transaction. Auditors, regulators, and internal teams rely on this ledger to verify what happened, when, and between whom. Its immutable design means records cannot be tampered with after the fact.
+  description: |-
+    PostgreSQL 15 with Citus extension for horizontal sharding across transaction date ranges. Append-only design with no UPDATE or DELETE operations � corrections are recorded as reversal entries. Partitioned by month with automated partition management. Synchronous replication to standby with RPO=0. Row-level security policies enforce data access by business unit. 12TB active data with 7-year retention.
+
+    The single source of truth for every financial transaction. Auditors, regulators, and internal teams rely on this ledger to verify what happened, when, and between whom. Its immutable design means records cannot be tampered with after the fact.
 interfaces:
   - direction: provides
     type: db
@@ -28,11 +32,10 @@ interfaces:
     type: rest
     target: monitoring-platform
     description: Reports storage usage, replication lag, and query performance
-dependencies:
-  - id: event-bus
-    connector: async
-  - id: monitoring-platform
-    connector: rest
+  - direction: provides
+    type: db
+    target: data-lake-platform
+    description: Daily batch load of transaction data for analytics
 risks:
   - Data loss or corruption would be a catastrophic regulatory and business event
   - Storage growth requires ongoing capacity planning � 12TB and growing
@@ -41,3 +44,10 @@ risks:
 diagram:
   color: '#059669'
   shape: cylinder
+relationships:
+  - target: event-bus
+    type: depends-on
+    connector: async
+  - target: monitoring-platform
+    type: depends-on
+    connector: rest
