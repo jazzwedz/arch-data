@@ -64,4 +64,8 @@ links:
     role: serves
     protocol: rest
     description: Receives break alert triggers from reconciliation
+  - target: swift-message-store
+    role: serves
+    protocol: file
+    description: Provides confirmations for position matching
 schema_version: 2
