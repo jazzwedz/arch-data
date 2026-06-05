@@ -28,6 +28,10 @@ interfaces:
     type: db
     target: auth-service
     description: Read/write user credentials and sessions
+  - direction: provides
+    type: db
+    target: data-lake-platform
+    description: Batch ingestion of customer and account data
 risks:
   - Data loss is a catastrophic scenario - RPO must be < 1 hour
   - GDPR right to erasure requires cascading deletion across all dependent tables
