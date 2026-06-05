@@ -36,6 +36,10 @@ interfaces:
     type: db
     target: data-lake-platform
     description: Daily batch load of transaction data for analytics
+  - direction: provides
+    type: db
+    target: eod-reconciliation
+    description: Internal position data
 risks:
   - Data loss or corruption would be a catastrophic regulatory and business event
   - Storage growth requires ongoing capacity planning � 12TB and growing
