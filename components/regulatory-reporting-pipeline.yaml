@@ -17,41 +17,42 @@ description:
     Apache Spark on Kubernetes with daily and intraday schedules. Reads from transaction ledger and canonical data store, applies regulatory calculation rules (via regulatory-calc-library), transforms into COREP/FINREP/AnaCredit formats. Output lands in data lake as parquet files and generates PDF reports to document archive.
 
     Collects all the transaction data the regulator needs to see and packages it in exactly the format they require. Runs every night so the compliance team has fresh reports each morning � and can run on demand when the regulator asks for ad-hoc data.
-interfaces:
-  - direction: consumes
-    type: db
-    target: transaction-ledger-db
-    description: Reads daily transaction records
-  - direction: consumes
-    type: db
-    target: silver-canonical-store
-    description: Reads canonical reference data
-  - direction: provides
-    type: file
-    description: COREP/FINREP/AnaCredit formatted output files
-relationships:
-  - target: transaction-ledger-db
-    type: reads-from
-    connector: db
-    description: Source transaction data
-  - target: silver-canonical-store
-    type: reads-from
-    connector: db
-    description: Reference and master data
-  - target: document-archive
-    type: writes-to
-    connector: file
-    description: Generated regulatory reports (PDF)
-  - target: data-lake-platform
-    type: child-of
-    description: Part of the enterprise data lake platform
-  - target: regulatory-calc-library
-    type: depends-on
-    description: Uses regulatory calculation rules
-  - target: document-archive
-    type: communicates-with
-    connector: file
-    description: Receives generated regulatory reports
 risks:
   - Pipeline failure before regulatory deadline requires manual intervention
   - Schema changes in source systems can silently break transformations
+links:
+  - target: transaction-ledger-db
+    role: calls
+    protocol: db
+    description: Reads daily transaction records
+  - target: silver-canonical-store
+    role: calls
+    protocol: db
+    description: Reads canonical reference data
+  - target: transaction-ledger-db
+    role: reads-from
+    protocol: db
+    description: Source transaction data
+  - target: silver-canonical-store
+    role: reads-from
+    protocol: db
+    description: Reference and master data
+  - target: document-archive
+    role: writes-to
+    protocol: file
+    description: Generated regulatory reports (PDF)
+  - target: data-lake-platform
+    role: part-of
+    description: Part of the enterprise data lake platform
+  - target: regulatory-calc-library
+    role: calls
+    description: Uses regulatory calculation rules
+  - target: document-archive
+    role: calls
+    protocol: file
+    description: Receives generated regulatory reports
+  - target: document-archive
+    role: serves
+    protocol: file
+    description: Receives generated regulatory reports
+schema_version: 2
