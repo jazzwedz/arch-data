@@ -27,6 +27,10 @@ interfaces:
     type: db
     target: regulatory-reporting-pipeline
     description: Reads canonical reference data
+  - direction: provides
+    type: db
+    target: aml-screening-job
+    description: Customer master data for screening
 risks:
   - Data quality issues in upstream bronze layer propagate to canonical tables
   - Schema changes require coordinated migration across all consumers
