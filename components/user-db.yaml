@@ -24,6 +24,10 @@ interfaces:
     type: async
     target: customer-data-pipeline
     description: CDC events from customer database
+  - direction: provides
+    type: db
+    target: auth-service
+    description: Read/write user credentials and sessions
 risks:
   - Data loss is a catastrophic scenario - RPO must be < 1 hour
   - GDPR right to erasure requires cascading deletion across all dependent tables
