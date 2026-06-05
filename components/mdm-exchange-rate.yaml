@@ -12,6 +12,10 @@ description:
   oneliner: Master Data Management service providing official exchange rates for the insurance group
   technical: Enterprise MDM system serving as the single source of truth for FX rates across the organization. Provides quarterly average rates, daily spot rates, and custom reporting deadline rates (e.g., rates 10 business days before reporting deadlines). Exposes REST API with historical rate queries and supports both real-time and batch consumption. Data sourced from Bloomberg and Reuters feeds with internal validation.
   business: Provides authoritative exchange rates used across all financial reporting, treaty settlements, and regulatory submissions. Critical for ensuring consistent currency conversion across all business units and compliance with treaty-specific exchange rate requirements.
+  description: |-
+    Enterprise MDM system serving as the single source of truth for FX rates across the organization. Provides quarterly average rates, daily spot rates, and custom reporting deadline rates (e.g., rates 10 business days before reporting deadlines). Exposes REST API with historical rate queries and supports both real-time and batch consumption. Data sourced from Bloomberg and Reuters feeds with internal validation.
+
+    Provides authoritative exchange rates used across all financial reporting, treaty settlements, and regulatory submissions. Critical for ensuring consistent currency conversion across all business units and compliance with treaty-specific exchange rate requirements.
 interfaces:
   - direction: provides
     type: rest
@@ -19,6 +23,10 @@ interfaces:
   - direction: provides
     type: async
     description: Publishes rate update events when new quarterly rates are finalized
+  - direction: provides
+    type: rest
+    target: retro-efr-service
+    description: Fetches quarterly average exchange rates from MDM for currency conversion
 risks:
   - Stale or incorrect rates propagate to all downstream financial calculations
   - Quarterly rate finalization timing creates a window where proxy rates must be used
