@@ -28,6 +28,10 @@ interfaces:
     type: db
     target: retro-efr-service
     description: Reads calculation state for retro processing
+  - direction: provides
+    type: db
+    target: risk-adjustment-processor
+    description: Reads and writes pipeline state and data completeness flags
 risks:
   - State corruption can cause pipelines to skip data or re-process unnecessarily
   - Polling-based monitoring adds latency to the overall pipeline execution
