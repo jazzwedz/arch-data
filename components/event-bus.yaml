@@ -16,69 +16,6 @@ description:
     Apache Kafka cluster (3 brokers, 3 ZooKeeper nodes) with Confluent Schema Registry for Avro schemas. Replication factor 3, min.insync.replicas=2. Retention policy 7 days for most topics, 90 days for audit topics. Kafka Connect for CDC from databases. Monitoring via Confluent Control Center.
 
     Enables individual systems to communicate asynchronously and independently, increasing overall system resilience against outages. Ensures that no message is lost.
-interfaces:
-  - direction: provides
-    type: async
-    description: Kafka topics pre publish/subscribe messaging s guaranteed delivery
-  - direction: provides
-    type: rest
-    description: Schema Registry REST API pre registráciu a validáciu schém
-  - direction: provides
-    type: async
-    target: fraud-detection-service
-    description: Subscribes to real-time transaction events for scoring
-  - direction: provides
-    type: async
-    target: data-lake-platform
-    description: Real-time event ingestion from operational systems
-  - direction: provides
-    type: async
-    target: treaty-config-service
-    description: Publishes contract configuration change events
-  - direction: provides
-    type: async
-    target: cashflow-event-store
-    description: Subscribes to cashflow events from Risk Adjustment pipeline for persistence
-  - direction: provides
-    type: async
-    target: igr-calculation-service
-    description: Consumes validated cashflow events from Risk Adjustment pipeline
-  - direction: provides
-    type: async
-    target: notification-service
-    description: Pocuva domenove eventy a triggeruje prislusne notifikacie
-  - direction: provides
-    type: async
-    target: order-service
-    description: Publishes order lifecycle events
-  - direction: provides
-    type: async
-    target: payment-service
-    description: Publishes payment confirmation and failure events
-  - direction: provides
-    type: async
-    target: retro-efr-service
-    description: Publishes retro calculation results
-  - direction: provides
-    type: async
-    target: risk-adjustment-processor
-    description: Consumes raw cashflow events from EFR layer
-  - direction: provides
-    type: async
-    target: swift-gateway
-    description: Publishes message status updates (sent, acknowledged, rejected)
-  - direction: provides
-    type: async
-    target: trade-settlement-queue
-    description: Receives raw trade execution events from the central event bus
-  - direction: provides
-    type: async
-    target: sics-booking-gateway
-    description: Consumes QSR run completion events and RA output events for automatic posting
-  - direction: provides
-    type: async
-    target: transaction-ledger-db
-    description: Receives confirmed transaction events for ledger posting
 risks:
   - Kafka cluster outage affects all asynchronous communication in the system
   - Schema evolution must be backward compatible, otherwise it breaks consumers
@@ -86,4 +23,65 @@ risks:
 diagram:
   color: '#F97316'
   shape: cylinder
-relationships: []
+links:
+  - target: fraud-detection-service
+    role: serves
+    protocol: async
+    description: Subscribes to real-time transaction events for scoring
+  - target: data-lake-platform
+    role: serves
+    protocol: async
+    description: Real-time event ingestion from operational systems
+  - target: treaty-config-service
+    role: serves
+    protocol: async
+    description: Publishes contract configuration change events
+  - target: cashflow-event-store
+    role: serves
+    protocol: async
+    description: Subscribes to cashflow events from Risk Adjustment pipeline for persistence
+  - target: igr-calculation-service
+    role: serves
+    protocol: async
+    description: Consumes validated cashflow events from Risk Adjustment pipeline
+  - target: notification-service
+    role: serves
+    protocol: async
+    description: Pocuva domenove eventy a triggeruje prislusne notifikacie
+  - target: order-service
+    role: serves
+    protocol: async
+    description: Publishes order lifecycle events
+  - target: payment-service
+    role: serves
+    protocol: async
+    description: Publishes payment confirmation and failure events
+  - target: retro-efr-service
+    role: serves
+    protocol: async
+    description: Publishes retro calculation results
+  - target: risk-adjustment-processor
+    role: serves
+    protocol: async
+    description: Consumes raw cashflow events from EFR layer
+  - target: swift-gateway
+    role: serves
+    protocol: async
+    description: Publishes message status updates (sent, acknowledged, rejected)
+  - target: trade-settlement-queue
+    role: serves
+    protocol: async
+    description: Receives raw trade execution events from the central event bus
+  - target: sics-booking-gateway
+    role: serves
+    protocol: async
+    description: Consumes QSR run completion events and RA output events for automatic posting
+  - target: transaction-ledger-db
+    role: serves
+    protocol: async
+    description: Receives confirmed transaction events for ledger posting
+  - target: customer-data-pipeline
+    role: serves
+    protocol: async
+    description: Kafka infrastructure for CDC transport
+schema_version: 2
