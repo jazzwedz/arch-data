@@ -16,70 +16,6 @@ description:
     Kong-based API gateway with rate limiting, JWT validation, request/response transformations, and circuit breaker pattern. Runs as a Kubernetes Ingress controller with horizontal scaling. Supports canary deployments and A/B routing.
 
     Ensures that all external and internal requests to the system pass through a single controlled point, increasing security and enabling comprehensive traffic monitoring.
-interfaces:
-  - direction: provides
-    type: rest
-    description: Proxy pre vsetky downstream REST API endpointy
-  - direction: provides
-    type: grpc
-    description: gRPC reverse proxy pre interne sluzby
-  - direction: consumes
-    type: rest
-    target: identity-service
-    description: Validacia JWT tokenov
-  - direction: consumes
-    type: db
-    target: redis-cache
-    description: Rate limiting counters and session cache
-  - direction: provides
-    type: db
-    target: gfdsgfdgfd
-    description: gfdgfdsgds
-  - direction: provides
-    type: rest
-    target: advisor-dashboard
-    description: All backend API calls routed through the gateway
-  - direction: provides
-    type: rest
-    target: customer-portal
-    description: VÅ¡etky API volania cez centrÃ¡lny gateway
-  - direction: provides
-    type: rest
-    target: bloomberg-market-data
-    description: Internal distribution of normalized market data through the gateway
-relationships:
-  - target: identity-service
-    type: depends-on
-    connector: rest
-  - target: redis-cache
-    type: depends-on
-    connector: db
-  - target: config-db
-    type: depends-on
-    connector: db
-  - target: session-cache
-    type: depends-on
-    connector: db
-    description: Rate limiting counters
-  - target: auth-service
-    type: communicates-with
-    connector: rest
-    description: JWT validation on each request
-  - target: dmz-boundary
-    type: parent-of
-    description: Deployed in DMZ network zone
-    connector: ''
-  - target: dmz-boundary
-    type: writes-to
-    description: ''
-    connector: rest
-  - target: dmz-boundary
-    type: child-of
-    description: Only component exposed to external traffic
-  - target: session-cache
-    type: communicates-with
-    connector: db
-    description: Rate limiting counter storage
 risks:
   - Single point of failure - gateway outage means full system outage
   - High throughput requires regular load testing
@@ -93,18 +29,6 @@ capabilities:
     role: indirect
   - name: Document Management
     role: indirect
-data:
-  owns:
-    - name: customer record
-      kind: document
-  inputs:
-    - name: table in Databricks
-      kind: table
-      purpose: load data
-  outputs:
-    - name: table in Databricks
-      kind: table
-      purpose: publish data
 processes:
   - name: process A
     role: participant
@@ -160,3 +84,54 @@ nfr:
 diagram:
   color: '#3B82F6'
   shape: hexagon
+links:
+  - target: identity-service
+    role: calls
+    protocol: rest
+    description: Validacia JWT tokenov
+  - target: redis-cache
+    role: calls
+    protocol: db
+    description: Rate limiting counters and session cache
+  - target: gfdsgfdgfd
+    role: serves
+    protocol: db
+    description: gfdgfdsgds
+  - target: advisor-dashboard
+    role: serves
+    protocol: rest
+    description: All backend API calls routed through the gateway
+  - target: customer-portal
+    role: serves
+    protocol: rest
+    description: VÅ¡etky API volania cez centrÃ¡lny gateway
+  - target: bloomberg-market-data
+    role: serves
+    protocol: rest
+    description: Internal distribution of normalized market data through the gateway
+  - target: config-db
+    role: calls
+    protocol: db
+    description: Depends on
+  - target: session-cache
+    role: calls
+    protocol: db
+    description: Rate limiting counters
+  - target: auth-service
+    role: calls
+    protocol: rest
+    description: JWT validation on each request
+  - target: dmz-boundary
+    role: contains
+    description: Deployed in DMZ network zone
+  - target: dmz-boundary
+    role: writes-to
+    protocol: rest
+  - target: dmz-boundary
+    role: part-of
+    description: Only component exposed to external traffic
+  - target: auth-service
+    role: serves
+    protocol: rest
+    description: JWT validation on each request
+schema_version: 2
