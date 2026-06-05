@@ -43,4 +43,8 @@ links:
     role: writes-to
     protocol: db
     description: Customer records to screen
+  - target: regulatory-reporting-pipeline
+    role: writes-to
+    protocol: db
+    description: Reference and master data
 schema_version: 2
