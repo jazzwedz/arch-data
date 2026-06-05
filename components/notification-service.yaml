@@ -13,6 +13,10 @@ description:
   oneliner: Centralized system for sending notifications across all channels
   technical: Node.js microservice with template engine (Handlebars) and channel routing. Supports email (SendGrid), SMS (Twilio), push notifications (Firebase), in-app, and webhook. Priority queue with rate limiting per channel. Retry mechanism with exponential backoff. Delivery tracking and bounce handling.
   business: Ensures reliable delivery of transactional and marketing messages to customers. Unifies communication channels and enables business teams to manage templates without developer intervention.
+  description: |-
+    Node.js microservice with template engine (Handlebars) and channel routing. Supports email (SendGrid), SMS (Twilio), push notifications (Firebase), in-app, and webhook. Priority queue with rate limiting per channel. Retry mechanism with exponential backoff. Delivery tracking and bounce handling.
+
+    Ensures reliable delivery of transactional and marketing messages to customers. Unifies communication channels and enables business teams to manage templates without developer intervention.
 interfaces:
   - direction: provides
     type: rest
@@ -32,6 +36,10 @@ interfaces:
     type: db
     target: redis-cache
     description: Template cache and delivery deduplication
+  - direction: provides
+    type: async
+    target: identity-service
+    description: Triggers notifications for login alerts and password resets
 risks:
   - Spam protection - misconfiguration can cause mass sending
   - Email deliverability depends on domain reputation and SPF/DKIM configuration
