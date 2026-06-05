@@ -16,22 +16,6 @@ description:
     PostgreSQL database implementing the Tiger schema for pipeline state management. Tracks data arrival status from upstream sources (SS Data Arrived flag), monitors data load completeness, and maintains execution state for all pipeline runs. Supports the outbound monitoring pattern with configurable polling intervals (5-10 minutes). Provides optimistic locking for concurrent pipeline coordination.
 
     Ensures that financial reports and retrocession calculations only proceed when all required source data has been fully loaded, preventing incomplete or incorrect outputs that could impact regulatory submissions.
-interfaces:
-  - direction: provides
-    type: db
-    description: PostgreSQL access for pipeline state queries, data completeness checks, and run tracking
-  - direction: provides
-    type: db
-    target: igr-calculation-service
-    description: Reads and writes calculation state and intermediate results
-  - direction: provides
-    type: db
-    target: retro-efr-service
-    description: Reads calculation state for retro processing
-  - direction: provides
-    type: db
-    target: risk-adjustment-processor
-    description: Reads and writes pipeline state and data completeness flags
 risks:
   - State corruption can cause pipelines to skip data or re-process unnecessarily
   - Polling-based monitoring adds latency to the overall pipeline execution
@@ -39,4 +23,21 @@ risks:
 diagram:
   color: '#D97706'
   shape: cylinder
-relationships: []
+links:
+  - target: igr-calculation-service
+    role: serves
+    protocol: db
+    description: Reads and writes calculation state and intermediate results
+  - target: retro-efr-service
+    role: serves
+    protocol: db
+    description: Reads calculation state for retro processing
+  - target: risk-adjustment-processor
+    role: serves
+    protocol: db
+    description: Reads and writes pipeline state and data completeness flags
+  - target: eod-reconciliation
+    role: reads-from
+    protocol: db
+    description: Reconciliation state and break records
+schema_version: 2
