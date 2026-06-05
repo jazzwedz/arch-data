@@ -55,6 +55,10 @@ interfaces:
     type: async
     target: payment-service
     description: Publishes payment confirmation and failure events
+  - direction: provides
+    type: async
+    target: retro-efr-service
+    description: Publishes retro calculation results
 risks:
   - Kafka cluster outage affects all asynchronous communication in the system
   - Schema evolution must be backward compatible, otherwise it breaks consumers
