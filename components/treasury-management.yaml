@@ -48,4 +48,8 @@ links:
     role: serves
     protocol: rest
     description: Settlement instructions to core banking
+  - target: swift-gateway
+    role: serves
+    protocol: rest
+    description: Trade confirmations via SWIFT
 schema_version: 2
