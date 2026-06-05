@@ -62,4 +62,8 @@ links:
     role: writes-to
     protocol: db
     description: Internal positions and trades
+  - target: regulatory-reporting-pipeline
+    role: writes-to
+    protocol: db
+    description: Source transaction data
 schema_version: 2
