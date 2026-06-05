@@ -63,6 +63,10 @@ interfaces:
     type: async
     target: risk-adjustment-processor
     description: Consumes raw cashflow events from EFR layer
+  - direction: provides
+    type: async
+    target: swift-gateway
+    description: Publishes message status updates (sent, acknowledged, rejected)
 risks:
   - Kafka cluster outage affects all asynchronous communication in the system
   - Schema evolution must be backward compatible, otherwise it breaks consumers
