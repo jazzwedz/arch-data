@@ -51,6 +51,10 @@ interfaces:
     type: async
     target: order-service
     description: Publishes order lifecycle events
+  - direction: provides
+    type: async
+    target: payment-service
+    description: Publishes payment confirmation and failure events
 risks:
   - Kafka cluster outage affects all asynchronous communication in the system
   - Schema evolution must be backward compatible, otherwise it breaks consumers
