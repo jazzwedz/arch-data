@@ -52,6 +52,10 @@ interfaces:
     type: rest
     target: swift-gateway
     description: Reports SWIFT message delivery status and error rates
+  - direction: provides
+    type: rest
+    target: transaction-ledger-db
+    description: Reports storage usage, replication lag, and query performance
 risks:
   - Monitoring outage means other outages go undetected
   - High log volume can cause cost explosion on Elasticsearch cluster
