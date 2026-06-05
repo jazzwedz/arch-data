@@ -48,4 +48,8 @@ links:
     role: writes-to
     protocol: db
     description: Customer behavioral data for scoring
+  - target: customer-data-pipeline
+    role: writes-to
+    protocol: async
+    description: CDC stream of customer changes
 schema_version: 2
