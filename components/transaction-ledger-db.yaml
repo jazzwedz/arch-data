@@ -58,4 +58,8 @@ links:
     role: writes-to
     protocol: db
     description: Source system for transaction data
+  - target: eod-reconciliation
+    role: writes-to
+    protocol: db
+    description: Internal positions and trades
 schema_version: 2
