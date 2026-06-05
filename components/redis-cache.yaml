@@ -36,6 +36,10 @@ interfaces:
     type: db
     target: identity-service
     description: Session token cache and rate limiting
+  - direction: provides
+    type: db
+    target: notification-service
+    description: Template cache and delivery deduplication
 risks:
   - Cache invalidation - inconsistency between cache and source of truth
   - Memory pressure - without monitoring, OOM killer can terminate Redis process
