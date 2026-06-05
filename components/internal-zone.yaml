@@ -17,29 +17,32 @@ description:
     Private network segment with microsegmentation via Kubernetes NetworkPolicies and Calico. Contains all microservices, databases, caches, queues, and internal tooling. Access only via API Gateway from DMZ or VPN for employees. East-west traffic encrypted with mTLS via service mesh (Istio). Zero-trust model � every service authenticates even within the zone.
 
     The vault of the bank where all the real work happens. No one from the outside can reach this directly � they must go through the DMZ first. Even inside, every system checks the identity of every other system it talks to. All customer data, transactions, and business logic live here.
-interfaces: []
-relationships:
-  - target: auth-service
-    type: parent-of
-    description: Authentication runs in trusted zone
-  - target: identity-service
-    type: parent-of
-    description: Identity management in trusted zone
-  - target: fraud-detection-service
-    type: parent-of
-    description: Fraud detection in trusted zone
-  - target: payment-service
-    type: parent-of
-    description: Payment processing in trusted zone
-  - target: dmz-boundary
-    type: communicates-with
-    description: Receives filtered external traffic from DMZ
-  - target: core-banking-system
-    type: parent-of
-    description: Deployed in internal trusted zone
-  - target: treasury-management
-    type: parent-of
-    description: Deployed in internal trusted zone
 risks:
   - Lateral movement risk if a single service is compromised
   - Service mesh misconfiguration could bypass mTLS enforcement
+links:
+  - target: auth-service
+    role: contains
+    description: Authentication runs in trusted zone
+  - target: identity-service
+    role: contains
+    description: Identity management in trusted zone
+  - target: fraud-detection-service
+    role: contains
+    description: Fraud detection in trusted zone
+  - target: payment-service
+    role: contains
+    description: Payment processing in trusted zone
+  - target: dmz-boundary
+    role: calls
+    description: Receives filtered external traffic from DMZ
+  - target: core-banking-system
+    role: contains
+    description: Deployed in internal trusted zone
+  - target: treasury-management
+    role: contains
+    description: Deployed in internal trusted zone
+  - target: dmz-boundary
+    role: serves
+    description: Filtered traffic forwarded to internal services
+schema_version: 2
