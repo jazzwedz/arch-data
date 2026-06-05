@@ -40,6 +40,10 @@ interfaces:
     type: async
     target: identity-service
     description: Triggers notifications for login alerts and password resets
+  - direction: provides
+    type: async
+    target: order-service
+    description: Triggers order confirmation and status update notifications
 risks:
   - Spam protection - misconfiguration can cause mass sending
   - Email deliverability depends on domain reputation and SPF/DKIM configuration
