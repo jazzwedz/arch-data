@@ -17,50 +17,47 @@ description:
     Spring Batch application running on Kubernetes CronJob at 22:00 CET. Compares positions in transaction ledger against external custodian records (via SWIFT), booking system (SICS), and payment processor. Generates break reports and auto-resolves known break patterns. Typical runtime 45-90 minutes for ~2M positions.
 
     Every evening after markets close, this job checks that the bank knows about every single trade and payment from the day. If something does not add up ï¿½ say a payment was sent but not recorded ï¿½ it flags the discrepancy so the operations team can fix it first thing in the morning.
-interfaces:
-  - direction: consumes
-    type: db
-    target: transaction-ledger-db
-    description: Internal position data
-  - direction: consumes
-    type: file
-    target: swift-message-store
-    description: SWIFT confirmations for matching
-  - direction: provides
-    type: file
-    description: Break reports and reconciliation summaries
-relationships:
-  - target: transaction-ledger-db
-    type: reads-from
-    connector: db
-    description: Internal positions and trades
-  - target: swift-message-store
-    type: reads-from
-    connector: file
-    description: External confirmations
-  - target: state-store
-    type: writes-to
-    connector: db
-    description: Reconciliation state and break records
-  - target: document-archive
-    type: writes-to
-    connector: file
-    description: Break reports (PDF)
-  - target: notification-service
-    type: communicates-with
-    connector: rest
-    description: Sends alerts on critical breaks
-  - target: payments-context
-    type: child-of
-    description: Part of the Payments bounded context
-  - target: swift-message-store
-    type: communicates-with
-    connector: file
-    description: Provides confirmations for position matching
-  - target: document-archive
-    type: communicates-with
-    connector: file
-    description: Receives break reports
 risks:
   - Delayed start due to upstream data latency impacts morning operations
   - Unresolved breaks accumulate if auto-resolution rules are not maintained
+links:
+  - target: transaction-ledger-db
+    role: calls
+    protocol: db
+    description: Internal position data
+  - target: swift-message-store
+    role: calls
+    protocol: file
+    description: SWIFT confirmations for matching
+  - target: transaction-ledger-db
+    role: reads-from
+    protocol: db
+    description: Internal positions and trades
+  - target: swift-message-store
+    role: reads-from
+    protocol: file
+    description: External confirmations
+  - target: state-store
+    role: writes-to
+    protocol: db
+    description: Reconciliation state and break records
+  - target: document-archive
+    role: writes-to
+    protocol: file
+    description: Break reports (PDF)
+  - target: notification-service
+    role: calls
+    protocol: rest
+    description: Sends alerts on critical breaks
+  - target: payments-context
+    role: part-of
+    description: Part of the Payments bounded context
+  - target: document-archive
+    role: calls
+    protocol: file
+    description: Receives break reports
+  - target: document-archive
+    role: serves
+    protocol: file
+    description: Receives break reports
+schema_version: 2
