@@ -41,4 +41,8 @@ links:
     role: serves
     protocol: file
     description: Receives break reports
+  - target: regulatory-reporting-pipeline
+    role: serves
+    protocol: file
+    description: Receives generated regulatory reports
 schema_version: 2
