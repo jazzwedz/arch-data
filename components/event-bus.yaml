@@ -39,6 +39,10 @@ interfaces:
     type: async
     target: cashflow-event-store
     description: Subscribes to cashflow events from Risk Adjustment pipeline for persistence
+  - direction: provides
+    type: async
+    target: igr-calculation-service
+    description: Consumes validated cashflow events from Risk Adjustment pipeline
 risks:
   - Kafka cluster outage affects all asynchronous communication in the system
   - Schema evolution must be backward compatible, otherwise it breaks consumers
