@@ -38,4 +38,8 @@ links:
     role: serves
     protocol: rest
     description: JWT validation on each request
+  - target: session-cache
+    role: serves
+    protocol: db
+    description: Stores and validates session tokens
 schema_version: 2
