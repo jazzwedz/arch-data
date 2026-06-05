@@ -57,6 +57,10 @@ relationships:
     type: communicates-with
     connector: file
     description: Provides confirmations for position matching
+  - target: document-archive
+    type: communicates-with
+    connector: file
+    description: Receives break reports
 risks:
   - Delayed start due to upstream data latency impacts morning operations
   - Unresolved breaks accumulate if auto-resolution rules are not maintained
