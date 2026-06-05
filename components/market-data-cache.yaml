@@ -24,6 +24,10 @@ interfaces:
     type: async
     target: bloomberg-market-data
     description: Receives live price updates via feed
+  - direction: provides
+    type: rest
+    target: treasury-management
+    description: Cached FX rates for valuation
 relationships:
   - target: bloomberg-market-data
     type: reads-from
