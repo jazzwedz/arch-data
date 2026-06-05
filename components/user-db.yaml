@@ -12,11 +12,18 @@ description:
   oneliner: Primary database for user data and identities
   technical: PostgreSQL 16 with pgcrypto for PII column encryption. Primary-replica setup with streaming replication and automatic failover via Patroni. Row-level security for multi-tenant isolation. Automated backups every 6 hours to S3 with point-in-time recovery. Connection pooling via PgBouncer.
   business: Stores all customer data including personal information. Subject to strict security and compliance requirements (GDPR, SOC 2). Availability of this database is critical for the entire system.
+  description: |-
+    PostgreSQL 16 with pgcrypto for PII column encryption. Primary-replica setup with streaming replication and automatic failover via Patroni. Row-level security for multi-tenant isolation. Automated backups every 6 hours to S3 with point-in-time recovery. Connection pooling via PgBouncer.
+
+    Stores all customer data including personal information. Subject to strict security and compliance requirements (GDPR, SOC 2). Availability of this database is critical for the entire system.
 interfaces:
   - direction: provides
     type: db
     description: PostgreSQL wire protocol na porte 5432 cez PgBouncer pool
-dependencies: []
+  - direction: provides
+    type: async
+    target: customer-data-pipeline
+    description: CDC events from customer database
 risks:
   - Data loss is a catastrophic scenario - RPO must be < 1 hour
   - GDPR right to erasure requires cascading deletion across all dependent tables
@@ -24,3 +31,4 @@ risks:
 diagram:
   color: '#06B6D4'
   shape: cylinder
+relationships: []
