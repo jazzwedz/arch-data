@@ -17,29 +17,6 @@ description:
     SWIFT Alliance Lite2 integration gateway handling MT and MX (ISO 20022) message formats. Translates internal payment instructions to SWIFT messages and routes incoming SWIFT messages to appropriate internal services. Supports FIN, InterAct, and FileAct protocols. HSM-backed message signing and encryption. Message queue with guaranteed delivery and automatic retry. Dual-site active-passive deployment for business continuity.
 
     Connects the institution to the global SWIFT network used by 11,000+ banks worldwide. Every international wire transfer, correspondent banking message, and securities settlement instruction flows through this gateway. Without it, the institution cannot send or receive international payments.
-interfaces:
-  - direction: provides
-    type: rest
-    description: Internal API for submitting outbound SWIFT messages (MT103, MT202, pacs.008)
-  - direction: provides
-    type: async
-    description: Publishes inbound SWIFT messages to internal processing queues
-  - direction: consumes
-    type: rest
-    target: payment-service
-    description: Receives payment instructions formatted for SWIFT delivery
-  - direction: consumes
-    type: async
-    target: event-bus
-    description: Publishes message status updates (sent, acknowledged, rejected)
-  - direction: consumes
-    type: rest
-    target: monitoring-platform
-    description: Reports SWIFT message delivery status and error rates
-  - direction: provides
-    type: async
-    target: swift-message-store
-    description: Incoming and outgoing SWIFT messages
 risks:
   - SWIFT outage means no international payments Ã¯Â¿Â½ direct revenue and regulatory impact
   - Message format errors can result in rejected payments and manual intervention
@@ -48,24 +25,36 @@ risks:
 diagram:
   color: '#0284C7'
   shape: hexagon
-relationships:
+links:
   - target: payment-service
-    type: depends-on
-    connector: rest
+    role: calls
+    protocol: rest
+    description: Receives payment instructions formatted for SWIFT delivery
   - target: event-bus
-    type: depends-on
-    connector: async
+    role: calls
+    protocol: async
+    description: Publishes message status updates (sent, acknowledged, rejected)
   - target: monitoring-platform
-    type: depends-on
-    connector: rest
+    role: calls
+    protocol: rest
+    description: Reports SWIFT message delivery status and error rates
   - target: swift-message-store
-    type: writes-to
-    connector: async
+    role: serves
+    protocol: async
+    description: Incoming and outgoing SWIFT messages
+  - target: swift-message-store
+    role: writes-to
+    protocol: async
     description: Archives all SWIFT traffic for audit
   - target: payments-context
-    type: child-of
+    role: part-of
     description: Part of the Payments bounded context
   - target: treasury-management
-    type: communicates-with
-    connector: rest
+    role: calls
+    protocol: rest
     description: Trade confirmations via SWIFT
+  - target: treasury-management
+    role: serves
+    protocol: rest
+    description: Trade confirmations via SWIFT
+schema_version: 2
