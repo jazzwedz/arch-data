@@ -44,6 +44,10 @@ interfaces:
     type: rest
     target: fraud-detection-service
     description: Reports fraud detection metrics and model performance
+  - direction: provides
+    type: rest
+    target: regulatory-calc-library
+    description: Reports calculation performance and error metrics
 risks:
   - Monitoring outage means other outages go undetected
   - High log volume can cause cost explosion on Elasticsearch cluster
