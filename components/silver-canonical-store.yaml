@@ -39,4 +39,8 @@ links:
     role: reads-from
     protocol: db
     description: Mastered customer records
+  - target: aml-screening-job
+    role: writes-to
+    protocol: db
+    description: Customer records to screen
 schema_version: 2
