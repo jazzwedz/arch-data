@@ -17,33 +17,6 @@ description:
     Node.js microservice with template engine (Handlebars) and channel routing. Supports email (SendGrid), SMS (Twilio), push notifications (Firebase), in-app, and webhook. Priority queue with rate limiting per channel. Retry mechanism with exponential backoff. Delivery tracking and bounce handling.
 
     Ensures reliable delivery of transactional and marketing messages to customers. Unifies communication channels and enables business teams to manage templates without developer intervention.
-interfaces:
-  - direction: provides
-    type: rest
-    description: REST API pre priame odoslanie notifikacie a spravu sablon
-  - direction: consumes
-    type: async
-    target: event-bus
-    description: Pocuva domenove eventy a triggeruje prislusne notifikacie
-  - direction: consumes
-    type: rest
-    target: sendgrid-api
-    description: SendGrid API pre odosielanie emailov
-  - direction: provides
-    type: async
-    description: Publishes notification delivery events and status updates
-  - direction: consumes
-    type: db
-    target: redis-cache
-    description: Template cache and delivery deduplication
-  - direction: provides
-    type: async
-    target: identity-service
-    description: Triggers notifications for login alerts and password resets
-  - direction: provides
-    type: async
-    target: order-service
-    description: Triggers order confirmation and status update notifications
 risks:
   - Spam protection - misconfiguration can cause mass sending
   - Email deliverability depends on domain reputation and SPF/DKIM configuration
@@ -51,17 +24,37 @@ risks:
 diagram:
   color: '#EC4899'
   shape: rectangle
-relationships:
-  - target: notification-db
-    type: depends-on
-    connector: db
+links:
   - target: event-bus
-    type: depends-on
-    connector: async
+    role: calls
+    protocol: async
+    description: Pocuva domenove eventy a triggeruje prislusne notifikacie
+  - target: sendgrid-api
+    role: calls
+    protocol: rest
+    description: SendGrid API pre odosielanie emailov
   - target: redis-cache
-    type: depends-on
-    connector: db
+    role: calls
+    protocol: db
+    description: Template cache and delivery deduplication
+  - target: identity-service
+    role: serves
+    protocol: async
+    description: Triggers notifications for login alerts and password resets
+  - target: order-service
+    role: serves
+    protocol: async
+    description: Triggers order confirmation and status update notifications
+  - target: notification-db
+    role: calls
+    protocol: db
+    description: Depends on
   - target: eod-reconciliation
-    type: communicates-with
-    connector: rest
+    role: calls
+    protocol: rest
     description: Receives break alert triggers from reconciliation
+  - target: aml-screening-job
+    role: serves
+    protocol: rest
+    description: Sends urgent match notifications
+schema_version: 2
