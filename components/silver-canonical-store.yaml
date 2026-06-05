@@ -15,22 +15,6 @@ description:
     Databricks Delta Lake layer table conforming to the enterprise canonical data model. Stores cleansed, validated and aggregated cashflow data from upstream sources. Partitioned by quarter and business line. Implements slowly changing dimensions (SCD Type 2) for audit trail. Accessed via Databricks SQL endpoints and JDBC connectivity.
 
     The trusted, enterprise-wide source of aggregated cashflow data used for financial reporting, retrocession calculations, and regulatory submissions. Eliminates data inconsistencies by providing a single canonical view across all reporting consumers.
-interfaces:
-  - direction: provides
-    type: db
-    description: SQL access to best_estimate_cashflow_aggregated and related canonical tables
-  - direction: provides
-    type: db
-    target: retro-efr-service
-    description: Reads best_estimate_cashflow_aggregated table from silver_canonical layer
-  - direction: provides
-    type: db
-    target: regulatory-reporting-pipeline
-    description: Reads canonical reference data
-  - direction: provides
-    type: db
-    target: aml-screening-job
-    description: Customer master data for screening
 risks:
   - Data quality issues in upstream bronze layer propagate to canonical tables
   - Schema changes require coordinated migration across all consumers
@@ -38,4 +22,21 @@ risks:
 diagram:
   color: '#0891B2'
   shape: cylinder
-relationships: []
+links:
+  - target: retro-efr-service
+    role: serves
+    protocol: db
+    description: Reads best_estimate_cashflow_aggregated table from silver_canonical layer
+  - target: regulatory-reporting-pipeline
+    role: serves
+    protocol: db
+    description: Reads canonical reference data
+  - target: aml-screening-job
+    role: serves
+    protocol: db
+    description: Customer master data for screening
+  - target: customer-data-pipeline
+    role: reads-from
+    protocol: db
+    description: Mastered customer records
+schema_version: 2
