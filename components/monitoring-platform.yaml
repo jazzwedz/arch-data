@@ -32,6 +32,10 @@ interfaces:
     type: rest
     target: trade-settlement-queue
     description: Reports queue depth, lag, and settlement metrics
+  - direction: provides
+    type: rest
+    target: bloomberg-market-data
+    description: Reports feed health, latency, and data quality metrics
 risks:
   - Monitoring outage means other outages go undetected
   - High log volume can cause cost explosion on Elasticsearch cluster
