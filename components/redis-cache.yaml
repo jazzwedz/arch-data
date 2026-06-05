@@ -24,6 +24,10 @@ interfaces:
     type: db
     target: api-gateway
     description: Rate limiting counters and session cache
+  - direction: provides
+    type: db
+    target: bloomberg-market-data
+    description: Caches frequently accessed market data for low-latency reads
 risks:
   - Cache invalidation - inconsistency between cache and source of truth
   - Memory pressure - without monitoring, OOM killer can terminate Redis process
