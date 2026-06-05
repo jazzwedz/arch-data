@@ -36,6 +36,10 @@ interfaces:
     type: rest
     target: bloomberg-market-data
     description: Reports feed health, latency, and data quality metrics
+  - direction: provides
+    type: rest
+    target: data-lake-platform
+    description: Pipeline monitoring and data quality alerting
 risks:
   - Monitoring outage means other outages go undetected
   - High log volume can cause cost explosion on Elasticsearch cluster
