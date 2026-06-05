@@ -75,6 +75,10 @@ interfaces:
     type: async
     target: sics-booking-gateway
     description: Consumes QSR run completion events and RA output events for automatic posting
+  - direction: provides
+    type: async
+    target: transaction-ledger-db
+    description: Receives confirmed transaction events for ledger posting
 risks:
   - Kafka cluster outage affects all asynchronous communication in the system
   - Schema evolution must be backward compatible, otherwise it breaks consumers
