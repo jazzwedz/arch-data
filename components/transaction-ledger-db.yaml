@@ -40,6 +40,10 @@ interfaces:
     type: db
     target: eod-reconciliation
     description: Internal position data
+  - direction: provides
+    type: db
+    target: regulatory-reporting-pipeline
+    description: Reads daily transaction records
 risks:
   - Data loss or corruption would be a catastrophic regulatory and business event
   - Storage growth requires ongoing capacity planning � 12TB and growing
