@@ -37,6 +37,9 @@ relationships:
   - target: core-banking-system
     type: parent-of
     description: Deployed in internal trusted zone
+  - target: treasury-management
+    type: parent-of
+    description: Deployed in internal trusted zone
 risks:
   - Lateral movement risk if a single service is compromised
   - Service mesh misconfiguration could bypass mTLS enforcement
