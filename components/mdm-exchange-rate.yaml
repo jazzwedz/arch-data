@@ -16,17 +16,6 @@ description:
     Enterprise MDM system serving as the single source of truth for FX rates across the organization. Provides quarterly average rates, daily spot rates, and custom reporting deadline rates (e.g., rates 10 business days before reporting deadlines). Exposes REST API with historical rate queries and supports both real-time and batch consumption. Data sourced from Bloomberg and Reuters feeds with internal validation.
 
     Provides authoritative exchange rates used across all financial reporting, treaty settlements, and regulatory submissions. Critical for ensuring consistent currency conversion across all business units and compliance with treaty-specific exchange rate requirements.
-interfaces:
-  - direction: provides
-    type: rest
-    description: REST API for querying quarterly average, daily spot, and custom-period exchange rates
-  - direction: provides
-    type: async
-    description: Publishes rate update events when new quarterly rates are finalized
-  - direction: provides
-    type: rest
-    target: retro-efr-service
-    description: Fetches quarterly average exchange rates from MDM for currency conversion
 risks:
   - Stale or incorrect rates propagate to all downstream financial calculations
   - Quarterly rate finalization timing creates a window where proxy rates must be used
@@ -34,8 +23,16 @@ risks:
 diagram:
   color: '#7C3AED'
   shape: rectangle
-relationships:
+links:
+  - target: retro-efr-service
+    role: serves
+    protocol: rest
+    description: Fetches quarterly average exchange rates from MDM for currency conversion
   - target: market-data-cache
-    type: communicates-with
-    connector: rest
+    role: calls
+    protocol: rest
     description: Provides fallback exchange rates when primary feed is down
+  - target: market-data-cache
+    role: serves
+    description: Falls back to MDM rates when Bloomberg feed is unavailable
+schema_version: 2
