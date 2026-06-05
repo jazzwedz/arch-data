@@ -37,4 +37,8 @@ links:
     role: reads-from
     protocol: file
     description: Generated regulatory reports (PDF)
+  - target: eod-reconciliation
+    role: serves
+    protocol: file
+    description: Receives break reports
 schema_version: 2
