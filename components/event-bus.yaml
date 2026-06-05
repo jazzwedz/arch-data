@@ -35,6 +35,10 @@ interfaces:
     type: async
     target: treaty-config-service
     description: Publishes contract configuration change events
+  - direction: provides
+    type: async
+    target: cashflow-event-store
+    description: Subscribes to cashflow events from Risk Adjustment pipeline for persistence
 risks:
   - Kafka cluster outage affects all asynchronous communication in the system
   - Schema evolution must be backward compatible, otherwise it breaks consumers
