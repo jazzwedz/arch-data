@@ -60,4 +60,8 @@ links:
     role: serves
     protocol: file
     description: Receives break reports
+  - target: notification-service
+    role: serves
+    protocol: rest
+    description: Receives break alert triggers from reconciliation
 schema_version: 2
