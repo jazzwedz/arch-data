@@ -36,6 +36,10 @@ interfaces:
     type: db
     target: fraud-detection-service
     description: Reads customer transaction history and behavioral patterns
+  - direction: provides
+    type: db
+    target: identity-service
+    description: Reads and writes user credentials and profile data
 risks:
   - Data loss is a catastrophic scenario - RPO must be < 1 hour
   - GDPR right to erasure requires cascading deletion across all dependent tables
