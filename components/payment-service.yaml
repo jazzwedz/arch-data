@@ -47,6 +47,10 @@ interfaces:
     type: rest
     target: core-banking-system
     description: Payment execution requests
+  - direction: provides
+    type: rest
+    target: swift-gateway
+    description: Receives payment instructions formatted for SWIFT delivery
 risks:
   - PCI DSS non-compliance can lead to loss of payment processing license
   - Double-charge scenario on network timeout - idempotency is critical
