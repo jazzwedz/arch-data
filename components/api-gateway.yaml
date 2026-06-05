@@ -43,6 +43,10 @@ interfaces:
     type: rest
     target: customer-portal
     description: VÅ¡etky API volania cez centrÃ¡lny gateway
+  - direction: provides
+    type: rest
+    target: bloomberg-market-data
+    description: Internal distribution of normalized market data through the gateway
 relationships:
   - target: identity-service
     type: depends-on
