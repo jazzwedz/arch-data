@@ -36,6 +36,10 @@ interfaces:
     type: rest
     target: monitoring-platform
     description: Reports SWIFT message delivery status and error rates
+  - direction: provides
+    type: async
+    target: swift-message-store
+    description: Incoming and outgoing SWIFT messages
 risks:
   - SWIFT outage means no international payments Ã¯Â¿Â½ direct revenue and regulatory impact
   - Message format errors can result in rejected payments and manual intervention
