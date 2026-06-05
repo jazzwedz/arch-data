@@ -54,4 +54,8 @@ links:
     role: serves
     protocol: db
     description: Primary data store for all financial records
+  - target: data-lake-platform
+    role: writes-to
+    protocol: db
+    description: Source system for transaction data
 schema_version: 2
