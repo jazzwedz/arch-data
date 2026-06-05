@@ -12,11 +12,18 @@ description:
   oneliner: External payment provider for card transactions
   technical: Stripe API v2024-01 integration via official SDK. Uses Payment Intents API, Webhook endpoints for async notifications (payment_intent.succeeded, charge.refunded), Stripe Elements for PCI-compliant frontend. Idempotency keys for safe retries. Test/live mode switching via environment variables.
   business: Primary payment provider enabling acceptance of card payments (Visa, Mastercard, AMEX) and digital wallets (Apple Pay, Google Pay). Stripe bears the PCI DSS compliance burden for card data.
+  description: |-
+    Stripe API v2024-01 integration via official SDK. Uses Payment Intents API, Webhook endpoints for async notifications (payment_intent.succeeded, charge.refunded), Stripe Elements for PCI-compliant frontend. Idempotency keys for safe retries. Test/live mode switching via environment variables.
+
+    Primary payment provider enabling acceptance of card payments (Visa, Mastercard, AMEX) and digital wallets (Apple Pay, Google Pay). Stripe bears the PCI DSS compliance burden for card data.
 interfaces:
   - direction: provides
     type: rest
     description: Stripe REST API – PaymentIntents, Refunds, Customers, Webhooks
-dependencies: []
+  - direction: provides
+    type: rest
+    target: payment-service
+    description: Stripe API pre kartovÃƒÂ© platby
 risks:
   - Vendor lock-in - migration to another provider is costly and risky
   - Stripe API version changes may require integration updates
@@ -24,3 +31,4 @@ risks:
 diagram:
   color: '#635BFF'
   shape: rectangle
+relationships: []
