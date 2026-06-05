@@ -32,4 +32,8 @@ links:
     role: serves
     protocol: db
     description: Rate limiting counters
+  - target: auth-service
+    role: serves
+    protocol: db
+    description: Session token storage and validation
 schema_version: 2
