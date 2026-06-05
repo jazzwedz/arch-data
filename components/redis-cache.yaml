@@ -40,6 +40,10 @@ interfaces:
     type: db
     target: notification-service
     description: Template cache and delivery deduplication
+  - direction: provides
+    type: db
+    target: payment-service
+    description: Idempotency keys and transaction deduplication cache
 risks:
   - Cache invalidation - inconsistency between cache and source of truth
   - Memory pressure - without monitoring, OOM killer can terminate Redis process
