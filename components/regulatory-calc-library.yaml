@@ -38,4 +38,7 @@ links:
   - target: credit-scoring-module
     role: serves
     description: Regulatory risk weight calculations
+  - target: lending-context
+    role: serves
+    description: Regulatory capital calculations for loan portfolio
 schema_version: 2
