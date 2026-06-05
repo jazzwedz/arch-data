@@ -16,30 +16,6 @@ description:
     PostgreSQL 16 with pgcrypto for PII column encryption. Primary-replica setup with streaming replication and automatic failover via Patroni. Row-level security for multi-tenant isolation. Automated backups every 6 hours to S3 with point-in-time recovery. Connection pooling via PgBouncer.
 
     Stores all customer data including personal information. Subject to strict security and compliance requirements (GDPR, SOC 2). Availability of this database is critical for the entire system.
-interfaces:
-  - direction: provides
-    type: db
-    description: PostgreSQL wire protocol na porte 5432 cez PgBouncer pool
-  - direction: provides
-    type: async
-    target: customer-data-pipeline
-    description: CDC events from customer database
-  - direction: provides
-    type: db
-    target: auth-service
-    description: Read/write user credentials and sessions
-  - direction: provides
-    type: db
-    target: data-lake-platform
-    description: Batch ingestion of customer and account data
-  - direction: provides
-    type: db
-    target: fraud-detection-service
-    description: Reads customer transaction history and behavioral patterns
-  - direction: provides
-    type: db
-    target: identity-service
-    description: Reads and writes user credentials and profile data
 risks:
   - Data loss is a catastrophic scenario - RPO must be < 1 hour
   - GDPR right to erasure requires cascading deletion across all dependent tables
@@ -47,4 +23,29 @@ risks:
 diagram:
   color: '#06B6D4'
   shape: cylinder
-relationships: []
+links:
+  - target: customer-data-pipeline
+    role: serves
+    protocol: async
+    description: CDC events from customer database
+  - target: auth-service
+    role: serves
+    protocol: db
+    description: Read/write user credentials and sessions
+  - target: data-lake-platform
+    role: serves
+    protocol: db
+    description: Batch ingestion of customer and account data
+  - target: fraud-detection-service
+    role: serves
+    protocol: db
+    description: Reads customer transaction history and behavioral patterns
+  - target: identity-service
+    role: serves
+    protocol: db
+    description: Reads and writes user credentials and profile data
+  - target: credit-scoring-module
+    role: writes-to
+    protocol: db
+    description: Customer behavioral data for scoring
+schema_version: 2
