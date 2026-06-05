@@ -41,4 +41,7 @@ links:
   - target: lending-context
     role: serves
     description: Regulatory capital calculations for loan portfolio
+  - target: regulatory-reporting-pipeline
+    role: serves
+    description: Uses regulatory calculation rules
 schema_version: 2
