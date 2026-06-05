@@ -67,6 +67,10 @@ interfaces:
     type: async
     target: swift-gateway
     description: Publishes message status updates (sent, acknowledged, rejected)
+  - direction: provides
+    type: async
+    target: trade-settlement-queue
+    description: Receives raw trade execution events from the central event bus
 risks:
   - Kafka cluster outage affects all asynchronous communication in the system
   - Schema evolution must be backward compatible, otherwise it breaks consumers
