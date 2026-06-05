@@ -43,6 +43,10 @@ interfaces:
     type: async
     target: order-service
     description: "PoÄ\uDC8DÃºva payment.completed a payment.failed eventy"
+  - direction: provides
+    type: rest
+    target: core-banking-system
+    description: Payment execution requests
 risks:
   - PCI DSS non-compliance can lead to loss of payment processing license
   - Double-charge scenario on network timeout - idempotency is critical
