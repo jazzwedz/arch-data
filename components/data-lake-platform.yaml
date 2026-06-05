@@ -14,32 +14,10 @@ description:
   oneliner: Centralized data platform for analytics, reporting, and machine learning
   technical: Databricks Lakehouse on Azure with Delta Lake storage format. Ingests data from 40+ source systems via structured streaming and batch pipelines. Bronze/Silver/Gold medallion architecture with automated data quality checks at each layer. Unity Catalog for governance and access control. Supports SQL analytics via Databricks SQL warehouses, Python/Spark for data science, and MLflow for model lifecycle management. 200TB+ managed data.
   business: The single place where data from across the institution comes together for analysis. Powers regulatory reporting (Basel III, Solvency II), management dashboards, customer analytics, and the machine learning models used in fraud detection and risk scoring. Replaces dozens of siloed data extracts with one governed, auditable data source.
-interfaces:
-  - direction: provides
-    type: rest
-    description: SQL and REST API access to curated Gold-layer datasets
-  - direction: provides
-    type: db
-    description: Direct table access for authorized analytics and reporting tools
-  - direction: provides
-    type: file
-    description: Automated data exports in CSV, Parquet, and Excel for downstream consumers
-  - direction: consumes
-    type: async
-    target: event-bus
-    description: Real-time event ingestion from operational systems
-  - direction: consumes
-    type: db
-    target: user-db
-    description: Batch ingestion of customer and account data
-  - direction: consumes
-    type: db
-    target: transaction-ledger-db
-    description: Daily batch load of transaction data for analytics
-  - direction: consumes
-    type: rest
-    target: monitoring-platform
-    description: Pipeline monitoring and data quality alerting
+  description: |-
+    Databricks Lakehouse on Azure with Delta Lake storage format. Ingests data from 40+ source systems via structured streaming and batch pipelines. Bronze/Silver/Gold medallion architecture with automated data quality checks at each layer. Unity Catalog for governance and access control. Supports SQL analytics via Databricks SQL warehouses, Python/Spark for data science, and MLflow for model lifecycle management. 200TB+ managed data.
+
+    The single place where data from across the institution comes together for analysis. Powers regulatory reporting (Basel III, Solvency II), management dashboards, customer analytics, and the machine learning models used in fraud detection and risk scoring. Replaces dozens of siloed data extracts with one governed, auditable data source.
 risks:
   - Contains sensitive data from across the institution ï¿½ data governance failures have regulatory consequences
   - Pipeline failures can delay regulatory reports with submission deadlines
@@ -48,26 +26,39 @@ risks:
 diagram:
   color: '#7C3AED'
   shape: round
-relationships:
+links:
   - target: event-bus
-    type: depends-on
-    connector: async
-    description: Kafka infrastructure for data ingestion
+    role: calls
+    protocol: async
+    description: Real-time event ingestion from operational systems
   - target: user-db
-    type: reads-from
-    connector: db
+    role: calls
+    protocol: db
+    description: Batch ingestion of customer and account data
+  - target: transaction-ledger-db
+    role: calls
+    protocol: db
+    description: Daily batch load of transaction data for analytics
+  - target: monitoring-platform
+    role: calls
+    protocol: rest
+    description: Pipeline monitoring and data quality alerting
+  - target: user-db
+    role: reads-from
+    protocol: db
     description: Source system for customer data
   - target: transaction-ledger-db
-    type: reads-from
-    connector: db
+    role: reads-from
+    protocol: db
     description: Source system for transaction data
-  - target: monitoring-platform
-    type: communicates-with
-    connector: rest
-    description: Pipeline health metrics and alerts
   - target: regulatory-reporting-pipeline
-    type: parent-of
+    role: contains
     description: Regulatory ETL pipeline runs on this platform
   - target: customer-data-pipeline
-    type: parent-of
+    role: contains
     description: Customer CDC pipeline runs on this platform
+  - target: monitoring-platform
+    role: serves
+    protocol: rest
+    description: Pipeline health metrics and alerts
+schema_version: 2
