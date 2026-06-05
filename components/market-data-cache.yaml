@@ -47,4 +47,8 @@ links:
     role: writes-to
     protocol: db
     description: Reads price data for transaction value checks
+  - target: treasury-management
+    role: writes-to
+    protocol: rest
+    description: Cached prices for batch valuations
 schema_version: 2
