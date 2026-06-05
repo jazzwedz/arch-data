@@ -134,4 +134,8 @@ links:
     role: serves
     protocol: rest
     description: JWT validation on each request
+  - target: session-cache
+    role: serves
+    protocol: db
+    description: Rate limiting counter storage
 schema_version: 2
