@@ -17,33 +17,6 @@ description:
     PostgreSQL 15 with Citus extension for horizontal sharding across transaction date ranges. Append-only design with no UPDATE or DELETE operations � corrections are recorded as reversal entries. Partitioned by month with automated partition management. Synchronous replication to standby with RPO=0. Row-level security policies enforce data access by business unit. 12TB active data with 7-year retention.
 
     The single source of truth for every financial transaction. Auditors, regulators, and internal teams rely on this ledger to verify what happened, when, and between whom. Its immutable design means records cannot be tampered with after the fact.
-interfaces:
-  - direction: provides
-    type: db
-    description: Read-only SQL access for reporting and analytics systems
-  - direction: provides
-    type: db
-    description: Write access for authorized transaction-posting services only
-  - direction: consumes
-    type: async
-    target: event-bus
-    description: Receives confirmed transaction events for ledger posting
-  - direction: consumes
-    type: rest
-    target: monitoring-platform
-    description: Reports storage usage, replication lag, and query performance
-  - direction: provides
-    type: db
-    target: data-lake-platform
-    description: Daily batch load of transaction data for analytics
-  - direction: provides
-    type: db
-    target: eod-reconciliation
-    description: Internal position data
-  - direction: provides
-    type: db
-    target: regulatory-reporting-pipeline
-    description: Reads daily transaction records
 risks:
   - Data loss or corruption would be a catastrophic regulatory and business event
   - Storage growth requires ongoing capacity planning � 12TB and growing
@@ -52,10 +25,29 @@ risks:
 diagram:
   color: '#059669'
   shape: cylinder
-relationships:
+links:
   - target: event-bus
-    type: depends-on
-    connector: async
+    role: calls
+    protocol: async
+    description: Receives confirmed transaction events for ledger posting
   - target: monitoring-platform
-    type: depends-on
-    connector: rest
+    role: calls
+    protocol: rest
+    description: Reports storage usage, replication lag, and query performance
+  - target: data-lake-platform
+    role: serves
+    protocol: db
+    description: Daily batch load of transaction data for analytics
+  - target: eod-reconciliation
+    role: serves
+    protocol: db
+    description: Internal position data
+  - target: regulatory-reporting-pipeline
+    role: serves
+    protocol: db
+    description: Reads daily transaction records
+  - target: gl-posting-module
+    role: reads-from
+    protocol: db
+    description: Persists all GL entries
+schema_version: 2
