@@ -39,6 +39,10 @@ interfaces:
     type: rest
     target: advisor-dashboard
     description: Initiates and tracks client fund transfers and payments
+  - direction: provides
+    type: async
+    target: order-service
+    description: "PoÄ\uDC8DÃºva payment.completed a payment.failed eventy"
 risks:
   - PCI DSS non-compliance can lead to loss of payment processing license
   - Double-charge scenario on network timeout - idempotency is critical
