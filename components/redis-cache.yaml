@@ -32,6 +32,10 @@ interfaces:
     type: db
     target: fraud-detection-service
     description: Caches recent transaction patterns for real-time scoring
+  - direction: provides
+    type: db
+    target: identity-service
+    description: Session token cache and rate limiting
 risks:
   - Cache invalidation - inconsistency between cache and source of truth
   - Memory pressure - without monitoring, OOM killer can terminate Redis process
