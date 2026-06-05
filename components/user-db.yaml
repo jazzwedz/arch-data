@@ -52,4 +52,8 @@ links:
     role: writes-to
     protocol: async
     description: CDC stream of customer changes
+  - target: data-lake-platform
+    role: writes-to
+    protocol: db
+    description: Source system for customer data
 schema_version: 2
