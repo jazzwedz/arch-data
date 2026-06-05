@@ -46,6 +46,10 @@ interfaces:
     type: rest
     target: advisor-dashboard
     description: User authentication and session management
+  - direction: provides
+    type: rest
+    target: customer-portal
+    description: User login and authentication
 risks:
   - Compromise of this service endangers the entire system - requires regular security audit
   - Identity provider migration is high-risk and complex
