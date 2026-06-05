@@ -44,6 +44,10 @@ relationships:
     type: communicates-with
     connector: db
     description: Stores and validates session tokens
+  - target: api-gateway
+    type: communicates-with
+    connector: rest
+    description: JWT validation on each request
 risks:
   - Single point of failure for all authenticated requests
   - Token signing key rotation requires coordinated deployment
