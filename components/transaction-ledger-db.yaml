@@ -50,4 +50,8 @@ links:
     role: reads-from
     protocol: db
     description: Persists all GL entries
+  - target: core-banking-system
+    role: serves
+    protocol: db
+    description: Primary data store for all financial records
 schema_version: 2
