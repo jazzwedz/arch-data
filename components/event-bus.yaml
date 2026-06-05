@@ -71,6 +71,10 @@ interfaces:
     type: async
     target: trade-settlement-queue
     description: Receives raw trade execution events from the central event bus
+  - direction: provides
+    type: async
+    target: sics-booking-gateway
+    description: Consumes QSR run completion events and RA output events for automatic posting
 risks:
   - Kafka cluster outage affects all asynchronous communication in the system
   - Schema evolution must be backward compatible, otherwise it breaks consumers
