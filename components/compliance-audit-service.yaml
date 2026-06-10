@@ -1,0 +1,12 @@
+id: compliance-audit-service
+name: Compliance & Audit Service
+type: service
+status: draft
+owner: test
+tags: []
+description: {}
+capabilities:
+  - name: Compliance & Audit
+    role: owner
+processes: []
+schema_version: 2
