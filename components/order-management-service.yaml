@@ -1,0 +1,12 @@
+id: order-management-service
+name: Order Management Service
+type: service
+status: draft
+owner: test
+tags: []
+description: {}
+capabilities:
+  - name: Order Management
+    role: owner
+processes: []
+schema_version: 2
