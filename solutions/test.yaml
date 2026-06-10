@@ -1,0 +1,24 @@
+id: test
+name: test
+status: draft
+owner: test
+description:
+  description: teste fgdsfgdgd fdsgfdfg
+goal: test
+delivers:
+  capabilities:
+    - Compliance & Audit
+    - Order Management
+  processes:
+    - process A
+members:
+  - component: api-gateway
+    disposition: reuse
+    role: participant in process “process A”
+  - component: compliance-audit-service
+    disposition: new
+    role: Covers capability “Compliance & Audit”
+  - component: order-management-service
+    disposition: new
+    role: Covers capability “Order Management”
+schema_version: 1
