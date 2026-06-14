@@ -1,0 +1,127 @@
+id: ai-maturity
+name: AI maturity
+status: draft
+owner: ''
+description:
+  description: An AI maturity assessment solution that evaluates current AI capabilities, identifies gaps, and provides actionable recommendations for improvement. Used by leadership and AI teams to benchmark progress, prioritize investments, and accelerate AI transformation. Integrates with existing culture and learning systems while providing dedicated assessment tools and dashboards.
+goal: Assess and improve organizational AI adoption maturity across strategic, operational and technical dimensions
+delivers:
+  capabilities:
+    - AI Maturity Assessment
+    - Strategic AI Planning
+    - Capability Gap Analysis
+    - AI Transformation Roadmapping
+members:
+  - component: culture-assessment-service
+    disposition: extend
+    role: Provides organizational culture evaluation framework for AI readiness assessment
+  - component: culture-dashboard
+    disposition: extend
+    role: Displays culture metrics and AI readiness indicators to leadership
+  - component: learning-management-platform
+    disposition: extend
+    role: Delivers AI training programs and tracks skill development progress
+  - component: feedback-engine
+    disposition: extend
+    role: Collects continuous feedback on AI initiatives and training effectiveness
+  - component: innovation-portal
+    disposition: extend
+    role: Showcases AI use cases and enables collaboration on AI initiatives
+  - component: notification-service
+    disposition: reuse
+    role: Sends assessment reminders and progress notifications to stakeholders
+  - component: identity-service
+    disposition: reuse
+    role: Manages user authentication and role-based access to assessment tools
+  - component: user-db
+    disposition: reuse
+    role: Stores user profiles, assessment responses, and maturity scores
+  - component: ai-maturity-assessment-engine
+    disposition: new
+  - component: ai-capability-registry
+    disposition: new
+  - component: executive-ai-dashboard
+    disposition: new
+  - component: assessment-workflow-engine
+    disposition: new
+flows:
+  - from: executive-ai-dashboard
+    to: ai-maturity-assessment-engine
+    role: calls
+    protocol: rest
+    status: proposed
+  - from: ai-maturity-assessment-engine
+    to: ai-capability-registry
+    role: reads-from
+    protocol: db
+    status: proposed
+  - from: ai-maturity-assessment-engine
+    to: culture-assessment-service
+    role: calls
+    protocol: rest
+    status: proposed
+  - from: culture-dashboard
+    to: ai-maturity-assessment-engine
+    role: calls
+    protocol: rest
+    status: proposed
+  - from: assessment-workflow-engine
+    to: notification-service
+    role: calls
+    protocol: rest
+    status: proposed
+  - from: feedback-engine
+    to: ai-maturity-assessment-engine
+    role: serves
+    protocol: rest
+    status: proposed
+  - from: learning-management-platform
+    to: ai-capability-registry
+    role: writes-to
+    protocol: db
+    status: proposed
+  - from: ai-maturity-assessment-engine
+    to: user-db
+    role: writes-to
+    protocol: db
+    status: proposed
+  - from: executive-ai-dashboard
+    to: identity-service
+    role: calls
+    protocol: rest
+    status: existing
+  - from: innovation-portal
+    to: ai-capability-registry
+    role: reads-from
+    protocol: db
+    status: proposed
+processes:
+  - id: ai-maturity-assessment-process
+    name: AI Maturity Assessment Process
+    actors:
+      - id: ai-maturity-assessment-engine
+        label: AI Maturity Assessment Engine
+        kind: member
+        component: ai-maturity-assessment-engine
+        role: owner
+      - id: assessment-workflow-engine
+        label: Assessment Workflow Engine
+        kind: member
+        component: assessment-workflow-engine
+        role: participant
+      - id: ext:leadership
+        label: Leadership Team
+        kind: external
+        role: trigger
+      - id: ext:employees
+        label: Employees
+        kind: external
+        role: participant
+    steps:
+      - from: ext:leadership
+        label: Initiates AI maturity assessment
+        kind: sync
+      - from: ext:employees
+        label: Submits assessment responses
+        kind: sync
+schema_version: 1
