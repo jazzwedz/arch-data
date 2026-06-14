@@ -1,0 +1,99 @@
+id: culture
+name: Culture
+status: draft
+owner: ''
+description:
+  description: A comprehensive culture transformation initiative that implements agile principles across teams, improves communication and collaboration patterns, and fosters an innovation mindset. The solution focuses on changing behaviors, processes, and team dynamics to create a more engaged, empowered workforce. It targets leadership, middle management, and individual contributors to drive sustainable cultural change.
+goal: Transform organizational culture to support agile collaboration, transparency and innovation
+delivers:
+  capabilities:
+    - Culture Transformation
+    - Team Collaboration
+    - Innovation Management
+  processes:
+    - Cultural Assessment
+    - Agile Transformation
+    - Innovation Pipeline
+members:
+  - component: monitoring-platform
+    disposition: extend
+    role: tracks culture transformation metrics and employee engagement KPIs
+  - component: notification-service
+    disposition: reuse
+    role: sends culture program updates and recognition notifications
+  - component: culture-assessment-service
+    disposition: new
+  - component: innovation-portal
+    disposition: new
+  - component: learning-management-platform
+    disposition: new
+  - component: feedback-engine
+    disposition: new
+  - component: culture-dashboard
+    disposition: new
+flows:
+  - from: culture-assessment-service
+    to: monitoring-platform
+    role: writes-to
+    protocol: rest
+    status: proposed
+  - from: innovation-portal
+    to: feedback-engine
+    role: calls
+    protocol: rest
+    status: proposed
+  - from: learning-management-platform
+    to: notification-service
+    role: calls
+    protocol: rest
+    status: existing
+  - from: culture-dashboard
+    to: monitoring-platform
+    role: reads-from
+    protocol: rest
+    status: proposed
+  - from: feedback-engine
+    to: notification-service
+    role: calls
+    protocol: rest
+    status: existing
+processes:
+  - id: culture-transformation-process
+    name: Culture Transformation Process
+    actors:
+      - id: ext:employee
+        label: Employee
+        kind: external
+      - id: ext:manager
+        label: Manager
+        kind: external
+      - id: culture-assessment-service
+        label: Culture Assessment Service
+        kind: member
+        component: culture-assessment-service
+      - id: innovation-portal
+        label: Innovation Portal
+        kind: member
+        component: innovation-portal
+      - id: learning-management-platform
+        label: Learning Management Platform
+        kind: member
+        component: learning-management-platform
+      - id: feedback-engine
+        label: Feedback Engine
+        kind: member
+        component: feedback-engine
+    steps:
+      - from: ext:employee
+        label: completes culture assessment survey
+        kind: sync
+      - from: ext:manager
+        label: assigns culture training modules
+        kind: sync
+      - from: ext:employee
+        label: submits improvement ideas
+        kind: sync
+      - from: ext:employee
+        label: participates in retrospectives
+        kind: sync
+schema_version: 1
