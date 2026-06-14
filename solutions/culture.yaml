@@ -1,3 +1,4 @@
+schema_version: 1
 id: culture
 name: Culture
 status: draft
@@ -10,10 +11,6 @@ delivers:
     - Culture Transformation
     - Team Collaboration
     - Innovation Management
-  processes:
-    - Cultural Assessment
-    - Agile Transformation
-    - Innovation Pipeline
 members:
   - component: monitoring-platform
     disposition: extend
@@ -96,4 +93,27 @@ processes:
       - from: ext:employee
         label: participates in retrospectives
         kind: sync
-schema_version: 1
+  - id: process-2
+    name: Process 2
+    actors:
+      - id: monitoring-platform
+        label: Observability Platform
+        kind: member
+        component: monitoring-platform
+      - id: notification-service
+        label: Notification Service
+        kind: member
+        component: notification-service
+      - id: culture-dashboard
+        label: Culture Dashboard
+        kind: member
+        component: culture-dashboard
+    steps:
+      - from: monitoring-platform
+        to: notification-service
+        label: ''
+        kind: sync
+      - from: notification-service
+        to: culture-dashboard
+        label: ''
+        kind: sync
