@@ -1,0 +1,123 @@
+id: industry-classification-code
+name: Industry Classification Code
+status: draft
+owner: ''
+description:
+  description: Introduces a hierarchical NACL (national activity classification) search-and-select capability inside CORE's company master data, replacing internal risk-label-only industry tagging. Underwriters and back-office staff search by keyword or code, see the full section/division/group/class/category hierarchy, and select a mandatory 6-digit activity code that is stored on the partner/company record. The solution also loads the official NACL reference list and pre-populates confirmed codes for the existing portfolio, while prompting reviewers to revalidate codes on subsequent master data, contract or renewal changes.
+goal: Enable standardized NACL industry-classification coding for all Commercial companies in CORE.
+delivers:
+  capabilities:
+    - Industry activity classification (NACL) search and selection
+    - Hierarchical browsing of classification taxonomy
+    - Mandatory field validation on company master data
+    - Initial bulk pre-population from existing portfolio classifications
+    - Periodic code plausibility review prompts
+members:
+  - component: policy-core-system-core
+    disposition: extend
+    role: Hosts the 'Modify Company' Identity screen; adds the NACL field, mandatory-field validation, and code-review prompts on master data/contract/renewal changes
+  - component: api-gateway
+    disposition: reuse
+    role: Routes CORE's classification search/autocomplete requests to the new NACL search service
+  - component: notification-service
+    disposition: reuse
+    role: Delivers the 'review NACL code' prompt to users during master data/contract/renewal updates
+  - component: nacl-reference-data-store
+    disposition: new
+  - component: nacl-classification-search-service
+    disposition: new
+  - component: nacl-portfolio-migration-job
+    disposition: new
+flows:
+  - from: policy-core-system-core
+    to: api-gateway
+    role: calls
+    protocol: rest
+    status: proposed
+  - from: api-gateway
+    to: nacl-classification-search-service
+    role: serves
+    protocol: rest
+    status: proposed
+  - from: nacl-classification-search-service
+    to: nacl-reference-data-store
+    role: reads-from
+    protocol: db
+    status: proposed
+  - from: nacl-portfolio-migration-job
+    to: nacl-reference-data-store
+    role: reads-from
+    protocol: db
+    status: proposed
+  - from: nacl-portfolio-migration-job
+    to: policy-core-system-core
+    role: writes-to
+    protocol: db
+    status: proposed
+  - from: policy-core-system-core
+    to: notification-service
+    role: calls
+    protocol: rest
+    status: proposed
+processes:
+  - id: nacl-code-selection-and-maintenance
+    name: NACL Code Selection and Maintenance
+    actors:
+      - id: ext:underwriter
+        label: Underwriter / Back-office User
+        kind: external
+        role: trigger
+      - id: policy-core-system-core
+        label: Policy Core System (CORE)
+        kind: member
+        component: policy-core-system-core
+        role: owner
+      - id: api-gateway
+        label: API Gateway
+        kind: member
+        component: api-gateway
+        role: participant
+      - id: nacl-classification-search-service
+        label: NACL Classification Search Service
+        kind: member
+        component: nacl-classification-search-service
+        role: participant
+      - id: nacl-reference-data-store
+        label: NACL Reference Data Store
+        kind: member
+        component: nacl-reference-data-store
+        role: participant
+      - id: nacl-portfolio-migration-job
+        label: NACL Portfolio Migration Job
+        kind: member
+        component: nacl-portfolio-migration-job
+        role: participant
+      - id: notification-service
+        label: Notification Service
+        kind: member
+        component: notification-service
+        role: listener
+    steps:
+      - from: ext:underwriter
+        to: policy-core-system-core
+        label: Open Modify Company > Identity screen, create/update company
+        kind: sync
+      - from: policy-core-system-core
+        to: api-gateway
+        label: Search NACL by keyword or code
+        kind: sync
+      - from: api-gateway
+        label: Forward search request
+        kind: sync
+      - from: ext:underwriter
+        to: policy-core-system-core
+        label: Select 6-digit code from results
+        kind: sync
+      - from: policy-core-system-core
+        label: Validate mandatory field and store code on company master data
+        kind: sync
+      - from: policy-core-system-core
+        to: notification-service
+        label: Prompt review if code is stale/missing on future updates
+        kind: async
+schema_version: 1
