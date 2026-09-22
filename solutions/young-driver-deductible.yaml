@@ -1,0 +1,203 @@
+id: young-driver-deductible
+name: Young Driver Deductible
+status: draft
+owner: ''
+description:
+  description: This solution validates the policyholder's and recorded driver's date of birth to determine whether the standard or a young-driver deductible applies for liability and collision on passenger cars, motorcycles and delivery trucks. It extends the policy administration core, public web quoting, correspondence/document generation, claims settlement and CRM so the young-driver rule is captured consistently at quote time, stored without appearing on documents, and auto-applied at claims. Users are underwriters, policyholders (self-service via WEB), claims handlers and sales agents.
+goal: Automatically apply a separate, age-based deductible for young drivers across quoting, policy, web, claims and CRM.
+delivers:
+  capabilities:
+    - Age-based deductible differentiation for young drivers
+    - Young driver declaration capture at offer/policy issuance
+    - Automatic deductible resolution at claims creation
+    - Deductible cap extension on public web quoting
+    - Cross-sell opportunity generation for agents
+    - Compliant document generation (GPC, offer, policy) without exposing driver DOB
+members:
+  - component: customer-portal
+    disposition: extend
+    role: Public WEB quoting UI extended with the young-driver query and raised deductible cap
+  - component: api-gateway
+    disposition: reuse
+    role: Routes quote/policy requests from portal and other channels to the policy core
+  - component: identity-service
+    disposition: reuse
+    role: Authenticates policyholders/agents accessing portal and admin screens
+  - component: user-db
+    disposition: extend
+    role: Stores policyholder and young driver dates of birth used to determine the applicable deductible
+  - component: document-archive
+    disposition: reuse
+    role: Archives generated offers, provisional policies, policies and GPC editions
+  - component: event-bus
+    disposition: reuse
+    role: Propagates young-driver-declared events to downstream systems like CRM
+  - component: notification-service
+    disposition: reuse
+    role: Notifies agents of new cross-sell opportunities generated from the young-driver query
+  - component: policy-core-system-core
+    disposition: new
+  - component: young-driver-deductible-engine
+    disposition: new
+  - component: claims-deductible-validator
+    disposition: new
+  - component: correspondence-documents-service
+    disposition: new
+  - component: crm-sales-opportunity-connector
+    disposition: new
+  - component: sec-admin-screen
+    disposition: new
+  - component: ops-view-screen
+    disposition: new
+flows:
+  - from: ext:policyholder
+    to: customer-portal
+    role: calls
+    protocol: human
+    status: existing
+  - from: customer-portal
+    to: api-gateway
+    role: calls
+    protocol: rest
+    status: existing
+  - from: api-gateway
+    to: policy-core-system-core
+    role: calls
+    protocol: rest
+    status: proposed
+  - from: policy-core-system-core
+    to: young-driver-deductible-engine
+    role: calls
+    protocol: rest
+    status: proposed
+  - from: young-driver-deductible-engine
+    to: user-db
+    role: reads-from
+    protocol: db
+    status: proposed
+  - from: policy-core-system-core
+    to: correspondence-documents-service
+    role: calls
+    protocol: rest
+    status: proposed
+  - from: correspondence-documents-service
+    to: document-archive
+    role: writes-to
+    protocol: file
+    status: proposed
+  - from: policy-core-system-core
+    to: event-bus
+    role: calls
+    protocol: async
+    status: proposed
+  - from: event-bus
+    to: crm-sales-opportunity-connector
+    role: serves
+    protocol: async
+    status: proposed
+  - from: crm-sales-opportunity-connector
+    to: notification-service
+    role: calls
+    protocol: rest
+    status: proposed
+  - from: claims-deductible-validator
+    to: policy-core-system-core
+    role: reads-from
+    protocol: rest
+    status: proposed
+  - from: policy-core-system-core
+    to: sec-admin-screen
+    role: serves
+    protocol: rest
+    status: proposed
+  - from: policy-core-system-core
+    to: ops-view-screen
+    role: serves
+    protocol: rest
+    status: proposed
+processes:
+  - id: young-driver-deductible-determination-and-application
+    name: Young driver deductible determination and application
+    actors:
+      - id: ext:policyholder
+        label: Policyholder/Owner
+        kind: external
+        role: trigger
+      - id: customer-portal
+        label: Customer Portal
+        kind: member
+        component: customer-portal
+        role: participant
+      - id: api-gateway
+        label: API Gateway
+        kind: member
+        component: api-gateway
+        role: participant
+      - id: policy-core-system-core
+        label: Policy Core System (CORE)
+        kind: member
+        component: policy-core-system-core
+        role: owner
+      - id: young-driver-deductible-engine
+        label: Young Driver Deductible Engine
+        kind: member
+        component: young-driver-deductible-engine
+        role: participant
+      - id: user-db
+        label: User Database
+        kind: member
+        component: user-db
+        role: participant
+      - id: correspondence-documents-service
+        label: Correspondence & Documents Service
+        kind: member
+        component: correspondence-documents-service
+        role: participant
+      - id: document-archive
+        label: Document Archive
+        kind: member
+        component: document-archive
+        role: participant
+      - id: event-bus
+        label: Enterprise Event Bus
+        kind: member
+        component: event-bus
+        role: participant
+      - id: crm-sales-opportunity-connector
+        label: CRM Sales Opportunity Connector
+        kind: member
+        component: crm-sales-opportunity-connector
+        role: listener
+      - id: notification-service
+        label: Notification Service
+        kind: member
+        component: notification-service
+        role: participant
+      - id: ext:claims-handler
+        label: Claims Handler
+        kind: external
+        role: trigger
+      - id: claims-deductible-validator
+        label: Claims Deductible Validator
+        kind: member
+        component: claims-deductible-validator
+        role: participant
+    steps:
+      - from: ext:policyholder
+        to: customer-portal
+        label: Enters DOB and answers young-driver circle question during quote
+        kind: sync
+      - from: customer-portal
+        to: api-gateway
+        label: Submits quote/policy request
+        kind: sync
+      - from: api-gateway
+        label: Routes request to policy administration
+        kind: sync
+      - from: event-bus
+        label: Delivers event for cross-sell processing
+        kind: async
+      - from: ext:claims-handler
+        label: Creates claim recording driver and DOB
+        kind: sync
+schema_version: 1
