@@ -1,0 +1,133 @@
+id: testovanie-aardwark
+name: Testovanie Aardwark
+status: draft
+owner: ''
+description:
+  description: A lightweight IT Service Management solution for a growing tech team, built on existing platform components rather than heavyweight ITIL tooling. It automates incident detection-to-resolution, gives internal (non-IT) teams a self-service request catalog, introduces a simple change-approval flow for production deployments, and centralizes a searchable knowledge base. On-call engineers, internal requesters, and platform teams use it daily to keep operations transparent across time zones as new markets go live.
+goal: Deliver light-touch ITSM foundations that keep incident, change, and knowledge processes scalable through internationalization.
+delivers:
+  capabilities:
+    - Incident Management
+    - Change Management
+    - Self-Service Catalog
+    - Knowledge Management
+members:
+  - component: monitoring-platform
+    disposition: reuse
+    role: Detects alerts and feeds them into the incident workflow
+  - component: notification-service
+    disposition: reuse
+    role: Delivers incident and change notifications to on-call staff and requesters
+  - component: event-bus
+    disposition: reuse
+    role: Carries incident and change lifecycle events between services
+  - component: api-gateway
+    disposition: reuse
+    role: Single entry point for the self-service catalog portal and ITSM APIs
+  - component: identity-service
+    disposition: reuse
+    role: Authenticates and authorizes ITSM portal users across teams
+  - component: itsm-incident-management-service
+    disposition: new
+  - component: self-service-catalog-portal
+    disposition: new
+  - component: change-management-service
+    disposition: new
+  - component: knowledge-base
+    disposition: new
+flows:
+  - from: monitoring-platform
+    to: itsm-incident-management-service
+    role: serves
+    protocol: async
+    status: proposed
+  - from: itsm-incident-management-service
+    to: notification-service
+    role: calls
+    protocol: rest
+    status: proposed
+  - from: itsm-incident-management-service
+    to: event-bus
+    role: calls
+    protocol: async
+    status: proposed
+  - from: self-service-catalog-portal
+    to: api-gateway
+    role: calls
+    protocol: rest
+    status: proposed
+  - from: api-gateway
+    to: itsm-incident-management-service
+    role: serves
+    protocol: rest
+    status: proposed
+  - from: api-gateway
+    to: change-management-service
+    role: serves
+    protocol: rest
+    status: proposed
+  - from: identity-service
+    to: self-service-catalog-portal
+    role: serves
+    protocol: rest
+    status: proposed
+  - from: change-management-service
+    to: event-bus
+    role: calls
+    protocol: async
+    status: proposed
+  - from: itsm-incident-management-service
+    to: knowledge-base
+    role: calls
+    protocol: db
+    status: proposed
+  - from: change-management-service
+    to: knowledge-base
+    role: calls
+    protocol: db
+    status: proposed
+processes:
+  - id: incident-management-flow
+    name: Incident Management Flow
+    actors:
+      - id: monitoring-platform
+        label: Observability Platform
+        kind: member
+        component: monitoring-platform
+        role: trigger
+      - id: itsm-incident-management-service
+        label: ITSM Incident Management Service
+        kind: member
+        component: itsm-incident-management-service
+        role: owner
+      - id: notification-service
+        label: Notification Service
+        kind: member
+        component: notification-service
+        role: participant
+      - id: event-bus
+        label: Enterprise Event Bus
+        kind: member
+        component: event-bus
+        role: participant
+      - id: knowledge-base
+        label: Knowledge Base
+        kind: member
+        component: knowledge-base
+        role: participant
+      - id: ext:on-call-engineer
+        label: On-call Engineer
+        kind: external
+        role: participant
+    steps:
+      - from: monitoring-platform
+        label: Alert triggers incident creation
+        kind: async
+      - from: notification-service
+        to: ext:on-call-engineer
+        label: Send alert notification
+        kind: async
+      - from: ext:on-call-engineer
+        label: Acknowledge and investigate incident
+        kind: sync
+schema_version: 1
