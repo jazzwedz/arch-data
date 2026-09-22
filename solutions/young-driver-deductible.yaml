@@ -1,0 +1,15 @@
+id: young-driver-deductible
+name: Young Driver Deductible
+status: draft
+owner: ''
+description:
+  description: Introduces a separate liability/collision deductible for policies where a driver under the age threshold may use the insured vehicle, based on the policyholder's date of birth and a new driver-circle question shown in CORE, SEC-ADMIN and WEB. The solution stores the young driver's date of birth without exposing it on documents, defaults and floors the young driver deductible relative to the standard deductible, extends the WEB deductible cap, applies the correct deductible automatically at claim creation, and surfaces a cross-sell opportunity to agents in CRM. It touches quoting/policy screens, contract documents (offer, provisional policy, policy, GPC), claims processing and sales tooling.
+goal: Apply a risk-based young driver deductible across quoting, policy, claims, CRM and correspondence for motor insurance.
+delivers:
+  capabilities:
+    - Risk-Based Deductible Pricing
+    - Motor Insurance Policy Administration
+    - Claims Deductible Determination
+    - Policy Document & GPC Generation
+    - Sales Opportunity Generation
+schema_version: 1
